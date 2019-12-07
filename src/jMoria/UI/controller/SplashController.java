@@ -15,6 +15,7 @@ public class SplashController extends FXMLControllerTemplate {
 
     @FXML
     private TextFlow asciiArea;
+    @FXML
     private TextFlow keyField;
 
     @Override
@@ -23,7 +24,18 @@ public class SplashController extends FXMLControllerTemplate {
         setKeyField();
     }
 
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
     void setAsciiArea() {
+        System.out.println("set ascii area");
         ASCIILoader loader = new ASCIILoader();
         loader.setLocation("durindoor.txt");
         loader.setFont(Font.font("Monospaced", 11.0));
@@ -33,6 +45,7 @@ public class SplashController extends FXMLControllerTemplate {
     }
 
     void setKeyField() {
+        System.out.println("set key field");
         Text t = new Text("press any key to enter");
         t.setFill(Color.WHITE);
         t.setFont(Font.font("Monospaced", 14.0));
@@ -43,5 +56,6 @@ public class SplashController extends FXMLControllerTemplate {
     public void handleKeys(KeyEvent e) {
         // are we on or off? how should we look at that?
         //super.getSceneManager().setScene(SceneManager.jMoriaScene.MENU);
+        System.out.println("KEYPRESS!");
     }
 }

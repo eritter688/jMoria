@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.TextFlow?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="jMoria.UI.controller.SplashController"
-      prefHeight="600.0" prefWidth="800.0">
-    <TextFlow>
-        fx:id="asciiArea"
-        prefHeight="575.0"
-        prefWidth="800.0"
-        textAlignment="CENTER"
-        style="-fx-background-color: black;"
-    </TextFlow>
-    <TextFlow>
-        fx:id="keyField"
-        prefHeight="25.0"
-        prefWidth="800.0"
-        style="-fx-background-color: black;"
-    </TextFlow>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="600.0"
+      prefWidth="800.0"
+      xmlns="http://javafx.com/javafx/10.0.2-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="jMoria.UI.controller.SplashController">
+    <children>
+        <TextFlow fx:id="asciiArea"
+                  prefHeight="575.0"
+                  prefWidth="800.0"
+                  textAlignment="CENTER"
+                  style="-fx-background-color: black;"
+        >
+        </TextFlow>
+        <TextFlow fx:id="keyField"
+                  prefHeight="25.0"
+                  prefWidth="800.0"
+                  textAlignment="CENTER"
+                  style="-fx-background-color: black;"
+        >
+        </TextFlow>
+    </children>
 </VBox>
