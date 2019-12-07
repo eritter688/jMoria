@@ -21,6 +21,9 @@ public abstract class FXMLControllerTemplate {
     @FXML
     public abstract void initialize();
 
+    public abstract void init();
+    public abstract void stop();
+
     public abstract void handleKeys(KeyEvent e);
 
     public final void setSceneManager(SceneManager sceneManager)

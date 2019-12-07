@@ -21,7 +21,6 @@ public class jMoria extends Application {
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
         var sceneManager = new SceneManager(primaryStage);
-        sceneManager.run();
     }
 
     public static void main(String[] args) {
