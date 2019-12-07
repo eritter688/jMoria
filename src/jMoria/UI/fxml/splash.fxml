@@ -5,19 +5,23 @@
 
 <VBox prefHeight="600.0"
       prefWidth="800.0"
+      maxHeight="600.0"
+      maxWidth="800.0"
+      minHeight="600.0"
+      minWidth="800.0"
       xmlns="http://javafx.com/javafx/10.0.2-internal"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="jMoria.UI.controller.SplashController">
     <children>
         <TextFlow fx:id="asciiArea"
-                  prefHeight="575.0"
+                  prefHeight="560.0"
                   prefWidth="800.0"
                   textAlignment="CENTER"
                   style="-fx-background-color: black;"
         >
         </TextFlow>
         <TextFlow fx:id="keyField"
-                  prefHeight="25.0"
+                  prefHeight="40.0"
                   prefWidth="800.0"
                   textAlignment="CENTER"
                   style="-fx-background-color: black;"

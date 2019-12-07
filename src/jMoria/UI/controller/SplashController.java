@@ -38,7 +38,7 @@ public class SplashController extends FXMLControllerTemplate {
         System.out.println("set ascii area");
         ASCIILoader loader = new ASCIILoader();
         loader.setLocation("durindoor.txt");
-        loader.setFont(Font.font("Monospaced", 11.0));
+        loader.setFont(Font.font("Monospaced", 10.0));
         loader.setColor(Color.CHARTREUSE);
         List<Text> listOfTexts = loader.loadToTexts();
         asciiArea.getChildren().addAll(0, listOfTexts);
@@ -48,7 +48,7 @@ public class SplashController extends FXMLControllerTemplate {
         System.out.println("set key field");
         Text t = new Text("press any key to enter");
         t.setFill(Color.WHITE);
-        t.setFont(Font.font("Monospaced", 14.0));
+        t.setFont(Font.font("Monospaced", 12.0));
         keyField.getChildren().add(t);
     }
 
