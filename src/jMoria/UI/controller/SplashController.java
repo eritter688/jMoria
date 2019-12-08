@@ -1,7 +1,6 @@
 package jMoria.UI.controller;
 
 import jMoria.UI.ASCIILoader;
-import jMoria.UI.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -11,7 +10,7 @@ import javafx.scene.text.TextFlow;
 
 import java.util.List;
 
-public class SplashController extends FXMLControllerTemplate {
+public class SplashController extends AbstractController {
 
     @FXML
     private TextFlow asciiArea;
@@ -25,17 +24,16 @@ public class SplashController extends FXMLControllerTemplate {
     }
 
     @Override
-    public void init() {
-
+    public void start() {
+        startEventHandling();
     }
 
     @Override
     public void stop() {
-
+        stopEventHandling();
     }
 
-    void setAsciiArea() {
-        System.out.println("set ascii area");
+    private void setAsciiArea() {
         ASCIILoader loader = new ASCIILoader();
         loader.setLocation("durindoor.txt");
         loader.setFont(Font.font("Monospaced", 10.0));
@@ -44,8 +42,7 @@ public class SplashController extends FXMLControllerTemplate {
         asciiArea.getChildren().addAll(0, listOfTexts);
     }
 
-    void setKeyField() {
-        System.out.println("set key field");
+    private void setKeyField() {
         Text t = new Text("press any key to enter");
         t.setFill(Color.WHITE);
         t.setFont(Font.font("Monospaced", 12.0));
