@@ -7,9 +7,9 @@ import javafx.stage.Stage;
 
 public class jMoria extends Application {
 
-    protected static String TITLE = "jMoria v0.1";
-    protected static int WIDTH = 800;
-    protected static int HEIGHT = 600;
+    protected static final String TITLE = "jMoria v0.1";
+    protected static final int WIDTH = 800;
+    protected static final int HEIGHT = 600;
 
     @Override
     public void start(Stage primaryStage) {
@@ -21,6 +21,7 @@ public class jMoria extends Application {
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
         var sceneManager = new SceneManager(primaryStage);
+        sceneManager.start();
     }
 
     public static void main(String[] args) {
