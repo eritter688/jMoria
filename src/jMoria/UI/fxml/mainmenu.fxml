@@ -5,48 +5,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-
-<HBox maxHeight="600.0" 
-      maxWidth="800.0" 
-      minHeight="600.0" 
-      minWidth="800.0" 
-      prefHeight="600.0" 
-      prefWidth="800.0" 
-      xmlns="http://javafx.com/javafx/8.0.102" 
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="jMoria.UI.controller.MainMenuController"
-      >
+<HBox maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jMoria.UI.controller.MainMenuController">
    <children>
-      <TextFlow fx:id="asciiArea"
-                prefHeight="600.0" 
-                prefWidth="500.0"
-                textAlignment="CENTER"
-                style="-fx-background-color: black"
-                >
+      <TextFlow fx:id="asciiArea" maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;" textAlignment="CENTER">
       </TextFlow>
-      <VBox fx:id="buttonArea"
-            prefHeight="600.0" 
-            prefWidth="300.0"
-            alignment="CENTER"
-            spacing="40.0"
-            style="-fx-background-color: black"
-            >
+      <VBox fx:id="buttonArea" alignment="CENTER" maxHeight="600.0" maxWidth="200.0" minHeight="600.0" minWidth="200.0" prefHeight="600.0" prefWidth="200.0" spacing="40.0" style="-fx-background-color: black">
          <children>
-            <Button fx:id="newButton"
-                    prefWidth="100.0"
-                    mnemonicParsing="false" text="(N)ew" />
-            <Button fx:id="loadButton"
-                    prefWidth="100.0"
-                    mnemonicParsing="false" text="(L)oad" />
-            <Button fx:id="scoresButton"
-                    prefWidth="100.0"
-                    mnemonicParsing="false" text="(S)cores" />
-            <Button fx:id="creditsButton"
-                    prefWidth="100.0"
-                    mnemonicParsing="false" text="(C)redits" />
-            <Button fx:id="quitButton"
-                    prefWidth="100.0"
-                    mnemonicParsing="false" text="(Q)uit" />
+            <Button fx:id="newButton" mnemonicParsing="false" prefWidth="100.0" text="(N)ew" />
+            <Button fx:id="loadButton" mnemonicParsing="false" prefWidth="100.0" text="(L)oad" />
+            <Button fx:id="scoresButton" mnemonicParsing="false" prefWidth="100.0" text="(S)cores" />
+            <Button fx:id="creditsButton" mnemonicParsing="false" prefWidth="100.0" text="(C)redits" />
+            <Button fx:id="quitButton" mnemonicParsing="false" prefWidth="100.0" text="(Q)uit" />
          </children>
       </VBox>
    </children>
