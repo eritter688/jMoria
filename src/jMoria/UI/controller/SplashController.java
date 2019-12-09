@@ -1,6 +1,7 @@
 package jMoria.UI.controller;
 
 import jMoria.UI.ASCIILoader;
+import jMoria.UI.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -53,6 +54,7 @@ public class SplashController extends AbstractController {
     public void handleKeys(KeyEvent e) {
         // are we on or off? how should we look at that?
         //super.getSceneManager().setScene(SceneManager.jMoriaScene.MENU);
-        System.out.println("KEYPRESS!");
+        //System.out.println("KEYPRESS!");
+        sceneManager.setScene(SceneManager.jMoriaScene.MENU);
     }
 }

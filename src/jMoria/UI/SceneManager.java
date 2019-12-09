@@ -21,7 +21,7 @@ public class SceneManager extends StackPane {
 
     public enum jMoriaScene {
         GAME("game.fxml"),
-        MENU("menu.fxml"),
+        MENU("mainmenu.fxml"),
         SPLASH("splash.fxml");
 
         private final String fxmlFile;
@@ -48,7 +48,7 @@ public class SceneManager extends StackPane {
         this.primaryStage.show();
     }
 
-    protected void setScene(jMoriaScene scene) {
+    public void setScene(jMoriaScene scene) {
 
         // Lazy load the fxml/controller pair.
         if (!scenes.containsKey(scene)) {
