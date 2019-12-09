@@ -43,7 +43,7 @@ public class SplashController extends AbstractController {
     }
 
     private void setKeyField() {
-        Text t = new Text("press any key to enter");
+        Text t = new Text(" <-- press any key to enter -->");
         t.setFill(Color.WHITE);
         t.setFont(Font.font("Monospaced", 12.0));
         keyField.getChildren().add(t);
