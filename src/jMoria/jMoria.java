@@ -1,6 +1,7 @@
 package jMoria;
 
-import jMoria.UI.SceneManager;
+import jMoria.game.Game;
+import jMoria.ui.SceneManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -10,6 +11,8 @@ public class jMoria extends Application {
     protected static final String TITLE = "jMoria v0.1";
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 600;
+
+    protected Game gameInstance = null;
 
     @Override
     public void start(Stage primaryStage) {

@@ -3,6 +3,6 @@ module jMoria {
     requires javafx.controls;
 
     opens jMoria;
-    opens jMoria.UI.controller;
-    opens jMoria.UI.fxml;
+    opens jMoria.ui.controller;
+    opens jMoria.ui.fxml;
 }

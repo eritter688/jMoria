@@ -1,6 +1,6 @@
-package jMoria.UI;
+package jMoria.ui;
 
-import jMoria.UI.controller.AbstractController;
+import jMoria.ui.controller.AbstractController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -72,7 +72,7 @@ public class SceneManager extends StackPane {
     private void loadScene(jMoriaScene scene, String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/jMoria/UI/fxml/" + fxmlFile));
+            loader.setLocation(getClass().getResource("/jMoria/ui/fxml/" + fxmlFile));
             System.out.println(loader.getLocation());
             Parent root = loader.load();
             AbstractController controller = loader.getController();
