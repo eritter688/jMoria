@@ -1,7 +1,7 @@
-package jMoria.UI.controller;
+package jMoria.ui.controller;
 
-import jMoria.UI.ASCIILoader;
-import jMoria.UI.SceneManager;
+import jMoria.ui.ASCIILoader;
+import jMoria.ui.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;

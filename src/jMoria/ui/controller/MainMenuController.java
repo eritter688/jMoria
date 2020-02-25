@@ -1,7 +1,7 @@
-package jMoria.UI.controller;
+package jMoria.ui.controller;
 
-import jMoria.UI.ASCIILoader;
 import javafx.application.Platform;
+import jMoria.ui.ASCIILoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;

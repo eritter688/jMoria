@@ -1,9 +1,9 @@
-package jMoria.UI.controller;
+package jMoria.ui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import jMoria.UI.SceneManager;
+import jMoria.ui.SceneManager;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
