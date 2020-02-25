@@ -20,7 +20,7 @@ public class jMoria extends Application {
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
-        var sceneManager = new SceneManager(primaryStage);
+        SceneManager sceneManager = new SceneManager(primaryStage);
         sceneManager.start();
     }
 

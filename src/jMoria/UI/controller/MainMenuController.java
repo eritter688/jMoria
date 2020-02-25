@@ -1,6 +1,7 @@
 package jMoria.UI.controller;
 
 import jMoria.UI.ASCIILoader;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
@@ -29,7 +30,6 @@ public class MainMenuController extends AbstractController {
     @FXML
     private Button quitButton;
 
-
     @Override
     public void initialize() {
         setLeftContent();
@@ -47,7 +47,25 @@ public class MainMenuController extends AbstractController {
 
     @Override
     public void handleKeys(KeyEvent e) {
-
+        switch(e.getCharacter().toLowerCase())
+        {
+            case "n": // NEW GAME
+                System.out.println("NEW");
+                break;
+            case "l": // LOAD GAME
+                System.out.println("LOAD");
+                break;
+            case "s": // SCORES
+                System.out.println("SCORES");
+                break;
+            case "c": // CREDITS
+                System.out.println("CREDS");
+                break;
+            case "q": // QUIT
+                // TODO Is there any cleanup I need to do here?
+                Platform.exit();
+                break;
+        }
     }
 
     private void setLeftContent()
