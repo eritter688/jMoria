@@ -52,9 +52,6 @@ public class SplashController extends AbstractController {
 
     @Override
     public void handleKeys(KeyEvent e) {
-        // are we on or off? how should we look at that?
-        //super.getSceneManager().setScene(SceneManager.jMoriaScene.MENU);
-        //System.out.println("KEYPRESS!");
         sceneManager.setScene(SceneManager.jMoriaScene.MENU);
     }
 }

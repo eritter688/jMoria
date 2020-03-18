@@ -1,5 +1,6 @@
 package jMoria.ui.controller;
 
+import jMoria.ui.SceneManager;
 import javafx.application.Platform;
 import jMoria.ui.ASCIILoader;
 import javafx.fxml.FXML;
@@ -51,6 +52,7 @@ public class MainMenuController extends AbstractController {
         {
             case "n": // NEW GAME
                 System.out.println("NEW");
+                sceneManager.setScene(SceneManager.jMoriaScene.GAME);
                 break;
             case "l": // LOAD GAME
                 System.out.println("LOAD");
