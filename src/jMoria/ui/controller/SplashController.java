@@ -26,12 +26,12 @@ public class SplashController extends AbstractController {
 
     @Override
     public void start() {
-        sceneManager.getPrimaryStage().addEventHandler(KeyEvent.KEY_TYPED, keyEventHandler);
+        startEventHandling();
     }
 
     @Override
     public void stop() {
-        sceneManager.getPrimaryStage().removeEventHandler(KeyEvent.KEY_TYPED, keyEventHandler);
+        stopEventHandling();
     }
 
     private void setAsciiArea() {

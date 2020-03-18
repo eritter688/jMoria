@@ -27,11 +27,11 @@ public abstract class AbstractController {
     public abstract void handleKeys(KeyEvent e);
 
     public void startEventHandling() {
-        sceneManager.getPrimaryStage().addEventHandler(KeyEvent.ANY, keyEventHandler);
+        sceneManager.getPrimaryStage().addEventHandler(KeyEvent.KEY_TYPED, keyEventHandler);
     }
 
     public void stopEventHandling() {
-        sceneManager.getPrimaryStage().removeEventHandler(KeyEvent.ANY, keyEventHandler);
+        sceneManager.getPrimaryStage().removeEventHandler(KeyEvent.KEY_TYPED, keyEventHandler);
     }
 
 }

@@ -38,13 +38,11 @@ public class MainMenuController extends AbstractController {
 
     @Override
     public void start() {
-        System.out.println("main menu start");
         startEventHandling();
     }
 
     @Override
     public void stop() {
-        System.out.println("main menu stop");
         stopEventHandling();
     }
 
@@ -54,7 +52,7 @@ public class MainMenuController extends AbstractController {
         {
             case "n": // NEW GAME
                 System.out.println("NEW");
-                //sceneManager.setScene(SceneManager.jMoriaScene.GAME);
+                sceneManager.setScene(SceneManager.jMoriaScene.GAME);
                 break;
             case "l": // LOAD GAME
                 System.out.println("LOAD");

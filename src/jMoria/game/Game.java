@@ -13,7 +13,6 @@ public class Game {
     public void highScores() {}
 
     public void receiveKeyInput(KeyEvent key) {
-        System.out.println("received " + key.toString());
     }
 
 }

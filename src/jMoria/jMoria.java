@@ -17,6 +17,9 @@ public class jMoria extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        System.out.println("Java Version: " + System.getProperty("java.version"));
+        System.out.println("JavaFX Version: " + System.getProperty("javafx.runtime.version"));
+
         primaryStage.setTitle(TITLE);
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);

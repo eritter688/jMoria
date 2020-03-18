@@ -73,7 +73,6 @@ public class SceneManager extends StackPane {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/jMoria/ui/fxml/" + fxmlFile));
-            System.out.println(loader.getLocation());
             Parent root = loader.load();
             AbstractController controller = loader.getController();
             scenes.put(scene, root);
