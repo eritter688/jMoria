@@ -31,7 +31,7 @@ public abstract class AbstractController {
     }
 
     public void stopEventHandling() {
-        sceneManager.getPrimaryStage().removeEventFilter(KeyEvent.ANY, keyEventHandler);
+        sceneManager.getPrimaryStage().removeEventHandler(KeyEvent.ANY, keyEventHandler);
     }
 
 }
