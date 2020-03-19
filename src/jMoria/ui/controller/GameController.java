@@ -4,32 +4,34 @@ import jMoria.ui.Terminal;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextFlow;
 
 public class GameController extends AbstractController {
 
+//    @FXML
+//    private TextFlow terminalArea;
+
     @FXML
-    private StackPane terminalArea;
+    private TextFlow terminalArea;
 
     private Terminal terminal;
 
     @Override
     public void initialize() {
-
+        // System.out.println(this.terminalArea.toString());
     }
 
     @Override
     public void start() {
-        // set up the terminal here
-        terminal = new Terminal();
-        terminal.dummyTerminal();
-        //terminalArea.chi;
+        this.terminal = new Terminal(terminalArea);
+        this.terminal.dummyTerminal();
 
-        startEventHandling();
+        //startEventHandling();
     }
 
     @Override
     public void stop() {
-        stopEventHandling();
+        //stopEventHandling();
     }
 
     @Override
