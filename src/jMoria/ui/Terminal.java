@@ -14,6 +14,14 @@ public class Terminal {
 
     TextFlow terminal;
 
+    public static final int defaultWidthInCharacters = 80;
+    public static final int defaultHeightInCharacters = 8;
+    public int widthInCharacters;
+    public int heightInCharacters;
+
+    public static final int defaultFontSize = 10;
+    public int fontSize;
+
     public List<Text> lines = new ArrayList<>();
 
     public Terminal(TextFlow terminal)
@@ -21,6 +29,42 @@ public class Terminal {
         this.terminal = terminal;
         //Text text = new Text("I AM A TERMINAL!!!");
         //this.terminal.getChildren().add(0, text);
+
+        widthInCharacters = defaultWidthInCharacters;
+        heightInCharacters = defaultHeightInCharacters;
+        fontSize = defaultFontSize;
+    }
+
+    // This needs to resize the terminal itself to accommodate the new size
+    // of it's containing Text elements.
+    public void changeFontSize(int size)
+    {
+        if (size <= 0)
+            throw new IllegalArgumentException("Size must be a positive number.");
+
+        if (fontSize == size)
+            return;
+
+        Text temp = new Text("");
+        temp.setFont(Font.font("Monospaced", size));
+        StringBuilder sb = new StringBuilder();
+        sb.append("0".repeat(Math.max(0, widthInCharacters)));
+        sb.append("\n");
+        temp.setText(sb.toString());
+
+        terminal.setMinHeight(temp.getBoundsInLocal().getHeight()*8.0);
+        terminal.setMaxHeight(temp.getBoundsInLocal().getHeight()*8.0);
+        terminal.setPrefHeight(temp.getBoundsInLocal().getHeight()*8.0);
+
+        terminal.setMinWidth(temp.getBoundsInLocal().getWidth());
+        terminal.setMaxWidth(temp.getBoundsInLocal().getWidth());
+        terminal.setPrefWidth(temp.getBoundsInLocal().getWidth());
+
+        for (Text t : lines)
+        {
+            t.setFont(Font.font("Monospaced", size));
+        }
+
     }
 
     public void dummyTerminal()
@@ -59,13 +103,13 @@ public class Terminal {
         lines.add(t8);
         this.terminal.getChildren().addAll(lines);
 
-        System.out.println(this.terminal.getBoundsInLocal());
-        System.out.println(this.terminal.getBoundsInParent());
-        System.out.println(this.terminal.getLayoutBounds());
-
-        System.out.println(t1.getBoundsInLocal());
-        System.out.println(t1.getBoundsInParent());
-        System.out.println(t1.getLayoutBounds());
+//        System.out.println(this.terminal.getBoundsInLocal());
+//        System.out.println(this.terminal.getBoundsInParent());
+//        System.out.println(this.terminal.getLayoutBounds());
+//
+//        System.out.println(t1.getBoundsInLocal());
+//        System.out.println(t1.getBoundsInParent());
+//        System.out.println(t1.getLayoutBounds());
 
         terminal.setMinHeight(t1.getBoundsInLocal().getHeight()*8.0);
         terminal.setMaxHeight(t1.getBoundsInLocal().getHeight()*8.0);
@@ -79,7 +123,7 @@ public class Terminal {
         tt.setFill(Color.BROWN);
         tt.setFont(Font.font("Monospaced", 10));
         tt.applyCss();
-        System.out.println(tt.getBoundsInLocal());
+//        System.out.println(tt.getBoundsInLocal());
 
 
     }
