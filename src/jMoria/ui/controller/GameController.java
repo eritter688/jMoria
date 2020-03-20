@@ -21,6 +21,7 @@ public class GameController extends AbstractController {
         this.terminal = new Terminal(terminalArea);
         this.terminal.dummyTerminal();
         this.gameInstance = new Game(terminal);
+        this.gameInstance.run();
     }
 
     @Override
@@ -36,8 +37,8 @@ public class GameController extends AbstractController {
     @Override
     public void handleKeys(KeyEvent e) {
 
-        System.out.println("UI RECEIVED KEY");
-        gameInstance.receiveKeyInput(e);
+        System.out.println("UI RECEIVED KEY" + e.getCode().toString());
+        gameInstance.receiveKeyInput(e.getCharacter());
 
     }
 }

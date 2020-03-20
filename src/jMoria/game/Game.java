@@ -1,8 +1,8 @@
 package jMoria.game;
 
 import jMoria.ui.Terminal;
-import javafx.scene.input.KeyEvent;
 
+// TODO Adapt for starting a saved game.
 public class Game {
 
     private Terminal terminal;
@@ -12,10 +12,20 @@ public class Game {
         this.terminal = terminal;
     }
 
-    public void newGame() {}
+    public void run()
+    {
+        newGame();
+    }
 
-    public void receiveKeyInput(KeyEvent key) {
+    public void newGame() {
+        NewGame newGameSequence = new NewGame(terminal);
+        newGameSequence.run();
+    }
+
+    // TODO Must be agnostic to JavaFX...
+    public void receiveKeyInput(String key) {
         System.out.println("GAME RECEIVED KEY");
+        System.out.println(key);
     }
 
 }

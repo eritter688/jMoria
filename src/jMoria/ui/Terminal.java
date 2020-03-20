@@ -37,10 +37,39 @@ public class Terminal {
     public void setCursorPosition()
     {}
 
-    public void writeLine(String line)
+    public void clearScreen()
     {
-        if (line.length() > defaultWidthInCharacters)
+        for (Text t: lines)
+        {
+            t.setText(" \n");
+        }
+    }
+
+    public void writeLine(int line, String text)
+    {
+        if (line < 0 || line >= defaultHeightInCharacters)
+            throw new IllegalArgumentException("Line index invalid.");
+
+        if (text.length() > defaultWidthInCharacters)
             throw new IllegalArgumentException("Line too long.");
+
+        if (text.contains("\n"))
+            throw new IllegalArgumentException("Do not include linebreaks.");
+
+        String tmp;
+
+        if (text.length() < 80)
+        {
+            StringBuilder sb = new StringBuilder(text);
+            sb.append(" ".repeat((80 - text.length())));
+            tmp = sb.toString();
+        }
+        else
+        {
+            tmp = text;
+        }
+
+        lines.get(line).setText(tmp + "\n");
     }
 
     public void writeChar()
@@ -51,12 +80,14 @@ public class Terminal {
 
         for (int x = 0; x < defaultHeightInCharacters; x++)
         {
-            Text t = new Text("123567890123456789012345678901234567890123567890123456789012345678901234567890\n");
+            Text t = new Text("12345678901234567890123456789012345678901234567890123456789012345678901234567890\n");
             t.setFont(Font.font("Monospaced", defaultFontSize));
             t.setFill(Color.WHITE);
             t.setWrappingWidth(Double.MAX_VALUE);
             lines.add(t);
         }
+        System.out.println(lines.get(0).getText());
+        System.out.println(lines.get(0).getText().length());
 
         this.terminal.getChildren().addAll(lines);
 
