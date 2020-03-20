@@ -39,10 +39,22 @@ public class Terminal {
 
     public void clearScreen()
     {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ".repeat(80));
         for (Text t: lines)
         {
-            t.setText(" \n");
+            t.setText(sb.toString() + "\n");
         }
+    }
+
+    public void clearLine(int line)
+    {
+        if (line < 0 || line >= defaultHeightInCharacters)
+            throw new IllegalArgumentException("Line index invalid.");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ".repeat(80));
+        lines.get(line).setText(sb.toString() + "\n");
     }
 
     public void writeLine(int line, String text)
