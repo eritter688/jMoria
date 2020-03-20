@@ -12,8 +12,6 @@ public class jMoria extends Application {
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 600;
 
-    protected Game gameInstance = null;
-
     @Override
     public void start(Stage primaryStage) {
 
@@ -26,7 +24,7 @@ public class jMoria extends Application {
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
-        SceneManager sceneManager = new SceneManager(primaryStage);
+        SceneManager sceneManager = new SceneManager(this, primaryStage);
         sceneManager.start();
     }
 

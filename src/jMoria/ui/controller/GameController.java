@@ -1,42 +1,43 @@
 package jMoria.ui.controller;
 
+import jMoria.game.Game;
 import jMoria.ui.Terminal;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
 
 
+// TODO Adapt for starting a saved game.
 public class GameController extends AbstractController {
 
     @FXML
     private TextFlow terminalArea;
 
+    private Game gameInstance;
     private Terminal terminal;
 
     @Override
     public void initialize() {
         this.terminal = new Terminal(terminalArea);
         this.terminal.dummyTerminal();
+        this.gameInstance = new Game(terminal);
     }
 
     @Override
     public void start() {
-//        startEventHandling();
+        startEventHandling();
     }
 
     @Override
     public void stop() {
-//        stopEventHandling();
+        stopEventHandling();
     }
 
     @Override
     public void handleKeys(KeyEvent e) {
 
-        // send all the things down to the actual game here
-        // via some sort of bridge?
-        // use the jMoria class as that bridge?
-        System.out.println("GAME RECEIVED KEY");
-
+        System.out.println("UI RECEIVED KEY");
+        gameInstance.receiveKeyInput(e);
 
     }
 }

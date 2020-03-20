@@ -1,5 +1,6 @@
 package jMoria.ui;
 
+import jMoria.jMoria;
 import jMoria.ui.controller.AbstractController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 
 public class SceneManager extends StackPane {
 
+    private jMoria app;
     private Stage primaryStage;
     private AbstractController primaryController;
 
@@ -35,8 +37,9 @@ public class SceneManager extends StackPane {
         }
     }
 
-    public SceneManager(Stage primaryStage) {
+    public SceneManager(jMoria app, Stage primaryStage) {
         super();
+        this.app = app;
         this.primaryStage = primaryStage;
         //this.setStyle("-fx-background-color: #000000");
         this.setStyle("-fx-background-color: #D2691E");

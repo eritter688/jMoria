@@ -1,7 +1,6 @@
 package jMoria.ui;
 
-import javafx.scene.Parent;
-import javafx.scene.layout.Border;
+import jMoria.game.Game;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class Terminal {
 
-    TextFlow terminal;
+    private TextFlow terminal;
 
     public static final int defaultWidthInCharacters = 80;
     public static final int defaultHeightInCharacters = 25;
@@ -24,7 +23,6 @@ public class Terminal {
 
     //background colors
     //foreground colors
-
 
     public List<Text> lines = new ArrayList<>();
 
@@ -39,8 +37,11 @@ public class Terminal {
     public void setCursorPosition()
     {}
 
-    public void writeLine()
-    {}
+    public void writeLine(String line)
+    {
+        if (line.length() > defaultWidthInCharacters)
+            throw new IllegalArgumentException("Line too long.");
+    }
 
     public void writeChar()
     {}
@@ -77,76 +78,5 @@ public class Terminal {
 
 
     }
-
-
-
-
-    /*
-
-
-    ON HOLD -> FEATURE CREEP
-
-
-     */
-
-
-//    // This needs to resize the terminal itself to accommodate the new size
-//    // of it's containing Text elements.
-//    public void changeFontSize(int size)
-//    {
-//        if (size <= 0)
-//            throw new IllegalArgumentException("Size must be a positive number.");
-//
-//        if (fontSize == size)
-//            return;
-//
-////        Text temp = new Text("");
-////        temp.setFont(Font.font("Monospaced", size));
-////        StringBuilder sb = new StringBuilder();
-////        sb.append("0".repeat(Math.max(0, widthInCharacters)));
-////        sb.append("\n");
-////        temp.setText(sb.toString());
-//
-////        terminal.getChildren().removeAll();
-////
-////        List<Text> tempLines = new ArrayList<>();
-////        for (Text t : lines)
-////        {
-////            //t.setFont(Font.font("Monospaced", size));
-////            Text temp = new Text();
-////            temp.setFont(Font.font("Monospaced", size));
-////            temp.setText(t.getText());
-////            tempLines.add(temp);
-////        }
-////        lines = tempLines;
-//
-//        terminal.setMinHeight(lines.get(0).getBoundsInLocal().getHeight()*16.0);
-//        terminal.setMaxHeight(lines.get(0).getBoundsInLocal().getHeight()*16.0);
-//        terminal.setPrefHeight(lines.get(0).getBoundsInLocal().getHeight()*16.0);
-//
-//        terminal.setMinWidth(lines.get(0).getBoundsInLocal().getWidth()*10);
-//        terminal.setMaxWidth(lines.get(0).getBoundsInLocal().getWidth()*10);
-//        terminal.setPrefWidth(lines.get(0).getBoundsInLocal().getWidth()*10);
-//
-//
-//        for (Text t: lines)
-//        {
-//            t.setFont(Font.font("Monospaced", size));
-//        }
-//
-//        //(Parent)terminal.updateBounds();
-//        //terminal.getParent().updateBounds();
-//
-//        terminal.setMinHeight(lines.get(0).getBoundsInLocal().getHeight()*8.0);
-//        terminal.setMaxHeight(lines.get(0).getBoundsInLocal().getHeight()*8.0);
-//        terminal.setPrefHeight(lines.get(0).getBoundsInLocal().getHeight()*8.0);
-//
-//        terminal.setMinWidth(lines.get(0).getBoundsInLocal().getWidth());
-//        terminal.setMaxWidth(lines.get(0).getBoundsInLocal().getWidth());
-//        terminal.setPrefWidth(lines.get(0).getBoundsInLocal().getWidth());
-//
-//        //terminal.getChildren().addAll(lines);
-//
-//    }
 
 }
