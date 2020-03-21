@@ -3,8 +3,13 @@ package jMoria.ui.controller;
 import jMoria.game.Game;
 import jMoria.ui.Terminal;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 // TODO Adapt for starting a saved game.
@@ -37,8 +42,36 @@ public class GameController extends AbstractController {
     @Override
     public void handleKeys(KeyEvent e) {
 
-        System.out.println("UI RECEIVED KEY" + e.getCode().toString());
-        gameInstance.receiveKeyInput(e.getCharacter());
+        List<KeyCode> notLetterOrDigit = Arrays.asList(
+                KeyCode.SLASH,
+                KeyCode.PERIOD,
+                KeyCode.COMMA,
+                KeyCode.SEMICOLON,
+                KeyCode.QUOTE,
+                KeyCode.OPEN_BRACKET,
+                KeyCode.CLOSE_BRACKET,
+                KeyCode.BACK_SLASH,
+                KeyCode.MINUS,
+                KeyCode.EQUALS,
+                KeyCode.BACK_QUOTE
+        );
+
+        String keyToGame;
+
+        if (e.getCode().isLetterKey() || e.getCode().isDigitKey())
+        {
+            keyToGame = e.getText();
+        }
+        else if (notLetterOrDigit.contains(e.getCode()))
+        {
+            keyToGame = e.getText();
+        }
+        else
+        {
+            keyToGame = e.getCode().toString();
+        }
+
+        gameInstance.receiveKeyInput(keyToGame);
 
     }
 }

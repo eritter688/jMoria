@@ -48,10 +48,9 @@ public class MainMenuController extends AbstractController {
 
     @Override
     public void handleKeys(KeyEvent e) {
-        switch(e.getCharacter().toLowerCase())
+        switch(e.getText().toLowerCase())
         {
             case "n": // NEW GAME
-                System.out.println("NEW");
                 sceneManager.setScene(SceneManager.jMoriaScene.GAME);
                 break;
             case "l": // LOAD GAME

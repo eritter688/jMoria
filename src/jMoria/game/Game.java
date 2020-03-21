@@ -24,8 +24,7 @@ public class Game {
 
     // TODO Must be agnostic to JavaFX...
     public void receiveKeyInput(String key) {
-        System.out.println("GAME RECEIVED KEY");
-        System.out.println(key);
+        System.out.println("GAME RECEIVED KEY: " + key);
     }
 
 }
