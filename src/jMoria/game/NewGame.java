@@ -1,22 +1,31 @@
 package jMoria.game;
 
+import jMoria.game.living.Player;
+import jMoria.game.screens.AbstractScreen;
+import jMoria.game.screens.NewGameChooseRace;
 import jMoria.ui.Terminal;
 
-public class NewGame {
+public class  NewGame {
 
     private Terminal terminal;
+    private Player player;
 
     public NewGame(Terminal terminal)
     {
         this.terminal = terminal;
+        this.player = new Player();
     }
 
     public void run() {
         terminal.clearScreen();
-        chooseRace();
-        chooseSex();
+
+        AbstractScreen chooseRace = new NewGameChooseRace(terminal, player);
+        chooseRace.initialize();
+
+        //chooseRace();
+        //chooseSex();
         //chooseStats();
-        chooseClass();
+        //chooseClass();
     }
 
     private void chooseRace()
