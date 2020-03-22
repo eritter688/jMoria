@@ -7,10 +7,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 // TODO Adapt for starting a saved game.
 public class GameController extends AbstractController {
@@ -42,7 +41,9 @@ public class GameController extends AbstractController {
     @Override
     public void handleKeys(KeyEvent e) {
 
-        List<KeyCode> notLetterOrDigit = Arrays.asList(
+        Set<KeyCode> notLetterOrDigit = new HashSet<>();
+        Collections.addAll(
+                notLetterOrDigit,
                 KeyCode.SLASH,
                 KeyCode.PERIOD,
                 KeyCode.COMMA,
