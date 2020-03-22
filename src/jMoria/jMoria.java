@@ -1,6 +1,5 @@
 package jMoria;
 
-import jMoria.game.Game;
 import jMoria.ui.SceneManager;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,7 +23,7 @@ public class jMoria extends Application {
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
-        SceneManager sceneManager = new SceneManager(this, primaryStage);
+        SceneManager sceneManager = new SceneManager(primaryStage);
         sceneManager.start();
     }
 
