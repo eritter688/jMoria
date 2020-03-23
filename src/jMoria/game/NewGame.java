@@ -2,7 +2,7 @@ package jMoria.game;
 
 import jMoria.game.living.Player;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.game.screens.NewGameChooseRace;
+import jMoria.game.screens.CharacterCreateChooseRace;
 import jMoria.ui.Terminal;
 
 public class  NewGame {
@@ -19,8 +19,8 @@ public class  NewGame {
     public void run() {
         terminal.clearScreen();
 
-        AbstractScreen chooseRace = new NewGameChooseRace(terminal, player);
-        chooseRace.initialize();
+        AbstractScreen chooseRace = new CharacterCreateChooseRace(terminal, player);
+        chooseRace.init();
 
         //chooseRace();
         //chooseSex();

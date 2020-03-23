@@ -1,20 +1,20 @@
 package jMoria.game.screens;
 
-import jMoria.ui.Terminal;
 import jMoria.game.living.Player;
+import jMoria.ui.Terminal;
 
-public class NewGameChooseRace extends AbstractScreen {
+public class CharacterCreateChooseRace extends AbstractScreen {
 
     public Player player;
 
-    public NewGameChooseRace(Terminal terminal, Player player)
+    public CharacterCreateChooseRace(Terminal terminal, Player player)
     {
         this.terminal = terminal;
         this.player = player;
     }
 
     @Override
-    public void initialize() {
+    public void init() {
         render();
     }
 
@@ -29,11 +29,11 @@ public class NewGameChooseRace extends AbstractScreen {
         terminal.writeLine(20, "  a) Human       b) Half-Elf    c) Elf         d) Halfling    e) Gnome");
         terminal.writeLine(21, "  f) Dwarf       g) Half-Orc    h) Half-Troll");
 
-        handleInput();
+        handleKey();
     }
 
     @Override
-    public void handleInput() {
+    public void handleKey() {
 
     }
 }
