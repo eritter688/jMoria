@@ -5,6 +5,7 @@ import jMoria.ui.Terminal;
 public abstract class AbstractScreen {
 
     public Terminal terminal;
+    public Boolean listening = Boolean.FALSE;
 
     public abstract void init();
 
@@ -12,6 +13,6 @@ public abstract class AbstractScreen {
 
     public abstract void render();
 
-    public abstract void handleKey();
+    public abstract void handleKey(String key);
 
 }

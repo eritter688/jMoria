@@ -30,7 +30,7 @@ public class CharacterCreationModule extends AbstractModule {
     @Override
     public void handleKey(String key) {
 
-        currentScreen.handleKey();
+        currentScreen.handleKey(key);
 
     }
 }
