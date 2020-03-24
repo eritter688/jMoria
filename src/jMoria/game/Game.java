@@ -4,26 +4,25 @@ import jMoria.game.modules.AbstractModule;
 import jMoria.game.modules.CharacterCreationModule;
 import jMoria.ui.Terminal;
 
-// TODO Adapt for starting a saved game.
 public class Game {
 
-    private Terminal terminal;
     private AbstractModule currentModule;
+    private ResourcePackage gameResources;
 
     public Game(Terminal terminal) {
-
-        this.terminal = terminal;
+        this.gameResources = new ResourcePackage();
+        this.gameResources.terminal = terminal;
     }
 
     public void run() {
-
-        currentModule = new CharacterCreationModule(terminal);
+        currentModule = new CharacterCreationModule(gameResources);
         currentModule.init();
         currentModule.run();
     }
 
     public void receiveKeyInput(String key) {
-        System.out.println("GAME RECEIVED KEY: " + key);
-        currentModule.handleKey(key);
+        if (this.currentModule != null) {
+            currentModule.handleKey(key);
+        }
     }
 }

@@ -1,15 +1,15 @@
 package jMoria.game.modules;
 
+import jMoria.game.ResourcePackage;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.ui.Terminal;
 
 public abstract class AbstractModule {
 
-    public Terminal terminal;
     public AbstractScreen currentScreen;
+    public ResourcePackage gameResources;
 
-    public void setCurrentScreen(AbstractScreen currentScreen) {
-        this.currentScreen = currentScreen;
+    public AbstractModule(ResourcePackage gameResources) {
+        this.gameResources = gameResources;
     }
 
     public abstract void init();

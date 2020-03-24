@@ -1,25 +1,27 @@
 package jMoria.game.modules;
 
+import jMoria.game.ResourcePackage;
 import jMoria.game.living.Player;
+import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.CharacterCreateChooseRace;
-import jMoria.ui.Terminal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CharacterCreationModule extends AbstractModule {
 
-    public Player player;
+    private List<AbstractScreen> creationScreens = new ArrayList<>();
 
-    public CharacterCreationModule(Terminal terminal) {
-        this.terminal = terminal;
+    public CharacterCreationModule(ResourcePackage gameResources) {
+        super(gameResources);
     }
 
     @Override
     public void init() {
-        player = new Player();
+        this.gameResources.player = new Player();
     }
 
     @Override
     public void run() {
-
         currentScreen = new CharacterCreateChooseRace(terminal, player);
         currentScreen.init();
         currentScreen.run();
@@ -27,7 +29,8 @@ public class CharacterCreationModule extends AbstractModule {
 
     @Override
     public void handleKey(String key) {
-
-        currentScreen.handleKey(key);
+        if (this.currentScreen != null) {
+            currentScreen.handleKey(key);
+        }
     }
 }
