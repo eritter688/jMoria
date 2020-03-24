@@ -2,7 +2,6 @@ package jMoria.game.screens;
 
 import jMoria.game.living.Player;
 import jMoria.ui.Terminal;
-
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -12,8 +11,7 @@ public class CharacterCreateChooseRace extends AbstractScreen {
 
     public HashSet<String> acceptedKeys = new HashSet<>();
 
-    public CharacterCreateChooseRace(Terminal terminal, Player player)
-    {
+    public CharacterCreateChooseRace(Terminal terminal, Player player) {
         this.terminal = terminal;
         this.player = player;
     }
@@ -36,24 +34,15 @@ public class CharacterCreateChooseRace extends AbstractScreen {
         terminal.writeLine(6, "  Class    :");
 
         terminal.writeLine(19, "  Choose a race:");
-        terminal.writeLine(20, "  a) Human       b) Half-Elf    c) Elf         d) Halfling    e) Gnome");
+        terminal.writeLine(
+            20, "  a) Human       b) Half-Elf    c) Elf         d) Halfling    e) Gnome");
         terminal.writeLine(21, "  f) Dwarf       g) Half-Orc    h) Half-Troll");
     }
 
     @Override
     public void handleKey(String key) {
 
-        Collections.addAll(
-                acceptedKeys,
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f",
-                "g",
-                "h"
-        );
+        Collections.addAll(acceptedKeys, "a", "b", "c", "d", "e", "f", "g", "h");
 
         if (this.listening == Boolean.TRUE && acceptedKeys.contains(key)) {
             player.race = key;

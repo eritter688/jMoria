@@ -10,8 +10,8 @@ public class Game {
     private Terminal terminal;
     private AbstractModule currentModule;
 
-    public Game(Terminal terminal)
-    {
+    public Game(Terminal terminal) {
+
         this.terminal = terminal;
     }
 
@@ -20,24 +20,10 @@ public class Game {
         currentModule = new CharacterCreationModule(terminal);
         currentModule.init();
         currentModule.run();
-
     }
 
     public void receiveKeyInput(String key) {
         System.out.println("GAME RECEIVED KEY: " + key);
         currentModule.handleKey(key);
     }
-
-
-
-
-//    public void run()
-//    {
-//        newGame();
-//    }
-//
-//    public void newGame() {
-//        NewGame newGameSequence = new NewGame(terminal);
-//        newGameSequence.run();
-//    }
 }

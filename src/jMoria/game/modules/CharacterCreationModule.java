@@ -8,8 +8,7 @@ public class CharacterCreationModule extends AbstractModule {
 
     public Player player;
 
-    public CharacterCreationModule(Terminal terminal)
-    {
+    public CharacterCreationModule(Terminal terminal) {
         this.terminal = terminal;
     }
 
@@ -24,13 +23,11 @@ public class CharacterCreationModule extends AbstractModule {
         currentScreen = new CharacterCreateChooseRace(terminal, player);
         currentScreen.init();
         currentScreen.run();
-
     }
 
     @Override
     public void handleKey(String key) {
 
         currentScreen.handleKey(key);
-
     }
 }
