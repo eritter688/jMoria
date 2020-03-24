@@ -1,11 +1,15 @@
 package jMoria.game.screens;
 
-import jMoria.ui.Terminal;
+import jMoria.game.ResourcePackage;
 
 public abstract class AbstractScreen {
 
-    public Terminal terminal;
     public Boolean listening = Boolean.FALSE;
+    public ResourcePackage gameResources;
+
+    public AbstractScreen(ResourcePackage gameResources) {
+        this.gameResources = gameResources;
+    }
 
     public abstract void init();
 
