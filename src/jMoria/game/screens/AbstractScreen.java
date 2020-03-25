@@ -15,6 +15,14 @@ public abstract class AbstractScreen {
 
     public abstract void render();
 
+    public void startListening() {
+        this.listening = Boolean.TRUE;
+    }
+
+    public void stopListening() {
+        this.listening = Boolean.FALSE;
+    }
+
     public abstract void handleKey(String key);
 
 }

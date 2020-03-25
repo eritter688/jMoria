@@ -1,14 +1,11 @@
 package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.living.Player;
 import jMoria.ui.Terminal;
 import java.util.Collections;
 import java.util.HashSet;
 
 public class ChooseRace extends AbstractScreen {
-
-    public Player player;
 
     public HashSet<String> acceptedKeys = new HashSet<>();
 
@@ -18,12 +15,7 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void init() {
-        render();
-    }
-
-    @Override
-    public void run() {
-        this.listening = Boolean.TRUE;
+        Collections.addAll(acceptedKeys, "a", "b", "c", "d", "e", "f", "g", "h");
     }
 
     @Override
@@ -42,11 +34,9 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void handleKey(String key) {
-
-        Collections.addAll(acceptedKeys, "a", "b", "c", "d", "e", "f", "g", "h");
-
         if (this.listening == Boolean.TRUE && acceptedKeys.contains(key)) {
-            player.race = key;
+            gameResources.player.race = key;
+            gameResources.game.setCurrentScreen(this);
         }
     }
 }

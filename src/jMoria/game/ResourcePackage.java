@@ -5,6 +5,7 @@ import jMoria.ui.Terminal;
 
 public class ResourcePackage {
 
+  public Game game;
   public Terminal terminal;
   public Player player;
 
