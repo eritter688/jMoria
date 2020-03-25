@@ -13,8 +13,6 @@ public abstract class AbstractScreen {
 
     public abstract void init();
 
-    public abstract void run();
-
     public abstract void render();
 
     public abstract void handleKey(String key);

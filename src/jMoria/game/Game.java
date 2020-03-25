@@ -1,12 +1,11 @@
 package jMoria.game;
 
-import jMoria.game.modules.AbstractModule;
-import jMoria.game.modules.CharacterCreationModule;
+import jMoria.game.screens.AbstractScreen;
 import jMoria.ui.Terminal;
 
 public class Game {
 
-    private AbstractModule currentModule;
+    private AbstractScreen currentScreen;
     private ResourcePackage gameResources;
 
     public Game(Terminal terminal) {
@@ -14,17 +13,19 @@ public class Game {
         this.gameResources.terminal = terminal;
     }
 
-    public void run() {
-        currentModule = new CharacterCreationModule(gameResources);
-        currentModule.init();
-        currentModule.run();
+    public void init() {
+        gameResources.terminal.clearScreen();
     }
 
-    // how do I know if a module/screen is complete
-    // if I'm waiting on input from the user??
+    public void newGame() {
+    }
+
+    public void loadGame() {
+    }
+
     public void receiveKeyInput(String key) {
-        if (this.currentModule != null) {
-            currentModule.handleKey(key);
+        if (this.currentScreen != null) {
+            currentScreen.handleKey(key);
         }
     }
 }
