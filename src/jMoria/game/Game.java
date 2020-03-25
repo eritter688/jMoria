@@ -20,6 +20,8 @@ public class Game {
         currentModule.run();
     }
 
+    // how do I know if a module/screen is complete
+    // if I'm waiting on input from the user??
     public void receiveKeyInput(String key) {
         if (this.currentModule != null) {
             currentModule.handleKey(key);
