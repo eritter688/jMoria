@@ -7,6 +7,8 @@ import jMoria.ui.Terminal;
 
 public class Game {
 
+    private Boolean DEBUG = Boolean.TRUE;
+
     private AbstractScreen currentScreen;
     private ResourcePackage gameResources;
 
