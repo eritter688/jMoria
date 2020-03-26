@@ -2,6 +2,7 @@ package jMoria.game;
 
 import jMoria.game.living.Player;
 import jMoria.game.screens.AbstractScreen;
+import jMoria.game.screens.ChooseRace;
 import jMoria.ui.Terminal;
 
 public class Game {
@@ -22,6 +23,7 @@ public class Game {
     public void newGame() {
         init();
         gameResources.player = new Player();
+        setCurrentScreen(new ChooseRace(gameResources));
     }
 
     public void loadGame() {
@@ -32,6 +34,9 @@ public class Game {
     }
 
     public void setCurrentScreen(AbstractScreen screen) {
+        if (currentScreen != null) {
+            currentScreen.stopListening();
+        }
         currentScreen = screen;
         currentScreen.init();
         currentScreen.render();
