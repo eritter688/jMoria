@@ -1,13 +1,11 @@
 package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
+import jMoria.game.enums.Race;
+import jMoria.game.living.Player;
 import jMoria.ui.Terminal;
-import java.util.Collections;
-import java.util.HashSet;
 
 public class ChooseRace extends AbstractScreen {
-
-    public HashSet<String> acceptedKeys = new HashSet<>();
 
     public ChooseRace(ResourcePackage gameResources) {
         super(gameResources);
@@ -15,7 +13,6 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void init() {
-        Collections.addAll(acceptedKeys, "a", "b", "c", "d", "e", "f", "g", "h");
     }
 
     @Override
@@ -34,8 +31,34 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void handleKey(String key) {
-        if (this.listening == Boolean.TRUE && acceptedKeys.contains(key)) {
-            gameResources.player.race = key;
+        if (this.listening == Boolean.TRUE) {
+            Player player = gameResources.player;
+            switch (key) {
+                case "a":
+                    player.race = Race.HUMAN;
+                    break;
+                case "b":
+                    player.race = Race.HALF_ELF;
+                    break;
+                case "c":
+                    player.race = Race.ELF;
+                    break;
+                case "d":
+                    player.race = Race.HALFLING;
+                    break;
+                case "e":
+                    player.race = Race.GNOME;
+                    break;
+                case "f":
+                    player.race = Race.DWARF;
+                    break;
+                case "g":
+                    player.race = Race.HALF_ORC;
+                    break;
+                case "h":
+                    player.race = Race.HALF_TROLL;
+                    break;
+            }
             gameResources.game.setCurrentScreen(this);
         }
     }

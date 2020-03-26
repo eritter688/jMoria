@@ -1,13 +1,11 @@
 package jMoria.ui;
 
-import jMoria.game.Game;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Terminal {
 
@@ -87,19 +85,18 @@ public class Terminal {
     public void writeChar()
     {}
 
-    public void dummyTerminal()
-    {
+    public void dummyTerminal() {
 
-        for (int x = 0; x < defaultHeightInCharacters; x++)
-        {
-            Text t = new Text("12345678901234567890123456789012345678901234567890123456789012345678901234567890\n");
+        for (int x = 0; x < defaultHeightInCharacters; x++) {
+            Text t = new Text(
+                "12345678901234567890123456789012345678901234567890123456789012345678901234567890\n");
             t.setFont(Font.font("Monospaced", defaultFontSize));
             t.setFill(Color.WHITE);
             t.setWrappingWidth(Double.MAX_VALUE);
             lines.add(t);
         }
-        System.out.println(lines.get(0).getText());
-        System.out.println(lines.get(0).getText().length());
+        //System.out.println(lines.get(0).getText());
+        //System.out.println(lines.get(0).getText().length());
 
         this.terminal.getChildren().addAll(lines);
 
