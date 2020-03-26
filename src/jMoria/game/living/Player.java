@@ -1,12 +1,13 @@
 package jMoria.game.living;
 
 import jMoria.game.enums.Race;
+import jMoria.game.enums.Sex;
 
 public class Player {
 
     public String name;
     public Race race;
-    public String sex;
+    public Sex sex;
     public String playerClass;
 
     public int age;

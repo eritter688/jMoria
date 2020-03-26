@@ -59,7 +59,7 @@ public class ChooseRace extends AbstractScreen {
                     player.race = Race.HALF_TROLL;
                     break;
             }
-            gameResources.game.setCurrentScreen(this);
+            gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
         }
     }
 }
