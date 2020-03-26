@@ -19,7 +19,7 @@ public class ChooseSex extends AbstractScreen {
   public void render() {
     Terminal t = gameResources.terminal;
     t.writeLine(4, "  Race     : " + gameResources.player.race.getRace());
-    t.writeLine(19, "  Choose sex:");
+    t.writeLine(19, "  Choose a sex:");
     t.writeLine(20, "  m) Male        f) Female");
     t.clearLine(21);
   }

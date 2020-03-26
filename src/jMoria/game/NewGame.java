@@ -54,9 +54,6 @@
 //
 //    private void chooseClass()
 //    {
-//        terminal.writeLine(19, "  Choose a class:");
-//        terminal.writeLine(20, "  a) Warrior     b) Mage        c) Priest      d) Rogue       e) Ranger");
-//        terminal.writeLine(21, "  f) Paladin");
 //    }
 //
 //}
