@@ -7,7 +7,10 @@ import jMoria.ui.Terminal;
 
 public class Game {
 
-    private Boolean DEBUG = Boolean.TRUE;
+    // TODO
+    // Remove this before actually finalizing the game.
+    public static final Boolean DEBUG = Boolean.TRUE;
+    public static final long RANDOM_SEED = 123456789L;
 
     private AbstractScreen currentScreen;
     private ResourcePackage gameResources;
@@ -19,6 +22,7 @@ public class Game {
 
     private void init() {
         gameResources.game = this;
+        gameResources.dice = new Dice(gameResources);
         gameResources.terminal.clearScreen();
     }
 

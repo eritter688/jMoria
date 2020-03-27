@@ -1,11 +1,21 @@
 package jMoria.game;
 
+import java.util.Random;
+
 public class Dice {
 
   private ResourcePackage gameResources;
+  private Random generator;
 
   public Dice(ResourcePackage gameResources) {
     this.gameResources = gameResources;
+    // TODO
+    // Remove this before actually finalizing the game.
+    if (Game.DEBUG) {
+      generator = new Random(Game.RANDOM_SEED);
+    } else {
+      generator = new Random();
+    }
   }
 
   public int rollDice(int rolls, int sides) {
@@ -16,7 +26,7 @@ public class Dice {
 
     int sum = 0;
     for (int x = 0; x < rolls; x++) {
-      sum += (int) (Math.random() * sides + 1);
+      sum += (generator.nextInt(sides) + 1);
     }
 
     return sum;
