@@ -2,7 +2,6 @@ package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Sex;
-import jMoria.game.living.Player;
 import jMoria.ui.Terminal;
 
 public class ChooseSex extends AbstractScreen {
@@ -31,15 +30,14 @@ public class ChooseSex extends AbstractScreen {
   @Override
   public void handleKey(String key) {
     if (this.listening == Boolean.TRUE) {
-      Player player = gameResources.player;
-      switch (key) {
-        case "m":
-          player.sex = Sex.MALE;
-          break;
-        case "f":
-          player.sex = Sex.FEMALE;
-          break;
-      }
+     switch (key) {
+       case "m":
+         gameResources.player.sex = Sex.MALE;
+         break;
+       case "f":
+         gameResources.player.sex = Sex.FEMALE;
+         break;
+     }
       gameResources.game.setCurrentScreen(new ChooseStats(gameResources));
     }
   }

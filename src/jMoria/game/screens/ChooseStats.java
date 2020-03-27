@@ -11,7 +11,7 @@ public class ChooseStats extends AbstractScreen {
 
   @Override
   public void init() {
-
+    gameResources.terminal.clearScreen();
   }
 
   @Override
