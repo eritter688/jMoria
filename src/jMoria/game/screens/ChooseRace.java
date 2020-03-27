@@ -13,6 +13,7 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void init() {
+        gameResources.terminal.clearScreen();
     }
 
     @Override

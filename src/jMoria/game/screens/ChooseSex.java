@@ -13,15 +13,19 @@ public class ChooseSex extends AbstractScreen {
 
   @Override
   public void init() {
+    gameResources.terminal.clearScreen();
   }
 
   @Override
   public void render() {
     Terminal t = gameResources.terminal;
+    t.writeLine(3, "  Name     :");
     t.writeLine(4, "  Race     : " + gameResources.player.race.getRace());
+    t.writeLine(5, "  Sex      :");
+    t.writeLine(6, "  Class    :");
+
     t.writeLine(19, "  Choose a sex:");
     t.writeLine(20, "  m) Male        f) Female");
-    t.clearLine(21);
   }
 
   @Override
@@ -36,7 +40,7 @@ public class ChooseSex extends AbstractScreen {
           player.sex = Sex.FEMALE;
           break;
       }
-      gameResources.game.setCurrentScreen(this);
+      gameResources.game.setCurrentScreen(new ChooseStats(gameResources));
     }
   }
 
