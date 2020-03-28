@@ -23,31 +23,11 @@ public class ChooseStats extends AbstractScreen {
 
     CharacterCreation.renderPersonalStats(t, p);
     CharacterCreation.renderHitACStats(t, p);
+    CharacterCreation.renderPhyicalStats(t, p);
+    CharacterCreation.renderPlayerStats(t, p);
 
     t.writeLine(19, "  Hit space to reroll or ESC to accept characteristics:");
 
-  }
-
-  private void renderStats(Terminal t) {
-    renderPhysicalStats(t);
-    renderPlayerStats(t);
-    renderHitACStats(t);
-  }
-
-  private void renderPhysicalStats(Terminal t) {
-  }
-
-  private void renderPlayerStats(Terminal t) {
-  }
-
-  private void renderHitACStats(Terminal t) {
-    t.writeLine(10, "   + To Hit   :      02");
-    t.writeLine(11, "   + To Damage:      0");
-    t.writeLine(12, "   + To AC    :      0");
-    t.writeLine(13, "     Total AC :      0");
-  }
-
-  private void renderCharacterBackground() {
   }
 
   @Override

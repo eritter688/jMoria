@@ -30,12 +30,12 @@ public class CharacterCreation {
   }
 
   public static void renderHitACStats(Terminal t, Player p) {
-    t.writeStringAt(10, 0, "   + To Hit   :" + " ".repeat(5));
-    t.writeStringAt(11, 0, "   + To Damage:" + " ".repeat(5));
-    t.writeStringAt(12, 0, "   + To AC    :" + " ".repeat(5));
-    t.writeStringAt(13, 0, "     Total AC :" + " ".repeat(5));
+    t.writeStringAt(10, 3, "+ To Hit   :" + " ".repeat(5));
+    t.writeStringAt(11, 3, "+ To Damage:" + " ".repeat(5));
+    t.writeStringAt(12, 3, "+ To AC    :" + " ".repeat(5));
+    t.writeStringAt(13, 3, "  Total AC :" + " ".repeat(5));
 
-    // TODO
+    // TODO Right Justified Needed Here!
     t.writeStringAt(10, 21, "0");
     t.writeStringAt(11, 21, "0");
     t.writeStringAt(12, 21, "0");
@@ -43,11 +43,33 @@ public class CharacterCreation {
   }
 
   public static void renderPhyicalStats(Terminal t, Player p) {
+    t.writeStringAt(3, 39, "Age          :" + " ".repeat(8));
+    t.writeStringAt(4, 39, "Weight       :" + " ".repeat(8));
+    t.writeStringAt(5, 39, "Height       :" + " ".repeat(8));
+    t.writeStringAt(6, 39, "Social Class :" + " ".repeat(8));
 
+    // TODO Right Justified Needed Here!
+    t.writeStringAt(3, 59, "0");
+    t.writeStringAt(4, 59, "0");
+    t.writeStringAt(5, 59, "0");
+    t.writeStringAt(6, 59, "0");
   }
 
   public static void renderPlayerStats(Terminal t, Player p) {
+    t.writeStringAt(3, 64, "STR :" + " ".repeat(8));
+    t.writeStringAt(4, 64, "INT :" + " ".repeat(8));
+    t.writeStringAt(5, 64, "WIS :" + " ".repeat(8));
+    t.writeStringAt(6, 64, "DEX :" + " ".repeat(8));
+    t.writeStringAt(7, 64, "CON :" + " ".repeat(8));
+    t.writeStringAt(8, 64, "CHR :" + " ".repeat(8));
 
+    // TODO Right Justified Needed Here!
+    t.writeStringAt(3, 74, "0");
+    t.writeStringAt(4, 74, "0");
+    t.writeStringAt(5, 74, "0");
+    t.writeStringAt(6, 74, "0");
+    t.writeStringAt(7, 74, "0");
+    t.writeStringAt(8, 74, "0");
   }
 
 }
