@@ -67,9 +67,7 @@ public class Terminal {
 
         if (text.length() < 80)
         {
-            StringBuilder sb = new StringBuilder(text);
-            sb.append(" ".repeat((80 - text.length())));
-            tmp = sb.toString();
+            tmp = text + " ".repeat(80 - text.length());
         } else {
             tmp = text;
         }
