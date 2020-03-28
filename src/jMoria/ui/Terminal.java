@@ -100,22 +100,7 @@ public class Terminal {
         String right = currentLine.substring(column + text.length());
         lines.get(line).setText(left + text + right);
     }
-
-    public void writeCharAt(int line, int column, char character) {
-        if (line < 0 || line >= defaultHeightInCharacters) {
-            throw new IllegalArgumentException("Line index invalid.");
-        }
-
-        if (column < 0 || column >= defaultWidthInCharacters) {
-            throw new IllegalArgumentException("Column index invalid.");
-        }
-
-        // other odd characters? \lf or shit like that?
-        if (character == '\n') {
-            throw new IllegalArgumentException("Character cannot be linebreak.");
-        }
-    }
-
+    
     public void dummyTerminal() {
 
         for (int x = 0; x < defaultHeightInCharacters; x++) {
