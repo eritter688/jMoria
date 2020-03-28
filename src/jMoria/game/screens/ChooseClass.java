@@ -25,7 +25,7 @@ public class ChooseClass extends AbstractScreen {
 
   @Override
   public void handleKey(String key) {
-    if (this.listening == Boolean.TRUE) {
+    if (this.listening) {
       Player player = gameResources.player;
       switch (key) {
         case "a":

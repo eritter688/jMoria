@@ -9,8 +9,8 @@ public class Game {
 
     // TODO
     // Remove this before actually finalizing the game.
-    public static final Boolean DEBUG = Boolean.TRUE;
-    public static final long RANDOM_SEED = 123456789L;
+    public static final boolean DEBUG = true;
+  public static final long RANDOM_SEED = 123456789L;
 
     private AbstractScreen currentScreen;
     private ResourcePackage gameResources;

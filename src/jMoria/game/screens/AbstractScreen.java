@@ -4,7 +4,7 @@ import jMoria.game.ResourcePackage;
 
 public abstract class AbstractScreen {
 
-    public Boolean listening = Boolean.FALSE;
+    public boolean listening = false;
     public ResourcePackage gameResources;
 
     public AbstractScreen(ResourcePackage gameResources) {
@@ -16,11 +16,11 @@ public abstract class AbstractScreen {
     public abstract void render();
 
     public void startListening() {
-        this.listening = Boolean.TRUE;
+        this.listening = true;
     }
 
     public void stopListening() {
-        this.listening = Boolean.FALSE;
+        this.listening = false;
     }
 
     public abstract void handleKey(String key);

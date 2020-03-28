@@ -46,7 +46,7 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void handleKey(String key) {
-        if (this.listening == Boolean.TRUE && choices.containsKey(key)) {
+        if (this.listening && choices.containsKey(key)) {
             gameResources.player.race = choices.get(key);
             gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
         }

@@ -25,13 +25,24 @@ public class ChooseStats extends AbstractScreen {
     CharacterCreation.renderHitACStats(t, p);
     CharacterCreation.renderPhyicalStats(t, p);
     CharacterCreation.renderPlayerStats(t, p);
+    CharacterCreation.renderCharacterBackground(t, p);
 
-    t.writeLine(19, "  Hit space to reroll or ESC to accept characteristics:");
+    t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
 
   }
 
   @Override
   public void handleKey(String key) {
+
+    if (!this.listening) {
+      return;
+    }
+
+    if (key.equals("SPACE")) {
+      System.out.println("space");
+    } else if (key.equals("ESCAPE")) {
+      System.out.println("escape");
+    }
 
   }
 }
