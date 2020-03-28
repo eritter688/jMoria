@@ -37,30 +37,41 @@ public class ChooseRace extends AbstractScreen {
             switch (key) {
                 case "a":
                     player.race = Race.HUMAN;
+                    advance();
                     break;
                 case "b":
                     player.race = Race.HALF_ELF;
+                    advance();
                     break;
                 case "c":
                     player.race = Race.ELF;
+                    advance();
                     break;
                 case "d":
                     player.race = Race.HALFLING;
+                    advance();
                     break;
                 case "e":
                     player.race = Race.GNOME;
+                    advance();
                     break;
                 case "f":
                     player.race = Race.DWARF;
+                    advance();
                     break;
                 case "g":
                     player.race = Race.HALF_ORC;
+                    advance();
                     break;
                 case "h":
                     player.race = Race.HALF_TROLL;
+                    advance();
                     break;
             }
-            gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
         }
+    }
+
+    private void advance() {
+        gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
     }
 }

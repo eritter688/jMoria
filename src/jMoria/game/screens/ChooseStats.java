@@ -41,7 +41,7 @@ public class ChooseStats extends AbstractScreen {
   }
 
   private void renderHitACStats(Terminal t) {
-    t.writeLine(10, "   + To Hit   :      0");
+    t.writeLine(10, "   + To Hit   :      02");
     t.writeLine(11, "   + To Damage:      0");
     t.writeLine(12, "   + To AC    :      0");
     t.writeLine(13, "     Total AC :      0");

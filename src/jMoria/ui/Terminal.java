@@ -87,7 +87,7 @@ public class Terminal {
             throw new IllegalArgumentException("Column index invalid.");
         }
 
-        if ((column + text.length() + 1) > defaultWidthInCharacters) {
+        if ((column + text.length()) > defaultWidthInCharacters) {
             throw new IllegalArgumentException("String wont fit on line.");
         }
 
@@ -96,11 +96,11 @@ public class Terminal {
         }
 
         String currentLine = lines.get(line).getText();
-        String left = currentLine.substring(0, column - 1);
+        String left = currentLine.substring(0, column);
         String right = currentLine.substring(column + text.length());
         lines.get(line).setText(left + text + right);
     }
-    
+
     public void dummyTerminal() {
 
         for (int x = 0; x < defaultHeightInCharacters; x++) {
