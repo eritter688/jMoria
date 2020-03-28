@@ -2,7 +2,7 @@ package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.living.Player;
-import jMoria.game.statics.CharacterCreation;
+import jMoria.game.screens.statics.CharacterCreation;
 import jMoria.ui.Terminal;
 
 public class ChooseStats extends AbstractScreen {

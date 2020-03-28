@@ -1,4 +1,4 @@
-package jMoria.game.statics;
+package jMoria.game.screens.statics;
 
 import jMoria.game.living.Player;
 import jMoria.ui.Terminal;

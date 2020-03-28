@@ -3,7 +3,7 @@ package jMoria.game.screens;
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Race;
 import jMoria.game.living.Player;
-import jMoria.game.statics.CharacterCreation;
+import jMoria.game.screens.statics.CharacterCreation;
 import jMoria.ui.Terminal;
 
 import java.util.Map;
