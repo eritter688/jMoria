@@ -22,10 +22,10 @@ public class ChooseStats extends AbstractScreen {
     Player p = gameResources.player;
 
     CharacterCreation.renderPersonalStats(t, p);
+    CharacterCreation.renderHitACStats(t, p);
 
     t.writeLine(19, "  Hit space to reroll or ESC to accept characteristics:");
 
-    renderStats(t);
   }
 
   private void renderStats(Terminal t) {
