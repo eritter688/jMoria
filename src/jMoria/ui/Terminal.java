@@ -37,11 +37,9 @@ public class Terminal {
 
     public void clearScreen()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append(" ".repeat(80));
         for (Text t: lines)
         {
-            t.setText(sb.toString() + "\n");
+            t.setText(" ".repeat(80) + "\n");
         }
     }
 
