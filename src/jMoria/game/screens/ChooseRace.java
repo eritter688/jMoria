@@ -1,11 +1,24 @@
 package jMoria.game.screens;
 
+import static java.util.Map.entry;
+
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Race;
-import jMoria.game.living.Player;
 import jMoria.ui.Terminal;
+import java.util.Map;
 
 public class ChooseRace extends AbstractScreen {
+
+    private Map<String, Race> choices = Map.ofEntries(
+        entry("a", Race.HUMAN),
+        entry("b", Race.HALF_ELF),
+        entry("c", Race.ELF),
+        entry("d", Race.HALFLING),
+        entry("e", Race.GNOME),
+        entry("f", Race.DWARF),
+        entry("g", Race.HALF_ORC),
+        entry("h", Race.HALF_TROLL)
+    );
 
     public ChooseRace(ResourcePackage gameResources) {
         super(gameResources);
@@ -32,46 +45,10 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void handleKey(String key) {
-        if (this.listening == Boolean.TRUE) {
-            Player player = gameResources.player;
-            switch (key) {
-                case "a":
-                    player.race = Race.HUMAN;
-                    advance();
-                    break;
-                case "b":
-                    player.race = Race.HALF_ELF;
-                    advance();
-                    break;
-                case "c":
-                    player.race = Race.ELF;
-                    advance();
-                    break;
-                case "d":
-                    player.race = Race.HALFLING;
-                    advance();
-                    break;
-                case "e":
-                    player.race = Race.GNOME;
-                    advance();
-                    break;
-                case "f":
-                    player.race = Race.DWARF;
-                    advance();
-                    break;
-                case "g":
-                    player.race = Race.HALF_ORC;
-                    advance();
-                    break;
-                case "h":
-                    player.race = Race.HALF_TROLL;
-                    advance();
-                    break;
-            }
+        if (this.listening == Boolean.TRUE && choices.containsKey(key)) {
+            gameResources.player.race = choices.get(key);
+            gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
         }
     }
 
-    private void advance() {
-        gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
-    }
 }
