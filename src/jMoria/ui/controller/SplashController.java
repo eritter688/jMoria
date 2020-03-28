@@ -13,45 +13,45 @@ import java.util.List;
 
 public class SplashController extends AbstractController {
 
-    @FXML
-    private TextFlow asciiArea;
-    @FXML
-    private TextFlow keyField;
+  @FXML
+  private TextFlow asciiArea;
+  @FXML
+  private TextFlow keyField;
 
-    @Override
-    public void initialize() {
-        setAsciiArea();
-        setKeyField();
-    }
+  @Override
+  public void initialize() {
+    setAsciiArea();
+    setKeyField();
+  }
 
-    @Override
-    public void start() {
-        startEventHandling();
-    }
+  @Override
+  public void start() {
+    startEventHandling();
+  }
 
-    @Override
-    public void stop() {
-        stopEventHandling();
-    }
+  @Override
+  public void stop() {
+    stopEventHandling();
+  }
 
-    private void setAsciiArea() {
-        ASCIILoader loader = new ASCIILoader();
-        loader.setLocation("durindoor.txt");
-        loader.setFont(Font.font("Monospaced", 10.0));
-        loader.setColor(Color.CHARTREUSE);
-        List<Text> listOfTexts = loader.loadToTexts();
-        asciiArea.getChildren().addAll(0, listOfTexts);
-    }
+  private void setAsciiArea() {
+    ASCIILoader loader = new ASCIILoader();
+    loader.setLocation("durindoor.txt");
+    loader.setFont(Font.font("Monospaced", 10.0));
+    loader.setColor(Color.CHARTREUSE);
+    List<Text> listOfTexts = loader.loadToTexts();
+    asciiArea.getChildren().addAll(0, listOfTexts);
+  }
 
-    private void setKeyField() {
-        Text t = new Text(" <-- press any key to enter -->");
-        t.setFill(Color.WHITE);
-        t.setFont(Font.font("Monospaced", 12.0));
-        keyField.getChildren().add(t);
-    }
+  private void setKeyField() {
+    Text t = new Text(" <-- press any key to enter -->");
+    t.setFill(Color.WHITE);
+    t.setFont(Font.font("Monospaced", 12.0));
+    keyField.getChildren().add(t);
+  }
 
-    @Override
-    public void handleKeys(KeyEvent e) {
-        sceneManager.setScene(SceneManager.jMoriaScene.MENU);
-    }
+  @Override
+  public void handleKeys(KeyEvent e) {
+    sceneManager.setScene(SceneManager.jMoriaScene.MENU);
+  }
 }

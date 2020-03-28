@@ -1,7 +1,6 @@
 package jMoria.game.enums;
 
 public enum PlayerClass {
-
   WARRIOR("Warrior"),
   MAGE("Mage"),
   PRIEST("Priest"),

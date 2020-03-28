@@ -28,7 +28,6 @@ public class ChooseStats extends AbstractScreen {
     CharacterCreation.renderCharacterBackground(t, p);
 
     t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
-
   }
 
   @Override
@@ -45,6 +44,5 @@ public class ChooseStats extends AbstractScreen {
       // move to the town and start the game!!
       System.out.println("escape");
     }
-
   }
 }

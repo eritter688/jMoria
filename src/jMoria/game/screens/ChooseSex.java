@@ -1,21 +1,18 @@
 package jMoria.game.screens;
 
-import static java.util.Map.entry;
-
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Sex;
 import jMoria.game.living.Player;
 import jMoria.game.statics.CharacterCreation;
 import jMoria.ui.Terminal;
+
 import java.util.Map;
 
+import static java.util.Map.entry;
 
 public class ChooseSex extends AbstractScreen {
 
-  private Map<String, Sex> choices = Map.ofEntries(
-      entry("m", Sex.MALE),
-      entry("f", Sex.FEMALE)
-  );
+  private Map<String, Sex> choices = Map.ofEntries(entry("m", Sex.MALE), entry("f", Sex.FEMALE));
 
   public ChooseSex(ResourcePackage gameResources) {
     super(gameResources);

@@ -1,7 +1,6 @@
 package jMoria.game.enums;
 
 public enum Sex {
-
   MALE("Male"),
   FEMALE("Female");
 
@@ -14,5 +13,4 @@ public enum Sex {
   public String getSex() {
     return this.sex;
   }
-
 }

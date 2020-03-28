@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.TextFlow?>
-
 <?import javafx.scene.layout.StackPane?>
-
+<?import javafx.scene.text.TextFlow?>
 <StackPane prefWidth="800.0"
            prefHeight="600.0"
            xmlns="http://javafx.com/javafx/10.0.2-internal"

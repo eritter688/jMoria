@@ -49,6 +49,5 @@ public class ChooseClass extends AbstractScreen {
       }
       gameResources.game.setCurrentScreen(this);
     }
-
   }
 }

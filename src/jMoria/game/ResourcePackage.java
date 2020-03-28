@@ -9,5 +9,4 @@ public class ResourcePackage {
   public Terminal terminal;
   public Player player;
   public Dice dice;
-
 }

@@ -9,150 +9,149 @@ import javafx.scene.text.TextFlow;
 
 public class Terminal {
 
-    private TextFlow terminal;
+  private TextFlow terminal;
 
-    public static final int defaultWidthInCharacters = 80;
-    public static final int defaultHeightInCharacters = 25;
+  public static final int defaultWidthInCharacters = 80;
+  public static final int defaultHeightInCharacters = 25;
 
-    public static final int defaultFontSize = 16;
+  public static final int defaultFontSize = 16;
 
-    public int cursorX = 0;
-    public int cursorY = 0;
+  public int cursorX = 0;
+  public int cursorY = 0;
 
-    //background colors
-    //foreground colors
+  // background colors
+  // foreground colors
 
-    public List<Text> lines = new ArrayList<>();
+  public List<Text> lines = new ArrayList<>();
 
-    public Terminal(TextFlow terminal)
-    {
-        this.terminal = terminal;
+  public Terminal(TextFlow terminal) {
+    this.terminal = terminal;
+  }
+
+  public void getCursorPosition() {
+  }
+
+  public void setCursorPosition() {
+  }
+
+  public void clearScreen() {
+    for (Text t : lines) {
+      t.setText(" ".repeat(defaultWidthInCharacters) + "\n");
+    }
+  }
+
+  public void clearLine(int line) {
+    if (line < 0 || line >= defaultHeightInCharacters) {
+      throw new IllegalArgumentException("Line index invalid.");
+    }
+    lines.get(line).setText(" ".repeat(defaultWidthInCharacters) + "\n");
+  }
+
+  public void writeLine(int line, String text) {
+    if (line < 0 || line >= defaultHeightInCharacters) {
+      throw new IllegalArgumentException("Line index invalid.");
     }
 
-    public void getCursorPosition()
-    {}
-
-    public void setCursorPosition()
-    {}
-
-    public void clearScreen()
-    {
-        for (Text t : lines) {
-            t.setText(" ".repeat(defaultWidthInCharacters) + "\n");
-        }
+    if (text.length() > defaultWidthInCharacters) {
+      throw new IllegalArgumentException("Line too long.");
     }
 
-    public void clearLine(int line)
-    {
-        if (line < 0 || line >= defaultHeightInCharacters)
-            throw new IllegalArgumentException("Line index invalid.");
-        lines.get(line).setText(" ".repeat(defaultWidthInCharacters) + "\n");
+    if (text.contains("\n")) {
+      throw new IllegalArgumentException("Do not include linebreaks.");
     }
 
-    public void writeLine(int line, String text)
-    {
-        if (line < 0 || line >= defaultHeightInCharacters)
-            throw new IllegalArgumentException("Line index invalid.");
+    String tmp;
 
-        if (text.length() > defaultWidthInCharacters)
-            throw new IllegalArgumentException("Line too long.");
-
-        if (text.contains("\n"))
-            throw new IllegalArgumentException("Do not include linebreaks.");
-
-        String tmp;
-
-        if (text.length() < defaultWidthInCharacters) {
-            tmp = text + " ".repeat(defaultWidthInCharacters - text.length());
-        } else {
-            tmp = text;
-        }
-
-        lines.get(line).setText(tmp + "\n");
+    if (text.length() < defaultWidthInCharacters) {
+      tmp = text + " ".repeat(defaultWidthInCharacters - text.length());
+    } else {
+      tmp = text;
     }
 
-    public void writeStringAt(int line, int column, String text) {
+    lines.get(line).setText(tmp + "\n");
+  }
 
-        if (line < 0 || line >= defaultHeightInCharacters) {
-            throw new IllegalArgumentException("Line index invalid.");
-        }
+  public void writeStringAt(int line, int column, String text) {
 
-        if (column < 0 || column >= defaultWidthInCharacters) {
-            throw new IllegalArgumentException("Column index invalid.");
-        }
-
-        if ((column + text.length()) > defaultWidthInCharacters) {
-            throw new IllegalArgumentException("String wont fit on line.");
-        }
-
-        if (text.contains("\n")) {
-            throw new IllegalArgumentException("Do not include linebreaks.");
-        }
-
-        String currentLine = lines.get(line).getText();
-        String left = currentLine.substring(0, column);
-        String right = currentLine.substring(column + text.length());
-        lines.get(line).setText(left + text + right);
+    if (line < 0 || line >= defaultHeightInCharacters) {
+      throw new IllegalArgumentException("Line index invalid.");
     }
 
-    // WORKS BUT DOESN'T CHECK FOR LEFT OVERFLOW!!
-    public void writeRJStringAt(int line, int column, String text) {
-
-        if (line < 0 || line >= defaultHeightInCharacters) {
-            throw new IllegalArgumentException("Line index invalid.");
-        }
-
-        if (column < 0 || column >= defaultWidthInCharacters) {
-            throw new IllegalArgumentException("Column index invalid.");
-        }
-
-        // TODO math is wrong here...
-//        if ((column - text.length() - 1) < 0) {
-//            throw new IllegalArgumentException("String overflowed left.");
-//        }
-
-        if (text.contains("\n")) {
-            throw new IllegalArgumentException("Do not include linebreaks.");
-        }
-
-        String currentLine = lines.get(line).getText();
-        String left = currentLine.substring(0, (column + 1) - text.length());
-        String right = currentLine.substring(column + 1);
-        lines.get(line).setText(left + text + right);
+    if (column < 0 || column >= defaultWidthInCharacters) {
+      throw new IllegalArgumentException("Column index invalid.");
     }
 
-    public void dummyTerminal() {
-
-        for (int x = 0; x < defaultHeightInCharacters; x++) {
-            Text t = new Text(
-                "12345678901234567890123456789012345678901234567890123456789012345678901234567890\n");
-            t.setFont(Font.font("Monospaced", defaultFontSize));
-            t.setFill(Color.WHITE);
-            t.setWrappingWidth(Double.MAX_VALUE);
-            lines.add(t);
-        }
-        //System.out.println(lines.get(0).getText());
-        //System.out.println(lines.get(0).getText().length());
-
-        this.terminal.getChildren().addAll(lines);
-
-//        System.out.println(this.terminal.getBoundsInLocal());
-//        System.out.println(this.terminal.getBoundsInParent());
-//        System.out.println(this.terminal.getLayoutBounds());
-//
-//        System.out.println(t1.getBoundsInLocal());
-//        System.out.println(t1.getBoundsInParent());
-//        System.out.println(t1.getLayoutBounds());
-
-        terminal.setMinHeight(lines.get(0).getBoundsInLocal().getHeight()*defaultHeightInCharacters);
-        terminal.setMaxHeight(lines.get(0).getBoundsInLocal().getHeight()*defaultHeightInCharacters);
-//        terminal.setPrefHeight(t1.getBoundsInLocal().getHeight()*8.0);
-//
-        terminal.setMinWidth(lines.get(0).getBoundsInLocal().getWidth());
-        terminal.setMaxWidth(lines.get(0).getBoundsInLocal().getWidth());
-//        terminal.setPrefWidth(t1.getBoundsInLocal().getWidth());
-
-
+    if ((column + text.length()) > defaultWidthInCharacters) {
+      throw new IllegalArgumentException("String wont fit on line.");
     }
 
+    if (text.contains("\n")) {
+      throw new IllegalArgumentException("Do not include linebreaks.");
+    }
+
+    String currentLine = lines.get(line).getText();
+    String left = currentLine.substring(0, column);
+    String right = currentLine.substring(column + text.length());
+    lines.get(line).setText(left + text + right);
+  }
+
+  // WORKS BUT DOESN'T CHECK FOR LEFT OVERFLOW!!
+  public void writeRJStringAt(int line, int column, String text) {
+
+    if (line < 0 || line >= defaultHeightInCharacters) {
+      throw new IllegalArgumentException("Line index invalid.");
+    }
+
+    if (column < 0 || column >= defaultWidthInCharacters) {
+      throw new IllegalArgumentException("Column index invalid.");
+    }
+
+    // TODO math is wrong here...
+    //        if ((column - text.length() - 1) < 0) {
+    //            throw new IllegalArgumentException("String overflowed left.");
+    //        }
+
+    if (text.contains("\n")) {
+      throw new IllegalArgumentException("Do not include linebreaks.");
+    }
+
+    String currentLine = lines.get(line).getText();
+    String left = currentLine.substring(0, (column + 1) - text.length());
+    String right = currentLine.substring(column + 1);
+    lines.get(line).setText(left + text + right);
+  }
+
+  public void dummyTerminal() {
+
+    for (int x = 0; x < defaultHeightInCharacters; x++) {
+      Text t =
+          new Text(
+              "12345678901234567890123456789012345678901234567890123456789012345678901234567890\n");
+      t.setFont(Font.font("Monospaced", defaultFontSize));
+      t.setFill(Color.WHITE);
+      t.setWrappingWidth(Double.MAX_VALUE);
+      lines.add(t);
+    }
+    // System.out.println(lines.get(0).getText());
+    // System.out.println(lines.get(0).getText().length());
+
+    this.terminal.getChildren().addAll(lines);
+
+    //        System.out.println(this.terminal.getBoundsInLocal());
+    //        System.out.println(this.terminal.getBoundsInParent());
+    //        System.out.println(this.terminal.getLayoutBounds());
+    //
+    //        System.out.println(t1.getBoundsInLocal());
+    //        System.out.println(t1.getBoundsInParent());
+    //        System.out.println(t1.getLayoutBounds());
+
+    terminal.setMinHeight(lines.get(0).getBoundsInLocal().getHeight() * defaultHeightInCharacters);
+    terminal.setMaxHeight(lines.get(0).getBoundsInLocal().getHeight() * defaultHeightInCharacters);
+    //        terminal.setPrefHeight(t1.getBoundsInLocal().getHeight()*8.0);
+    //
+    terminal.setMinWidth(lines.get(0).getBoundsInLocal().getWidth());
+    terminal.setMaxWidth(lines.get(0).getBoundsInLocal().getWidth());
+    //        terminal.setPrefWidth(t1.getBoundsInLocal().getWidth());
+
+  }
 }

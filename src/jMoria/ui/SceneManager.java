@@ -13,77 +13,76 @@ import java.util.HashMap;
 
 public class SceneManager extends StackPane {
 
-    private Stage primaryStage;
-    private AbstractController primaryController;
+  private Stage primaryStage;
+  private AbstractController primaryController;
 
-    private HashMap<jMoriaScene, Node> scenes = new HashMap<>();
-    private HashMap<jMoriaScene, AbstractController> controllers = new HashMap<>();
+  private HashMap<jMoriaScene, Node> scenes = new HashMap<>();
+  private HashMap<jMoriaScene, AbstractController> controllers = new HashMap<>();
 
-    public enum jMoriaScene {
-        GAME("game.fxml"),
-        MENU("mainmenu.fxml"),
-        SPLASH("splash.fxml");
+  public enum jMoriaScene {
+    GAME("game.fxml"),
+    MENU("mainmenu.fxml"),
+    SPLASH("splash.fxml");
 
-        private final String fxmlFile;
+    private final String fxmlFile;
 
-        jMoriaScene(String fxmlFile) {
-            this.fxmlFile = fxmlFile;
-        }
-
-        String getFXMLFile() {
-            return this.fxmlFile;
-        }
+    jMoriaScene(String fxmlFile) {
+      this.fxmlFile = fxmlFile;
     }
 
-    public SceneManager(Stage primaryStage) {
-        super();
-        this.primaryStage = primaryStage;
-        //this.setStyle("-fx-background-color: #000000");
-        this.setStyle("-fx-background-color: #D2691E");
+    String getFXMLFile() {
+      return this.fxmlFile;
+    }
+  }
+
+  public SceneManager(Stage primaryStage) {
+    super();
+    this.primaryStage = primaryStage;
+    // this.setStyle("-fx-background-color: #000000");
+    this.setStyle("-fx-background-color: #D2691E");
+  }
+
+  public void start() {
+    this.primaryStage.setScene(new Scene(this, primaryStage.getWidth(), primaryStage.getHeight()));
+    this.setScene(jMoriaScene.SPLASH);
+    this.primaryStage.show();
+  }
+
+  public void setScene(jMoriaScene scene) {
+
+    // Lazy load the fxml/controller pair.
+    if (!scenes.containsKey(scene)) {
+      loadScene(scene, scene.getFXMLFile());
     }
 
-    public void start() {
-        this.primaryStage.setScene(new Scene(this, primaryStage.getWidth(), primaryStage.getHeight()));
-        this.setScene(jMoriaScene.SPLASH);
-        this.primaryStage.show();
+    if (primaryController != null) {
+      primaryController.stop();
     }
 
-    public void setScene(jMoriaScene scene) {
-
-        // Lazy load the fxml/controller pair.
-        if (!scenes.containsKey(scene)) {
-            loadScene(scene, scene.getFXMLFile());
-        }
-
-        if (primaryController != null) {
-            primaryController.stop();
-        }
-
-        if(!this.getChildren().isEmpty()) {
-            this.getChildren().remove(0);
-        }
-        this.getChildren().add(0, scenes.get(scene));
-
-        primaryController = controllers.get(scene);
-        primaryController.sceneManager = this;
-        primaryController.start();
+    if (!this.getChildren().isEmpty()) {
+      this.getChildren().remove(0);
     }
+    this.getChildren().add(0, scenes.get(scene));
 
-    private void loadScene(jMoriaScene scene, String fxmlFile) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/jMoria/ui/fxml/" + fxmlFile));
-            Parent root = loader.load();
-            AbstractController controller = loader.getController();
-            scenes.put(scene, root);
-            controllers.put(scene, controller);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    primaryController = controllers.get(scene);
+    primaryController.sceneManager = this;
+    primaryController.start();
+  }
+
+  private void loadScene(jMoriaScene scene, String fxmlFile) {
+    try {
+      FXMLLoader loader = new FXMLLoader();
+      loader.setLocation(getClass().getResource("/jMoria/ui/fxml/" + fxmlFile));
+      Parent root = loader.load();
+      AbstractController controller = loader.getController();
+      scenes.put(scene, root);
+      controllers.put(scene, controller);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
+  public Stage getPrimaryStage() {
+    return primaryStage;
+  }
 }

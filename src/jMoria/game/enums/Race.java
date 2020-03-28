@@ -1,7 +1,6 @@
 package jMoria.game.enums;
 
 public enum Race {
-
   HUMAN("Human"),
   HALF_ELF("Half-Elf"),
   ELF("Elf"),
@@ -20,5 +19,4 @@ public enum Race {
   public String getRace() {
     return this.race;
   }
-
 }

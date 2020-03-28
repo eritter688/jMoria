@@ -24,5 +24,4 @@ public abstract class AbstractScreen {
     }
 
     public abstract void handleKey(String key);
-
 }

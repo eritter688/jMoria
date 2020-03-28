@@ -26,7 +26,6 @@ public class CharacterCreation {
     if (p.playerClass != null) {
       t.writeStringAt(6, 14, p.playerClass.getPlayerClass());
     }
-
   }
 
   public static void renderHitACStats(Terminal t, Player p) {
@@ -80,5 +79,4 @@ public class CharacterCreation {
     t.writeStringAt(16, 4, "child.  You have dark brown eyes, straight brown hair, and an average");
     t.writeStringAt(17, 4, "complexion.");
   }
-
 }
