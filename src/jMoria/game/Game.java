@@ -22,8 +22,8 @@ public class Game {
 
     private void init() {
         gameResources.game = this;
-        gameResources.dice = new Dice(gameResources);
-        gameResources.terminal.clearScreen();
+      gameResources.dice = new Dice();
+      gameResources.terminal.clearScreen();
     }
 
     public void newGame() {

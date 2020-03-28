@@ -4,11 +4,9 @@ import java.util.Random;
 
 public class Dice {
 
-  private ResourcePackage gameResources;
   private Random generator;
 
-  public Dice(ResourcePackage gameResources) {
-    this.gameResources = gameResources;
+  public Dice() {
     // TODO
     // Remove this before actually finalizing the game.
     if (Game.DEBUG) {
