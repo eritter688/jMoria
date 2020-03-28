@@ -39,8 +39,10 @@ public class ChooseStats extends AbstractScreen {
     }
 
     if (key.equals("SPACE")) {
-      System.out.println("space");
+      // roll again
+      render();
     } else if (key.equals("ESCAPE")) {
+      // move to the town and start the game!!
       System.out.println("escape");
     }
 

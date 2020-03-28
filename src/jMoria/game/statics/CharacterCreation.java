@@ -6,6 +6,8 @@ import jMoria.ui.Terminal;
 public class CharacterCreation {
 
   public static void renderPersonalStats(Terminal t, Player p) {
+    t.writeRJStringAt(0, 1, "00");
+
     t.writeStringAt(3, 0, "  Name      :");
     t.writeStringAt(4, 0, "  Race      :");
     t.writeStringAt(5, 0, "  Sex       :");
@@ -37,6 +39,7 @@ public class CharacterCreation {
 
     // TODO Right Justified Needed Here!
     t.writeStringAt(10, 21, "0");
+    t.writeRJStringAt(10, 21, "000");
     t.writeStringAt(11, 21, "0");
     t.writeStringAt(12, 21, "0");
     t.writeStringAt(13, 21, "0");

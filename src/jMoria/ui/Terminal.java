@@ -95,6 +95,32 @@ public class Terminal {
         lines.get(line).setText(left + text + right);
     }
 
+    // WORKS BUT DOESN'T CHECK FOR LEFT OVERFLOW!!
+    public void writeRJStringAt(int line, int column, String text) {
+
+        if (line < 0 || line >= defaultHeightInCharacters) {
+            throw new IllegalArgumentException("Line index invalid.");
+        }
+
+        if (column < 0 || column >= defaultWidthInCharacters) {
+            throw new IllegalArgumentException("Column index invalid.");
+        }
+
+        // TODO math is wrong here...
+//        if ((column - text.length() - 1) < 0) {
+//            throw new IllegalArgumentException("String overflowed left.");
+//        }
+
+        if (text.contains("\n")) {
+            throw new IllegalArgumentException("Do not include linebreaks.");
+        }
+
+        String currentLine = lines.get(line).getText();
+        String left = currentLine.substring(0, (column + 1) - text.length());
+        String right = currentLine.substring(column + 1);
+        lines.get(line).setText(left + text + right);
+    }
+
     public void dummyTerminal() {
 
         for (int x = 0; x < defaultHeightInCharacters; x++) {
