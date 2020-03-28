@@ -37,9 +37,8 @@ public class Terminal {
 
     public void clearScreen()
     {
-        for (Text t: lines)
-        {
-            t.setText(" ".repeat(80) + "\n");
+        for (Text t : lines) {
+            t.setText(" ".repeat(defaultWidthInCharacters) + "\n");
         }
     }
 
@@ -47,7 +46,7 @@ public class Terminal {
     {
         if (line < 0 || line >= defaultHeightInCharacters)
             throw new IllegalArgumentException("Line index invalid.");
-        lines.get(line).setText(" ".repeat(80) + "\n");
+        lines.get(line).setText(" ".repeat(defaultWidthInCharacters) + "\n");
     }
 
     public void writeLine(int line, String text)
@@ -63,9 +62,8 @@ public class Terminal {
 
         String tmp;
 
-        if (text.length() < 80)
-        {
-            tmp = text + " ".repeat(80 - text.length());
+        if (text.length() < defaultWidthInCharacters) {
+            tmp = text + " ".repeat(defaultWidthInCharacters - text.length());
         } else {
             tmp = text;
         }
