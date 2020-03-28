@@ -4,6 +4,7 @@ import static java.util.Map.entry;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Race;
+import jMoria.game.statics.CharacterCreation;
 import jMoria.ui.Terminal;
 import java.util.Map;
 
@@ -31,12 +32,9 @@ public class ChooseRace extends AbstractScreen {
 
     @Override
     public void render() {
-        Terminal t = gameResources.terminal;
-        t.writeLine(3, "  Name     :");
-        t.writeLine(4, "  Race     :");
-        t.writeLine(5, "  Sex      :");
-        t.writeLine(6, "  Class    :");
+        CharacterCreation.renderPersonalStats(gameResources.terminal, gameResources.player);
 
+        Terminal t = gameResources.terminal;
         t.writeLine(19, "  Choose a race:");
         t.writeLine(
             20, "  a) Human       b) Half-Elf    c) Elf         d) Halfling    e) Gnome");
