@@ -49,10 +49,7 @@ public class Terminal {
     {
         if (line < 0 || line >= defaultHeightInCharacters)
             throw new IllegalArgumentException("Line index invalid.");
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(" ".repeat(80));
-        lines.get(line).setText(sb.toString() + "\n");
+        lines.get(line).setText(" ".repeat(80) + "\n");
     }
 
     public void writeLine(int line, String text)
@@ -73,17 +70,51 @@ public class Terminal {
             StringBuilder sb = new StringBuilder(text);
             sb.append(" ".repeat((80 - text.length())));
             tmp = sb.toString();
-        }
-        else
-        {
+        } else {
             tmp = text;
         }
 
         lines.get(line).setText(tmp + "\n");
     }
 
-    public void writeChar()
-    {}
+    public void writeStringAt(int line, int column, String text) {
+
+        if (line < 0 || line >= defaultHeightInCharacters) {
+            throw new IllegalArgumentException("Line index invalid.");
+        }
+
+        if (column < 0 || column >= defaultWidthInCharacters) {
+            throw new IllegalArgumentException("Column index invalid.");
+        }
+
+        if ((column + text.length() + 1) > defaultWidthInCharacters) {
+            throw new IllegalArgumentException("String wont fit on line.");
+        }
+
+        if (text.contains("\n")) {
+            throw new IllegalArgumentException("Do not include linebreaks.");
+        }
+
+        String currentLine = lines.get(line).getText();
+        String left = currentLine.substring(0, column - 1);
+        String right = currentLine.substring(column + text.length());
+        lines.get(line).setText(left + text + right);
+    }
+
+    public void writeCharAt(int line, int column, char character) {
+        if (line < 0 || line >= defaultHeightInCharacters) {
+            throw new IllegalArgumentException("Line index invalid.");
+        }
+
+        if (column < 0 || column >= defaultWidthInCharacters) {
+            throw new IllegalArgumentException("Column index invalid.");
+        }
+
+        // other odd characters? \lf or shit like that?
+        if (character == '\n') {
+            throw new IllegalArgumentException("Character cannot be linebreak.");
+        }
+    }
 
     public void dummyTerminal() {
 
