@@ -2,7 +2,7 @@ package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.living.Player;
-import jMoria.game.screens.statics.CharacterCreation;
+import jMoria.game.screens.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
 
 public class ChooseStats extends AbstractScreen {
@@ -18,16 +18,16 @@ public class ChooseStats extends AbstractScreen {
 
   @Override
   public void render() {
-    Terminal t = gameResources.terminal;
-    Player p = gameResources.player;
+      Terminal t = gameResources.terminal;
+      Player p = gameResources.player;
 
-    CharacterCreation.renderPersonalStats(t, p);
-    CharacterCreation.renderHitACStats(t, p);
-    CharacterCreation.renderPhyicalStats(t, p);
-    CharacterCreation.renderPlayerStats(t, p);
-    CharacterCreation.renderCharacterBackground(t, p);
+      PlayerCreationRenders.renderPersonalStats(t, p);
+      PlayerCreationRenders.renderHitACStats(t, p);
+      PlayerCreationRenders.renderPhyicalStats(t, p);
+      PlayerCreationRenders.renderPlayerStats(t, p);
+      PlayerCreationRenders.renderCharacterBackground(t, p);
 
-    t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
+      t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
   }
 
   @Override

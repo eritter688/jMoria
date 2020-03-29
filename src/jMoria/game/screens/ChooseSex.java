@@ -3,7 +3,7 @@ package jMoria.game.screens;
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Sex;
 import jMoria.game.living.Player;
-import jMoria.game.screens.statics.CharacterCreation;
+import jMoria.game.screens.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
 
 import java.util.Map;
@@ -28,7 +28,7 @@ public class ChooseSex extends AbstractScreen {
     Terminal t = gameResources.terminal;
     Player p = gameResources.player;
 
-    CharacterCreation.renderPersonalStats(t, p);
+    PlayerCreationRenders.renderPersonalStats(t, p);
 
     t.writeLine(19, "  Choose a sex:");
     t.writeLine(20, "  m) Male        f) Female");

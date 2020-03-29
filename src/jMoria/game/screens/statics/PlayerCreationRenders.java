@@ -3,7 +3,7 @@ package jMoria.game.screens.statics;
 import jMoria.game.living.Player;
 import jMoria.ui.Terminal;
 
-public class CharacterCreation {
+public class PlayerCreationRenders {
 
   public static void renderPersonalStats(Terminal t, Player p) {
     t.writeStringAt(3, 0, "  Name      :");
