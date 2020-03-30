@@ -12,7 +12,8 @@ import java.util.List;
 
 public class CSVReader {
 
-    private static final String dataPath = "/jMoria/game/data/";
+    private static final String DATA_PATH = "/jMoria/game/data/";
+
     private String fileName;
     private BufferedReader bReader;
     private ResourcePackage gameResources;
@@ -20,16 +21,6 @@ public class CSVReader {
     public CSVReader(ResourcePackage gameResources, String fileName) {
         this.fileName = fileName;
         this.gameResources = gameResources;
-
-//        Class c = getClass();
-//        System.out.println(c.toString());
-//        System.out.println(c.getClassLoader().toString());
-//        URL u = getClass().getResource("PlayerAgeWeightHeight.csv");
-//        InputStream input = gameResources.game.getClass().getResourceAsStream(dataPath + fileName);
-//        InputStreamReader isr = new InputStreamReader(input, StandardCharsets.UTF_8);
-//        bReader = new BufferedReader(isr);
-
-
     }
 
     public void setFileName(String fileName) {
@@ -37,7 +28,7 @@ public class CSVReader {
     }
 
     private void openFile() {
-        InputStream input = gameResources.game.getClass().getResourceAsStream(dataPath + fileName);
+        InputStream input = gameResources.game.getClass().getResourceAsStream(DATA_PATH + fileName);
         InputStreamReader isr = new InputStreamReader(input, StandardCharsets.UTF_8);
         bReader = new BufferedReader(isr);
     }
