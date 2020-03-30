@@ -18,8 +18,7 @@ public class CSVReader {
     private BufferedReader bReader;
     private ResourcePackage gameResources;
 
-    public CSVReader(ResourcePackage gameResources, String fileName) {
-        this.fileName = fileName;
+    public CSVReader(ResourcePackage gameResources) {
         this.gameResources = gameResources;
     }
 

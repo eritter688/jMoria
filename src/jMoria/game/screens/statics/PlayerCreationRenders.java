@@ -48,9 +48,9 @@ public class PlayerCreationRenders {
     t.writeStringAt(6, 39, "Social Class :");
 
     // TODO
-    t.writeRJStringAt(3, 58, "0");
-    t.writeRJStringAt(4, 58, "00");
-    t.writeRJStringAt(5, 58, "000");
+    t.writeRJStringAt(3, 58, String.valueOf(p.age));
+    t.writeRJStringAt(4, 58, String.valueOf(p.height));
+    t.writeRJStringAt(5, 58, String.valueOf(p.weight));
     t.writeRJStringAt(6, 58, "0000");
   }
 
