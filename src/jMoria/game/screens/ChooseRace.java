@@ -4,8 +4,10 @@ import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Race;
 import jMoria.game.living.Player;
 import jMoria.game.screens.statics.PlayerCreationRenders;
+import jMoria.game.utils.CSVReader;
 import jMoria.ui.Terminal;
 
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -36,6 +38,16 @@ public class ChooseRace extends AbstractScreen {
   public void render() {
     Terminal t = gameResources.terminal;
     Player p = gameResources.player;
+
+    //temp
+    CSVReader reader = new CSVReader(gameResources, "PlayerAgeWeightHeight.csv");
+    List<Integer> data = reader.getLineDataFromKey("Dwarf");
+    for (Integer x : data) {
+      System.out.println(x);
+
+    }
+
+    //
 
     PlayerCreationRenders.renderPersonalStats(t, p);
 

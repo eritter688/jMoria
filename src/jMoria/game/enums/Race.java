@@ -5,14 +5,18 @@ public enum Race {
   HALF_ELF("Half-Elf"),
   ELF("Elf"),
   HALFLING("Halfling"),
-  GNOME("Gnome"),
-  DWARF("Dwarf"),
-  HALF_ORC("Half-Orc"),
-  HALF_TROLL("Half-Troll");
+    GNOME("Gnome"),
+    DWARF("Dwarf"),
+    HALF_ORC("Half-Orc"),
+    HALF_TROLL("Half-Troll");
 
-  private final String race;
+    private final String race;
 
-  Race(String race) {
-    this.race = race;
-  }
+    Race(String race) {
+        this.race = race;
+    }
+
+    public String getRace() {
+        return this.race;
+    }
 }
