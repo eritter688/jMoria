@@ -19,23 +19,18 @@ public class ChooseStats extends AbstractScreen {
         pc = new PlayerCreator(gameResources);
     }
 
-  @Override
-  public void render() {
-      Terminal t = gameResources.terminal;
-      Player p = gameResources.player;
+    @Override
+    public void render() {
+        Terminal t = gameResources.terminal;
+        Player p = gameResources.player;
 
-      t.clearScreen();
+        t.clearScreen();
 
-      pc.setAgeHeightWeight();
+        pc.rollPlayerValues();
+        PlayerCreationRenders.renderAll(t, p);
 
-      PlayerCreationRenders.renderPersonalStats(t, p);
-      PlayerCreationRenders.renderHitACStats(t, p);
-      PlayerCreationRenders.renderPhyicalStats(t, p);
-      PlayerCreationRenders.renderPlayerStats(t, p);
-      PlayerCreationRenders.renderCharacterBackground(t, p);
-
-      t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
-  }
+        t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
+    }
 
   @Override
   public void handleKey(String key) {
@@ -45,7 +40,6 @@ public class ChooseStats extends AbstractScreen {
     }
 
     if (key.equals("SPACE")) {
-      // roll again
       render();
     } else if (key.equals("ESCAPE")) {
       // move to the town and start the game!!

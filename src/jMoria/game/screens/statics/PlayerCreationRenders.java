@@ -5,6 +5,14 @@ import jMoria.ui.Terminal;
 
 public class PlayerCreationRenders {
 
+  public static void renderAll(Terminal t, Player p) {
+    renderPersonalStats(t, p);
+    renderHitACStats(t, p);
+    renderPhyicalStats(t, p);
+    renderPlayerStats(t, p);
+    renderCharacterBackground(t, p);
+  }
+
   public static void renderPersonalStats(Terminal t, Player p) {
     t.writeStringAt(3, 0, "  Name      :");
     t.writeStringAt(4, 0, "  Race      :");
