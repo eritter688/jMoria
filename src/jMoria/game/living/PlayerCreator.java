@@ -1,22 +1,22 @@
 package jMoria.game.living;
 
-import jMoria.game.Dice;
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Sex;
 import jMoria.game.utils.CSVReader;
 
 import java.util.List;
 
+import static jMoria.game.utils.Math.randInt;
+import static jMoria.game.utils.Math.randNor;
+
 public class PlayerCreator {
 
     private CSVReader csvReader;
-    private Dice dice;
     private Player player;
 
     // RACE and SEX are chosen by this point.
     public PlayerCreator(ResourcePackage gameResources) {
         this.player = gameResources.player;
-        this.dice = gameResources.dice;
         this.csvReader = new CSVReader(gameResources);
     }
 
@@ -45,9 +45,9 @@ public class PlayerCreator {
             modWeight = data.get(9);
         }
 
-        player.age = baseAge + dice.randInt(ageMod);
-        player.height = dice.randNor(baseHeight, modHeight);
-        player.weight = dice.randNor(baseWeight, modWeight);
+        player.age = baseAge + randInt(ageMod);
+        player.height = randNor(baseHeight, modHeight);
+        player.weight = randNor(baseWeight, modWeight);
 
     }
 
