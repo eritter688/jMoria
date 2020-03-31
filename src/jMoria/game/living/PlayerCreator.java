@@ -40,11 +40,11 @@ public class PlayerCreator {
         if (player.sex == Sex.MALE) {
             values.put("baseHeight", data.get(2));
             values.put("modHeight", data.get(3));
-            values.put("baseWeight", data.get(6));
-            values.put("modWeight", data.get(7));
+            values.put("baseWeight", data.get(4));
+            values.put("modWeight", data.get(5));
         } else {
-            values.put("baseHeight", data.get(4));
-            values.put("modHeight", data.get(5));
+            values.put("baseHeight", data.get(6));
+            values.put("modHeight", data.get(7));
             values.put("baseWeight", data.get(8));
             values.put("modWeight", data.get(9));
         }

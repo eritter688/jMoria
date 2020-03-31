@@ -5,14 +5,14 @@
 # MA - Age Modifier
 # MBH - Male Base Height
 # MMH - Male Height Modifier
-# FBH - Female Base Height
-# FMH - Female Height Modifier
 # MBW - Male Base Weight
 # MMW - Male Weight Modifier
+# FBH - Female Base Height
+# FMH - Female Height Modifier
 # FBW - Female Base Weight
 # FMW - Female Weight Modifier
 #
-# Race                         ,BA,MA,MBH,MMH,FBH,FMH,MBW,MMW,FBW,FMW
+# Race                         ,BA,MA,MBH,MMH,MBW,MMW,FBH,FMH,FBW,FMW
 Human                          ,14,6 ,72 ,6  ,180,25 ,66 ,4  ,150,20
 Half-Elf                       ,24,16,66 ,6  ,130,15 ,62 ,6  ,100,10
 Elf                            ,75,75,60 ,4  ,100,6  ,54 ,4  ,80 ,6
