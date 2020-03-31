@@ -49,7 +49,7 @@ public class ChooseStats extends AbstractScreen {
       render();
     } else if (key.equals("ESCAPE")) {
       // move to the town and start the game!!
-      System.out.println("escape");
+      System.out.println("TO TOWN!!");
     }
   }
 }

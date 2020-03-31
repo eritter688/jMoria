@@ -31,8 +31,7 @@ public class PlayerCreator {
         int modHeight;
         int baseWeight;
         int modWeight;
-        System.out.println(baseAge);
-        System.out.println(ageMod);
+
         if (player.sex == Sex.MALE) {
             baseHeight = data.get(2);
             modHeight = data.get(3);
