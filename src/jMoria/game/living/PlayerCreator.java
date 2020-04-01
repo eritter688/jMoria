@@ -34,6 +34,7 @@ public class PlayerCreator {
     private void readAgeHeightWeightData() {
         csvReader.setFileName("PlayerAgeWeightHeight.csv");
         List<Integer> data = csvReader.getLineDataFromKey(player.race.getRace());
+
         values.put("baseAge", data.get(0));
         values.put("ageMod", data.get(1));
 
@@ -51,10 +52,18 @@ public class PlayerCreator {
 
     }
 
+    private void readHistoryData() {
+
+    }
+
     private void setAgeHeightWeight() {
         player.age = values.get("baseAge") + randInt(values.get("ageMod"));
         player.height = randNor(values.get("baseHeight"), values.get("modHeight"));
         player.weight = randNor(values.get("baseWeight"), values.get("modWeight"));
+    }
+
+    private void setHistoryData() {
+
     }
 
 }
