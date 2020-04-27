@@ -23,7 +23,9 @@ public class GameScreen extends AbstractScreen {
         Terminal t = gameResources.terminal;
         t.clearScreen();
         renderStats(t);
-        renderBorder(t);
+        renderDepthAndStudy(t);
+        renderMapBorder(t);
+        renderMap(t);
 
     }
 
@@ -56,28 +58,27 @@ public class GameScreen extends AbstractScreen {
         t.writeStringAt(20, 0, "GOLD:    487");
     }
 
-    private void renderBorder(Terminal t) {
+    private void renderMapBorder(Terminal t) {
         char BLOCK = '\u2588';
-
         // TOP
-        //t.writeRJStringAt(1, 78, String.valueOf(BLOCK).repeat(66));
         t.writeStringAt(1, 13, String.valueOf(BLOCK).repeat(66));
         // BOTTOM
-        //t.writeRJStringAt(22, 78, String.valueOf(BLOCK).repeat(66));
         t.writeStringAt(22, 13, String.valueOf(BLOCK).repeat(66));
         // LEFT/RIGHT
         for (int x = 1; x < 23; x++) {
             t.writeStringAt(x, 13, String.valueOf(BLOCK));
             t.writeStringAt(x, 78, String.valueOf(BLOCK));
         }
-
     }
 
+    // TODO
     private void renderMap(Terminal t) {
-
+        for (int x = 2; x < 22; x++) {
+            t.writeStringAt(x, 14, ".".repeat(64));
+        }
     }
 
     private void renderDepthAndStudy(Terminal t) {
-
+        t.writeRJStringAt(23, 74, "Town level");
     }
 }
