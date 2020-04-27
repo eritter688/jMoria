@@ -2,7 +2,7 @@ package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.PlayerClass;
-import jMoria.game.living.Player;
+import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
 
 public class ChooseClass extends AbstractScreen {

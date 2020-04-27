@@ -2,7 +2,7 @@ package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.enums.Sex;
-import jMoria.game.living.Player;
+import jMoria.game.player.Player;
 import jMoria.game.screens.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
 

@@ -1,4 +1,4 @@
-package jMoria.game.living;
+package jMoria.game.player;
 
 import jMoria.game.enums.PlayerClass;
 import jMoria.game.enums.Race;

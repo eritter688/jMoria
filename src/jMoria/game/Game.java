@@ -1,6 +1,6 @@
 package jMoria.game;
 
-import jMoria.game.living.Player;
+import jMoria.game.player.Player;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.ChooseRace;
 import jMoria.ui.Terminal;

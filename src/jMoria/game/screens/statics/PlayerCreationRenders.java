@@ -1,6 +1,6 @@
 package jMoria.game.screens.statics;
 
-import jMoria.game.living.Player;
+import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
 
 public class PlayerCreationRenders {
