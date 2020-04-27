@@ -3,11 +3,13 @@ package jMoria.game.screens;
 import jMoria.game.ResourcePackage;
 import jMoria.game.keyhandlers.AbstractKeyHandler;
 import jMoria.game.keyhandlers.GameKeyHandler;
+import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
 
 public class GameScreen extends AbstractScreen {
 
     private AbstractKeyHandler gameKeyHandler;
+    private Player player;
 
     public GameScreen(ResourcePackage gameResources) {
         super(gameResources);
@@ -16,6 +18,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void init() {
         this.gameKeyHandler = new GameKeyHandler();
+        this.player = gameResources.player;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void renderStats(Terminal t) {
-        t.writeStringAt(2, 0, "Human");
+        t.writeStringAt(2, 0, player.race.getRace());
         t.writeStringAt(3, 0, "Warrior");
         t.writeStringAt(4, 0, "Rookie");
 
