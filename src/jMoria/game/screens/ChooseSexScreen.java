@@ -10,11 +10,11 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class ChooseSex extends AbstractScreen {
+public class ChooseSexScreen extends AbstractScreen {
 
   private Map<String, Sex> choices = Map.ofEntries(entry("m", Sex.MALE), entry("f", Sex.FEMALE));
 
-  public ChooseSex(ResourcePackage gameResources) {
+  public ChooseSexScreen(ResourcePackage gameResources) {
     super(gameResources);
   }
 
@@ -38,7 +38,7 @@ public class ChooseSex extends AbstractScreen {
   public void handleKey(String key) {
     if (this.listening && choices.containsKey(key)) {
       gameResources.player.sex = choices.get(key);
-      gameResources.game.setCurrentScreen(new ChooseStats(gameResources));
+      gameResources.game.setCurrentScreen(new ChooseStatsScreen(gameResources));
     }
   }
 }

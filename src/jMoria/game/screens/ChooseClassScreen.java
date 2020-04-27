@@ -5,9 +5,9 @@ import jMoria.game.enums.PlayerClass;
 import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
 
-public class ChooseClass extends AbstractScreen {
+public class ChooseClassScreen extends AbstractScreen {
 
-  public ChooseClass(ResourcePackage gameResources) {
+  public ChooseClassScreen(ResourcePackage gameResources) {
     super(gameResources);
   }
 

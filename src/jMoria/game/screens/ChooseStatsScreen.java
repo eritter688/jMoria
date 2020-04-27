@@ -6,11 +6,11 @@ import jMoria.game.player.PlayerCreator;
 import jMoria.game.screens.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
 
-public class ChooseStats extends AbstractScreen {
+public class ChooseStatsScreen extends AbstractScreen {
 
     private PlayerCreator pc;
 
-    public ChooseStats(ResourcePackage gameResources) {
+    public ChooseStatsScreen(ResourcePackage gameResources) {
         super(gameResources);
     }
 
@@ -43,7 +43,10 @@ public class ChooseStats extends AbstractScreen {
       render();
     } else if (key.equals("ESCAPE")) {
       // move to the town and start the game!!
-      System.out.println("TO TOWN!!");
+        // TODO
+        // Needs to go to choose class, then choose name before this!!
+        gameResources.game.setCurrentScreen(new GameScreen(gameResources));
+      //System.out.println("TO TOWN!!");
     }
   }
 }

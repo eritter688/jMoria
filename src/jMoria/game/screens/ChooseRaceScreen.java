@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class ChooseRace extends AbstractScreen {
+public class ChooseRaceScreen extends AbstractScreen {
 
   private Map<String, Race> choices =
           Map.ofEntries(
@@ -23,7 +23,7 @@ public class ChooseRace extends AbstractScreen {
                   entry("g", Race.HALF_ORC),
                   entry("h", Race.HALF_TROLL));
 
-  public ChooseRace(ResourcePackage gameResources) {
+  public ChooseRaceScreen(ResourcePackage gameResources) {
     super(gameResources);
   }
 
@@ -48,7 +48,7 @@ public class ChooseRace extends AbstractScreen {
   public void handleKey(String key) {
     if (this.listening && choices.containsKey(key)) {
       gameResources.player.race = choices.get(key);
-      gameResources.game.setCurrentScreen(new ChooseSex(gameResources));
+      gameResources.game.setCurrentScreen(new ChooseSexScreen(gameResources));
     }
   }
 }
