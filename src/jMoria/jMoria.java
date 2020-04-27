@@ -5,9 +5,21 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+/**
+ * jMoria - Application Start
+ * <p>
+ * Set the basic attributes for the primary JavaFX stage and load the sceneManager.
+ * <p>
+ * Window size is restricted to 800x600.
+ */
 public class jMoria extends Application {
 
-    protected static final String TITLE = "jMoria v0.1";
+    protected static final int MAJOR_VERSION = 0;
+    protected static final int MINOR_VERSION = 1;
+
+    protected static final String TITLE = String.format("jMoria v%d.%d",
+        MAJOR_VERSION,
+        MINOR_VERSION);
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 600;
 
