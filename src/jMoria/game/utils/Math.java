@@ -16,26 +16,27 @@ public class Math {
         }
     }
 
-    public static int rollDice(int rolls, int sides) {
-        int sum = 0;
-        for (int x = 0; x < rolls; x++) {
-            sum += (GENERATOR.nextInt(sides) + 1);
-        }
-        return sum;
+  public static int rollDice(int rolls, int sides) {
+    int sum = 0;
+    for (int x = 0; x < rolls; x++) {
+      sum += (GENERATOR.nextInt(sides) + 1);
     }
+    return sum;
+  }
 
-    public static int randInt(int bound) {
-        return GENERATOR.nextInt(bound) + 1;
-    }
+  // TODO Inclusive or Exclusive of bound...
+  public static int randInt(int bound) {
+    return GENERATOR.nextInt(bound) + 1;
+  }
 
-    public static int randNor(int mean, int stand) {
+  public static int randNor(int mean, int stand) {
 
-        int NORMAL_TABLE_SIZE = 256;
-        int NORMAL_TABLE_SD = 64;
+    int NORMAL_TABLE_SIZE = 256;
+    int NORMAL_TABLE_SD = 64;
 
-        int tmp, offset, low, iindex, high;
+    int tmp, offset, low, iindex, high;
 
-        tmp = randInt(32767);
+    tmp = randInt(32767);
 
         /* off scale, assign random value between 4 and 5 times SD */
         if (tmp == 32767) {

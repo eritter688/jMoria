@@ -1,16 +1,19 @@
 package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.dungeon.Dungeon;
+import jMoria.game.dungeon.MoriaMap;
+import jMoria.game.dungeon.MoriaMapCreator;
 import jMoria.game.player.Player;
 import jMoria.game.screens.keyhandlers.AbstractKeyHandler;
 import jMoria.game.screens.keyhandlers.GameKeyHandler;
 import jMoria.ui.Terminal;
+import java.util.List;
 
 public class GameScreen extends AbstractScreen {
 
   private AbstractKeyHandler gameKeyHandler;
-  private Dungeon dungeon;
+  private MoriaMap town;
+  private MoriaMap dungeon;
   private Player player;
 
   public GameScreen(ResourcePackage gameResources) {
@@ -21,6 +24,10 @@ public class GameScreen extends AbstractScreen {
   public void init() {
     this.gameKeyHandler = new GameKeyHandler();
     this.player = gameResources.player;
+    // TEMP
+    MoriaMapCreator mapCreator = new MoriaMapCreator();
+    mapCreator.createMap(0);
+    this.town = mapCreator.getMoriaMap();
   }
 
   @Override
@@ -78,8 +85,12 @@ public class GameScreen extends AbstractScreen {
 
   // TODO
   private void renderMap(Terminal t) {
-    for (int x = 2; x < 22; x++) {
-      t.writeStringAt(x, 14, ".".repeat(64));
+    List<String> mapRows = this.town.getMapSlice(1, 1, 64, 20);
+    int dRow = 2;
+    int dCol = 14;
+    for (String row : mapRows) {
+      t.writeStringAt(dRow, dCol, row);
+      dRow++;
     }
   }
 

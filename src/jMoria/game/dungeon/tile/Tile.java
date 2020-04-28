@@ -2,16 +2,10 @@ package jMoria.game.dungeon.tile;
 
 public class Tile {
 
-  public boolean isLit = false;
+  public TileType type;
 
-  public Tile() {
-
+  public Tile(TileType type) {
+    this.type = type;
   }
 
-  @Override
-  public String toString() {
-    return "Tile{" +
-        "isLit=" + isLit +
-        '}';
-  }
 }
