@@ -1,6 +1,6 @@
-package jMoria.game.enums;
+package jMoria.game.player.enums;
 
-public enum PlayerClass {
+public enum Class {
   WARRIOR("Warrior"),
   MAGE("Mage"),
   PRIEST("Priest"),
@@ -10,7 +10,7 @@ public enum PlayerClass {
 
   private final String playerClass;
 
-  PlayerClass(String playerClass) {
+  Class(String playerClass) {
     this.playerClass = playerClass;
   }
 

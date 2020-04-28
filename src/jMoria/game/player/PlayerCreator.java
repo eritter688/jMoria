@@ -1,7 +1,7 @@
 package jMoria.game.player;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.enums.Sex;
+import jMoria.game.player.enums.Sex;
 import jMoria.game.utils.CSVReader;
 
 import java.util.HashMap;

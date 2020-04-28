@@ -1,15 +1,15 @@
 package jMoria.game.player;
 
-import jMoria.game.enums.PlayerClass;
-import jMoria.game.enums.Race;
-import jMoria.game.enums.Sex;
+import jMoria.game.player.enums.Class;
+import jMoria.game.player.enums.Race;
+import jMoria.game.player.enums.Sex;
 
 public class Player {
 
   public String name;
   public Race race;
   public Sex sex;
-  public PlayerClass playerClass;
+  public Class playerClass;
 
   public int age;
   public int height;

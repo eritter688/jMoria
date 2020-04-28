@@ -1,7 +1,7 @@
 package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.enums.PlayerClass;
+import jMoria.game.player.enums.Class;
 import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
 
@@ -29,22 +29,22 @@ public class ChooseClassScreen extends AbstractScreen {
       Player player = gameResources.player;
       switch (key) {
         case "a":
-          player.playerClass = PlayerClass.WARRIOR;
+          player.playerClass = Class.WARRIOR;
           break;
         case "b":
-          player.playerClass = PlayerClass.MAGE;
+          player.playerClass = Class.MAGE;
           break;
         case "c":
-          player.playerClass = PlayerClass.PRIEST;
+          player.playerClass = Class.PRIEST;
           break;
         case "d":
-          player.playerClass = PlayerClass.ROGUE;
+          player.playerClass = Class.ROGUE;
           break;
         case "e":
-          player.playerClass = PlayerClass.RANGER;
+          player.playerClass = Class.RANGER;
           break;
         case "f":
-          player.playerClass = PlayerClass.PALADIN;
+          player.playerClass = Class.PALADIN;
           break;
       }
       gameResources.game.setCurrentScreen(this);

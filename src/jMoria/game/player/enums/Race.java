@@ -1,4 +1,4 @@
-package jMoria.game.enums;
+package jMoria.game.player.enums;
 
 public enum Race {
   HUMAN("Human"),
