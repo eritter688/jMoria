@@ -1,4 +1,4 @@
-package jMoria.game.dungeon;
+package jMoria.game.dungeon.tile;
 
 public class Tile {
 

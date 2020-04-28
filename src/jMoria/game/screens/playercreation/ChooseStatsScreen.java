@@ -1,9 +1,11 @@
-package jMoria.game.screens;
+package jMoria.game.screens.playercreation;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.player.Player;
 import jMoria.game.player.PlayerCreator;
-import jMoria.game.screens.statics.PlayerCreationRenders;
+import jMoria.game.screens.AbstractScreen;
+import jMoria.game.screens.GameScreen;
+import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
 
 public class ChooseStatsScreen extends AbstractScreen {

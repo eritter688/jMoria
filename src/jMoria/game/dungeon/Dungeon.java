@@ -1,5 +1,6 @@
 package jMoria.game.dungeon;
 
+import jMoria.game.dungeon.tile.Tile;
 import jMoria.game.monster.Monster;
 import jMoria.game.player.Player;
 
@@ -12,7 +13,7 @@ public class Dungeon {
   private Player player;
   private Monster[] monsters;
 
-  private int[][] map;
+  private Tile[][] map;
 
   public Dungeon(int width, int height, int depth) {
     this.width = width;

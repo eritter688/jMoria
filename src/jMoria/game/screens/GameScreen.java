@@ -1,8 +1,8 @@
 package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.keyhandlers.AbstractKeyHandler;
-import jMoria.game.keyhandlers.GameKeyHandler;
+import jMoria.game.screens.keyhandlers.AbstractKeyHandler;
+import jMoria.game.screens.keyhandlers.GameKeyHandler;
 import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
 

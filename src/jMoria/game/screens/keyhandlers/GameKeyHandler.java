@@ -1,4 +1,4 @@
-package jMoria.game.keyhandlers;
+package jMoria.game.screens.keyhandlers;
 
 public class GameKeyHandler extends AbstractKeyHandler {
 

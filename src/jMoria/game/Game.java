@@ -2,7 +2,7 @@ package jMoria.game;
 
 import jMoria.game.player.Player;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.game.screens.ChooseRaceScreen;
+import jMoria.game.screens.playercreation.ChooseRaceScreen;
 import jMoria.ui.Terminal;
 
 public class Game {
