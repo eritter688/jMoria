@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Rest {
+public class Rest extends AbstractCommand {
 
 }

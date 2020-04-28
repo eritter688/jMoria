@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Move {
+public class Move extends AbstractCommand {
 
 }

@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Inscribe {
+public class Inscribe extends AbstractCommand {
 
 }

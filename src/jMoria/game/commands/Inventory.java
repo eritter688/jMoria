@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Inventory {
+public class Inventory extends AbstractCommand {
 
 }

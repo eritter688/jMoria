@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Magic {
+public class Magic extends AbstractCommand {
 
 }

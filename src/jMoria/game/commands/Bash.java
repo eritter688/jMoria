@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Bash {
+public class Bash extends AbstractCommand {
 
 }

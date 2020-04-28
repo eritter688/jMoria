@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Zap {
+public class Zap extends AbstractCommand {
 
 }

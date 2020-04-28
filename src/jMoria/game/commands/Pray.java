@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Pray {
+public class Pray extends AbstractCommand {
 
 }

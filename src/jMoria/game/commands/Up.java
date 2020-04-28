@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Up {
+public class Up extends AbstractCommand {
 
 }

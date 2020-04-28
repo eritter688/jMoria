@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Disarm {
+public class Disarm extends AbstractCommand {
 
 }

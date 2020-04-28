@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Close {
+public class Close extends AbstractCommand {
 
 }

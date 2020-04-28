@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Quit {
+public class Quit extends AbstractCommand {
 
 }

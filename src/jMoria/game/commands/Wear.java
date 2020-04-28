@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Wear {
+public class Wear extends AbstractCommand {
 
 }

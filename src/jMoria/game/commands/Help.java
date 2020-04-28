@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Help {
+public class Help extends AbstractCommand {
 
 }

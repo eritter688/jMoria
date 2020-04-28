@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Wield {
+public class Wield extends AbstractCommand {
 
 }

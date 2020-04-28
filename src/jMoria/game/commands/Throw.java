@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Throw {
+public class Throw extends AbstractCommand {
 
 }

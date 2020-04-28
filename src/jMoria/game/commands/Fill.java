@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Fill {
+public class Fill extends AbstractCommand {
 
 }

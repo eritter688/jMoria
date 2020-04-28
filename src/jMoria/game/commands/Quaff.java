@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Quaff {
+public class Quaff extends AbstractCommand {
 
 }

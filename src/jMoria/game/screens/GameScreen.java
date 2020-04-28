@@ -1,6 +1,7 @@
 package jMoria.game.screens;
 
 import jMoria.game.ResourcePackage;
+import jMoria.game.dungeon.Dungeon;
 import jMoria.game.player.Player;
 import jMoria.game.screens.keyhandlers.AbstractKeyHandler;
 import jMoria.game.screens.keyhandlers.GameKeyHandler;
@@ -9,6 +10,7 @@ import jMoria.ui.Terminal;
 public class GameScreen extends AbstractScreen {
 
   private AbstractKeyHandler gameKeyHandler;
+  private Dungeon dungeon;
   private Player player;
 
   public GameScreen(ResourcePackage gameResources) {

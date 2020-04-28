@@ -1,5 +1,5 @@
 package jMoria.game.commands;
 
-public class Look {
+public class Look extends AbstractCommand {
 
 }
