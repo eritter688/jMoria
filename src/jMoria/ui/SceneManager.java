@@ -1,15 +1,14 @@
 package jMoria.ui;
 
 import jMoria.ui.controller.AbstractController;
+import java.io.IOException;
+import java.util.HashMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.HashMap;
 
 public class SceneManager extends StackPane {
 

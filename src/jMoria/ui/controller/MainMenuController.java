@@ -2,6 +2,7 @@ package jMoria.ui.controller;
 
 import jMoria.ui.ASCIILoader;
 import jMoria.ui.SceneManager;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,8 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
-import java.util.List;
 
 public class MainMenuController extends AbstractController {
 

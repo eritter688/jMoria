@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
-<HBox maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0"
-      xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="jMoria.ui.controller.MainMenuController">
-   <children>
-      <TextFlow fx:id="asciiArea" maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0"
-                prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;" textAlignment="CENTER">
-      </TextFlow>
-      <VBox fx:id="buttonArea" alignment="CENTER" maxHeight="600.0" maxWidth="200.0" minHeight="600.0"
-            minWidth="200.0" prefHeight="600.0" prefWidth="200.0" spacing="40.0" style="-fx-background-color: black">
-         <children>
-            <Button fx:id="newButton" mnemonicParsing="false" prefWidth="100.0" text="(N)ew"/>
-            <Button fx:id="loadButton" mnemonicParsing="false" prefWidth="100.0" text="(L)oad"/>
-            <Button fx:id="scoresButton" mnemonicParsing="false" prefWidth="100.0" text="(S)cores"/>
-            <Button fx:id="creditsButton" mnemonicParsing="false" prefWidth="100.0" text="(C)redits"/>
-            <Button fx:id="quitButton" mnemonicParsing="false" prefWidth="100.0" text="(Q)uit"/>
-         </children>
-      </VBox>
-   </children>
+<HBox maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0"
+  prefWidth="800.0"
+  xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="jMoria.ui.controller.MainMenuController">
+  <children>
+    <TextFlow fx:id="asciiArea" maxHeight="600.0" maxWidth="600.0" minHeight="600.0"
+      minWidth="600.0"
+      prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;"
+      textAlignment="CENTER">
+    </TextFlow>
+    <VBox fx:id="buttonArea" alignment="CENTER" maxHeight="600.0" maxWidth="200.0" minHeight="600.0"
+      minWidth="200.0" prefHeight="600.0" prefWidth="200.0" spacing="40.0"
+      style="-fx-background-color: black">
+      <children>
+        <Button fx:id="newButton" mnemonicParsing="false" prefWidth="100.0" text="(N)ew"/>
+        <Button fx:id="loadButton" mnemonicParsing="false" prefWidth="100.0" text="(L)oad"/>
+        <Button fx:id="scoresButton" mnemonicParsing="false" prefWidth="100.0" text="(S)cores"/>
+        <Button fx:id="creditsButton" mnemonicParsing="false" prefWidth="100.0" text="(C)redits"/>
+        <Button fx:id="quitButton" mnemonicParsing="false" prefWidth="100.0" text="(Q)uit"/>
+      </children>
+    </VBox>
+  </children>
 </HBox>

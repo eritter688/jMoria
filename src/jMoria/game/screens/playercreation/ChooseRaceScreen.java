@@ -1,28 +1,27 @@
 package jMoria.game.screens.playercreation;
 
+import static java.util.Map.entry;
+
 import jMoria.game.ResourcePackage;
-import jMoria.game.player.enums.Race;
 import jMoria.game.player.Player;
+import jMoria.game.player.enums.Race;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
-
 import java.util.Map;
-
-import static java.util.Map.entry;
 
 public class ChooseRaceScreen extends AbstractScreen {
 
   private Map<String, Race> choices =
-          Map.ofEntries(
-                  entry("a", Race.HUMAN),
-                  entry("b", Race.HALF_ELF),
-                  entry("c", Race.ELF),
-                  entry("d", Race.HALFLING),
-                  entry("e", Race.GNOME),
-                  entry("f", Race.DWARF),
-                  entry("g", Race.HALF_ORC),
-                  entry("h", Race.HALF_TROLL));
+      Map.ofEntries(
+          entry("a", Race.HUMAN),
+          entry("b", Race.HALF_ELF),
+          entry("c", Race.ELF),
+          entry("d", Race.HALFLING),
+          entry("e", Race.GNOME),
+          entry("f", Race.DWARF),
+          entry("g", Race.HALF_ORC),
+          entry("h", Race.HALF_TROLL));
 
   public ChooseRaceScreen(ResourcePackage gameResources) {
     super(gameResources);

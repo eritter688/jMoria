@@ -2,14 +2,13 @@ package jMoria.ui.controller;
 
 import jMoria.ui.ASCIILoader;
 import jMoria.ui.SceneManager;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
-import java.util.List;
 
 public class SplashController extends AbstractController {
 

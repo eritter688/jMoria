@@ -1,9 +1,5 @@
 package jMoria.ui;
 
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class ASCIILoader {
 
@@ -96,11 +95,11 @@ public class ASCIILoader {
 
   private void convertToText() {
     this.listOfStrings.forEach(
-            string -> {
-              Text t = new Text(string);
-              t.setFill(this.color);
-              t.setFont(this.font);
-              this.listOfTexts.add(t);
-            });
+        string -> {
+          Text t = new Text(string);
+          t.setFill(this.color);
+          t.setFont(this.font);
+          this.listOfTexts.add(t);
+        });
   }
 }

@@ -1,15 +1,14 @@
 package jMoria.game.screens.playercreation;
 
+import static java.util.Map.entry;
+
 import jMoria.game.ResourcePackage;
-import jMoria.game.player.enums.Sex;
 import jMoria.game.player.Player;
+import jMoria.game.player.enums.Sex;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
-
 import java.util.Map;
-
-import static java.util.Map.entry;
 
 public class ChooseSexScreen extends AbstractScreen {
 
