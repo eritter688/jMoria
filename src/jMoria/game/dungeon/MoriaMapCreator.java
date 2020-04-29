@@ -97,6 +97,8 @@ public class MoriaMapCreator {
     }
   }
 
+  // array[row_index][col_index]
+  // array[y][x]
   private void placeBoundary() {
     for (int i = 0; i < moriaMap.width; i++) {
       moriaMap.tileMap[i][0].type = TileType.WALL_BOUNDARY;

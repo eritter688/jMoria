@@ -33,10 +33,3 @@ public enum TileType {
   }
 
 }
-
-/*
-char BLOCK = '\u2588';
-    // TOP
-    t.writeStringAt(1, 13, String.valueOf(BLOCK).repeat(66));
-    // BOTTOM
- */

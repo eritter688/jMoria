@@ -12,32 +12,36 @@ public class MoriaMap {
   public int height;
   public Tile[][] tileMap;
 
-  public MoriaMap(int depth, int width, int height) {
+  // array[row_index][col_index]
+  // array[y][x]
+  public MoriaMap(int depth, int height, int width) {
     this.depth = depth;
-    this.width = width;
     this.height = height;
-    this.tileMap = new Tile[width][height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+    this.width = width;
+    this.tileMap = new Tile[height][width];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         tileMap[i][j] = new Tile(TileType.FLOOR_DARK);
       }
     }
+
   }
 
-  public List<String> getMapAsString() {
-    List<String> result = new ArrayList<>();
-    for (Tile[] tiles : tileMap) {
-      String rowString = "";
-      for (Tile t : tiles) {
-        rowString += t.type.getTileChar();
-      }
-      result.add(rowString);
+  public List<String> getMapSlice(int row, int col, int height, int width) {
+
+    if (row < 0 || row >= this.height) {
+      throw new IllegalArgumentException("requested row out of bounds.");
     }
-    return result;
-  }
+    if (col < 0 || col >= this.width) {
+      throw new IllegalArgumentException("requested column out of bounds.");
+    }
+    if ((row + height) >= this.height) {
+      throw new IllegalArgumentException("requested height out of bounds.");
+    }
+    if ((col + width) >= this.width) {
+      throw new IllegalArgumentException("requested width out of bounds.");
+    }
 
-  // NO SAFETY CHECKS
-  public List<String> getMapSlice(int row, int col, int width, int height) {
     List<String> result = new ArrayList<>();
     for (int i = row; i < row + height; i++) {
       StringBuilder rowString = new StringBuilder();
@@ -46,6 +50,7 @@ public class MoriaMap {
       }
       result.add(rowString.toString());
     }
+
     return result;
   }
 
