@@ -97,19 +97,38 @@ public class MoriaMapCreator {
     }
   }
 
-  // array[row_index][col_index]
-  // array[y][x]
+  /**
+   * Place boundary tiles around along the top and bottom rows, and the first and last column of the
+   * tileMap.
+   * <p>
+   * array[row_index][col_index] array[y][x]
+   */
   private void placeBoundary() {
-    for (int i = 0; i < moriaMap.width; i++) {
+    // left and right
+    for (int i = 0; i < moriaMap.height; i++) {
       moriaMap.tileMap[i][0].type = TileType.WALL_BOUNDARY;
-      moriaMap.tileMap[i][moriaMap.height - 1].type = TileType.WALL_BOUNDARY;
+      moriaMap.tileMap[i][moriaMap.width - 1].type = TileType.WALL_BOUNDARY;
     }
-    for (int j = 0; j < moriaMap.height; j++) {
+    // top and bottom
+    for (int j = 0; j < moriaMap.width; j++) {
       moriaMap.tileMap[0][j].type = TileType.WALL_BOUNDARY;
-      moriaMap.tileMap[moriaMap.width - 1][j].type = TileType.WALL_BOUNDARY;
+      moriaMap.tileMap[moriaMap.height - 1][j].type = TileType.WALL_BOUNDARY;
     }
   }
 
+  /**
+   * Place 'num' staircases of 'type' randomly on the map.
+   * <p>
+   * Can only be placed on a tile of the OPEN_SPACE type. // TODO Cannot be placed on a tile that is
+   * already occupied by something.
+   * <p>
+   * <p>
+   * array[row_index][col_index] array[y][x]
+   *
+   * @param type       Staircase type: up or down.
+   * @param num        Number of staircases to place on the map. 1-3.
+   * @param nextToWall Should this be next to a wall?? //TODO
+   */
   private void placeStairs(TileType type, int num, boolean nextToWall) {
 
     if (!TileSets.STAIR_TYPES.contains(type)) {
@@ -124,12 +143,12 @@ public class MoriaMapCreator {
     boolean flag = false;
     for (int i = 0; i < num; i++) {
       do {
-        int x = Math.randInt(moriaMap.width);
         int y = Math.randInt(moriaMap.height);
-        Tile t = moriaMap.tileMap[x][y];
-        if (nextToWall && !nextToWalls(x, y)) {
-          break;
-        }
+        int x = Math.randInt(moriaMap.width);
+        Tile t = moriaMap.tileMap[y][x];
+//        if (nextToWall && !nextToWalls(x, y)) {
+//          break;
+//        }
         // TODO Ensure tile is 'empty' ie no treasure/monster/etc...
         if (TileSets.OPEN_SPACE.contains(t.type)) {
           t.type = type;
@@ -139,15 +158,15 @@ public class MoriaMapCreator {
     }
   }
 
-  // TODO
-  // This only covers n/s/w/e...
-  // What about nw/ne/sw/se ??
-  // BOUNDARY CHECK?
-  public boolean nextToWalls(int x, int y) {
-    return (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x - 1][y].type)) ||
-        (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x + 1][y].type)) ||
-        (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x][y - 1].type)) ||
-        (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x][y + 1].type));
-  }
+//  // TODO
+//  // This only covers n/s/w/e...
+//  // What about nw/ne/sw/se ??
+//  // BOUNDARY CHECK?
+//  public boolean nextToWalls(int x, int y) {
+//    return (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x - 1][y].type)) ||
+//        (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x + 1][y].type)) ||
+//        (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x][y - 1].type)) ||
+//        (TileSets.WALL_TYPES.contains(moriaMap.tileMap[x][y + 1].type));
+//  }
 
 }

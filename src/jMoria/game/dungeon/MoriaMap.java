@@ -24,7 +24,6 @@ public class MoriaMap {
         tileMap[i][j] = new Tile(TileType.FLOOR_DARK);
       }
     }
-
   }
 
   public List<String> getMapSlice(int row, int col, int height, int width) {

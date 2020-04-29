@@ -72,9 +72,8 @@ public class GameScreen extends AbstractScreen {
 
   private void renderMapBorder(Terminal t) {
     char BLOCK = '\u2588';
-    // TOP
+    // TOP/BOTTOM
     t.writeStringAt(1, 13, String.valueOf(BLOCK).repeat(66));
-    // BOTTOM
     t.writeStringAt(22, 13, String.valueOf(BLOCK).repeat(66));
     // LEFT/RIGHT
     for (int x = 1; x < 23; x++) {
@@ -85,7 +84,7 @@ public class GameScreen extends AbstractScreen {
 
   // TODO
   private void renderMap(Terminal t) {
-    List<String> mapRows = this.town.getMapSlice(1, 1, 64, 20);
+    List<String> mapRows = this.town.getMapSlice(1, 1, 20, 64);
     int dRow = 2;
     int dCol = 14;
     for (String row : mapRows) {
