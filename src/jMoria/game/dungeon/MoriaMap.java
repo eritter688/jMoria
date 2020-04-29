@@ -19,9 +19,9 @@ public class MoriaMap {
     this.height = height;
     this.width = width;
     this.tileMap = new Tile[height][width];
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        tileMap[i][j] = new Tile(TileType.FLOOR_DARK);
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        tileMap[y][x] = new Tile(TileType.NULL);
       }
     }
   }
@@ -31,29 +31,14 @@ public class MoriaMap {
   // ensure this doesn't give a hint to the player that they are near
   // the boundary of the map...
   public List<String> getMapSlice(int row, int col, int height, int width) {
-
-    if (row < 0 || row >= this.height) {
-      throw new IllegalArgumentException("requested row out of bounds.");
-    }
-    if (col < 0 || col >= this.width) {
-      throw new IllegalArgumentException("requested column out of bounds.");
-    }
-    if ((row + height) >= this.height) {
-      throw new IllegalArgumentException("requested height out of bounds.");
-    }
-    if ((col + width) >= this.width) {
-      throw new IllegalArgumentException("requested width out of bounds.");
-    }
-
     List<String> result = new ArrayList<>();
-    for (int i = row; i < row + height; i++) {
+    for (int y = row; y < row + height; y++) {
       StringBuilder rowString = new StringBuilder();
-      for (int j = col; j < col + width; j++) {
-        rowString.append(tileMap[i][j].type.getTileChar());
+      for (int x = col; x < col + width; x++) {
+        rowString.append(tileMap[y][x].type.getTileChar());
       }
       result.add(rowString.toString());
     }
-
     return result;
   }
 

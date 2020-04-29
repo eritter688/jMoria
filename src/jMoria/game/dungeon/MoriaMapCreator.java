@@ -34,21 +34,24 @@ public class MoriaMapCreator {
   }
 
   private void createTown() {
-    //fillCave(TileType.FLOOR_DARK);
-    fillCave(TileType.FLOOR_LIGHT);
 
+    // Place the six store types randomly at each of the six predetermined
+    // start points.
     List<TileType> store_list = new ArrayList<>();
     TileSets.STORE_TYPES.iterator().forEachRemaining(store_list::add);
     Collections.shuffle(store_list);
-
-    Iterator<TileType> iterator = store_list.iterator();
-    for (int i = 0; i < 2; i++) {
-      for (int j = 0; j < 3; j++) {
-        placeStore(iterator.next(), i * 10 + 5, j * 16 + 16);
-      }
+    Iterator<TileType> store_iterator = store_list.iterator();
+    int[] rows = {5, 5, 5, 15, 15, 15};
+    int[] cols = {16, 32, 48, 16, 32, 48};
+    for (int i = 0; i < 6; i++) {
+      placeStore(store_iterator.next(), rows[i], cols[i]);
     }
-    placeBoundary();
+    //fillCave(TileType.FLOOR_DARK);
+    fillCave(TileType.FLOOR_LIGHT);
+    placeBoundaryWall();
     placeStairs(TileType.STAIRCASE_DOWN, 1, false);
+    // allocate monsters
+    // do store maintenance
   }
 
   private void createDungeon(int depth) {
@@ -78,6 +81,12 @@ public class MoriaMapCreator {
     }
 
     // Place the door...
+    int tmp = Math.randInt(4);
+    if (tmp == 0 || tmp == 1) {
+      // horizontal coordinate
+    } else {
+      // vertical coordinate
+    }
     switch (Math.randInt(4)) {
       case 0:
         // door on top
@@ -92,32 +101,20 @@ public class MoriaMapCreator {
         // door on right
         break;
     }
-
-    //    // Place the door!
-//    int i, j;
-//    int tmp = Math.randInt(4);
-//    if (tmp < 3) {
-//      i = Math.randInt(y_depth - y_height) + y_height - 1;
-//      if (tmp == 1) {
-//        j = x_left;
-//      } else {
-//        j = x_right;
-//      }
-//    } else {
-//      j = Math.randInt(x_right - x_left) + x_left - 1;
-//      if (tmp == 3) {
-//        i = y_depth;
-//      } else {
-//        i = y_height;
-//      }
-//    }
-    moriaMap.tileMap[i][j].type = type;
+    //moriaMap.tileMap[i][j].type = type;
   }
 
+  /**
+   * Fill in empty (NULL) map tiles with desired type.
+   *
+   * @param type Type of tile to use as filler.
+   */
   private void fillCave(TileType type) {
     for (Tile[] tileRow : moriaMap.tileMap) {
       for (Tile t : tileRow) {
-        t.type = type;
+        if (t.type == TileType.NULL) {
+          t.type = type;
+        }
       }
     }
   }
@@ -128,7 +125,7 @@ public class MoriaMapCreator {
    * <p>
    * array[row_index][col_index] array[y][x]
    */
-  private void placeBoundary() {
+  private void placeBoundaryWall() {
     // left and right
     for (int i = 0; i < moriaMap.height; i++) {
       moriaMap.tileMap[i][0].type = TileType.WALL_BOUNDARY;
