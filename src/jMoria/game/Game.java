@@ -24,6 +24,8 @@ public class Game {
 
   public void newGame() {
     init();
+    // thread create town
+    // thread create dungeon level 50
     gameResources.player = new Player();
     setCurrentScreen(new ChooseRaceScreen(gameResources));
   }
