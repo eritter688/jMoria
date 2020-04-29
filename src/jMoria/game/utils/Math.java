@@ -24,9 +24,9 @@ public class Math {
     return sum;
   }
 
-  // TODO Inclusive or Exclusive of bound...
+  // [0, bound)
   public static int randInt(int bound) {
-    return GENERATOR.nextInt(bound) + 1;
+    return GENERATOR.nextInt(bound);
   }
 
   public static int randNor(int mean, int stand) {

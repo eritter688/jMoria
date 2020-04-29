@@ -122,8 +122,8 @@ public class MoriaMapCreator {
     boolean flag = false;
     for (int i = 0; i < num; i++) {
       do {
-        int x = Math.randInt(moriaMap.width) - 1;
-        int y = Math.randInt(moriaMap.height) - 1;
+        int x = Math.randInt(moriaMap.width);
+        int y = Math.randInt(moriaMap.height);
         Tile t = moriaMap.tileMap[x][y];
         if (nextToWall && !nextToWalls(x, y)) {
           break;
