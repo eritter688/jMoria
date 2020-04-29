@@ -1,0 +1,828 @@
+/****************************************************************************
+ * This source file was written by Acorn Computers Limited. It is part of   *
+ * the RISCOS library for writing applications in C for RISC OS. It may be  *
+ * used freely in the creation of programs for Archimedes. It should be     *
+ * used with Acorn's C Compiler Release 3 or later.                         *
+ *                                                                          *
+ ***************************************************************************/
+
+/*
+ *   Title:   wimp.h
+ *   Purpose: C interface to RISC OS Wimp routines.   
+ */
+
+#ifndef __wimpdata_h
+#define __wimpdata_h
+
+#ifndef BOOL
+ #define BOOL  int
+ #define TRUE  1
+ #define FALSE 0
+#endif
+
+
+#define ICONBAR_LEFT        (-2)
+#define ICONBAR_RIGHT       (-1)
+#define ICONBAR_HANDLE      (-2)
+#define WIMP_SPRITEAREA       1
+#define SPRITE_READINFO       40
+#define SPRITE_READUSERINFO   296
+#define MODE_XEIG             4
+#define MODE_YEIG             5
+
+
+typedef enum                          /* window flag set                      */
+  {
+  MOVEABLE          = 0x00000002,     /* is moveable                          */
+  AUTO_REDRAW       = 0x00000010,     /* can be redrawn entirely by wimp      */
+                                      /* ie. no user graphics                 */
+  PANE              = 0x00000020,     /* window is stuck over tool window     */
+  NO_BOUNDS         = 0x00000040,     /* window is allowed to go outside      */
+                                      /* main area                            */
+  SCROLL_AUTO       = 0x00000100,     /* scroll request returned when         */
+                                      /* scroll button clicked- auto repeat   */
+  SCROLL_DEBOUNCED  = 0x00000200,     /* as SCROLL_AUTO, debounced, no auto   */
+  REAL_COLOURS      = 0x000000400,    /* use real window colours.             */
+  BACK_WINDOW       = 0x000000800,    /* this window is a background window.  */
+  HOT_KEYS          = 0x000001000,    /* generate events for 'hot keys'       */
+
+  IS_OPEN           = 0x00010000,     /* window is open                       */
+  IS_TOP            = 0x00020000,     /* window is on top (not covered)       */
+  IS_FULL           = 0x00040000,     /* window is full size                  */
+  IS_CLICK_TOGGLE   = 0x00080000,     /* open_window_request was due to click */
+                                      /* on toggle-size button                */
+  HAS_FOCUS         = 0x00100000,     /* window has input focus               */ 
+
+  BACK_BUTTON       = 0x01000000,     /* window has back button               */
+  QUIT_BUTTON       = 0x02000000,     /* has a quit button                    */
+  TITLE_BAR         = 0x04000000,     /* has a title bar                      */
+  TOGGLE_BUTTON     = 0x08000000,     /* has a toggle-size button             */
+  VERTICAL_SCROLL   = 0x10000000,     /* has vertical scroll bar              */
+  SIZE_BUTTON       = 0x20000000,     /* has size box                         */
+  HORIZONTAL_SCROLL = 0x40000000,     /* has horizontal scroll bar            */
+  NEW   = ~0x7fffffff                 /* use these new flags                  */
+                                      /* NB! always set the NEW flag          */
+  }
+windowflags;
+
+
+typedef enum
+  {
+  TITLE_FORE,
+  TITLE_BACK,
+  WORKAREA_FORE,
+  WORKAREA_BACK,
+  SCROLL_OUTER,
+  SCROLL_INNER,
+  TITLE_HIGHLIGHT,
+  RESERVED
+  }
+windowcolours;
+/* If work area background is 255 then it isn't painted.                 */
+/* If title foreground is 255 then you get no borders, title etc. at all */
+#define INVISIBLE_BACKGROUND 255
+#define INVISIBLE_OUTLINES   255
+
+
+typedef enum                         /* icon flag set */
+  {
+  HAS_TEXT         = 0x00000001,     /* icon contains text                 */
+  HAS_SPRITE       = 0x00000002,     /* icon is a sprite                   */
+  HAS_BORDER       = 0x00000004,     /* icon has a border                  */
+  HORIZONAL_CENTRE = 0x00000008,     /* text is horizontally centred       */
+  VERTICAL_CENTRE  = 0x00000010,     /* text is vertically centred         */
+  FILLED           = 0x00000020,     /* icon has a filled background       */
+  FANCY_FONT       = 0x00000040,     /* text is an anti-aliased font       */
+  USER_REDRAW      = 0x00000080,     /* redraw needs application's help    */
+  INDIRECTED       = 0x00000100,     /* icon data is 'indirected'          */
+  RIGHT_JUSTIFY    = 0x00000200,     /* text right justified in box        */
+  ESG_NOCANCEL     = 0x00000400,     /* if selected by right button, don't */
+                                     /* cancel other icons in same ESG     */
+  HALVESPRITE      = 0x00000800,     /* plot sprites half-size             */
+  BUTTON_FIELD     = 0x00001000,     /* 4-bit field: button type           */
+  SELECTED         = 0x00200000,     /* icon selected by user (inverted)   */
+  NOT_SELECTABLE   = 0x00400000,     /* icon cannot be selected (shaded)   */
+  DELETED          = 0x00800000,     /* icon has been deleted              */
+  FOREGROUND_FIELD = 0x01000000,     /* 4-bit field: foreground colour     */
+  BACKGROUND_FIELD = 0x10000000      /* 4-bit field: background colour     */
+  }
+iconflagnums;
+typedef int iconflags;
+/* If the icon contains anti-aliased text then */
+/* the colour fields give the font handle:     */
+#define FONTHANDLE_FIELD 0x01000000
+
+
+typedef enum                  /* button types */
+  {
+  IGNORE,               /* ignore all mouse ops */
+  NOTIFY,
+  CLICKAUTO,
+  CLICKDEBOUNCE,
+  SELREL,
+  SELDOUBLE,
+  DEBOUNCEDRAG,
+  RELEASEDRAG,
+  DOUBLEDRAG,
+  SELNOTIFY,
+  CLICKDRAGDOUBLE,
+  CLICKSEL,              /* useful for on/off and radio buttons */
+  WRITABLE = 15
+  }
+buttontype;
+
+
+typedef enum   /* button state bits */
+  {
+  ADJUST        = 0x001,
+  MENU          = 0x002,
+  SELECT        = 0x004,
+  DRAG_ADJUST   = 0x010,
+  DRAG_SELECT   = 0x040,
+  TYPE10_ADJUST = 0x100,
+  TYPE10_SELECT = 0x400
+  }
+buttonstate;
+
+
+typedef enum
+  {
+  MOVE_WINDOW    = 1,      /* change position of window     */
+  RESIZE_WINDOW  = 2,      /* change size of window         */
+  SCROLL_HBAR    = 3,      /* drag horizontal scroll bar    */
+  SCROLL_VBAR    = 4,      /* drag vertical scroll bar      */
+  USER_BOX       = 5,      /* user drag box - fixed size    */
+  USER_RUBBER    = 6,      /* user drag box - rubber box    */
+  USER_HIDDEN    = 7       /* user drag box - invisible box */
+  }
+dragtype;
+
+
+/*****************************************************************************/
+
+
+typedef int windowhandle; /* abstract window handle */
+typedef int iconhandle;   /* abstract icon handle   */
+typedef int taskhandle;   /* abstract task handle   */
+
+
+typedef struct
+  {
+  char *name;
+  void *area;           /* 0->use the common sprite area               */
+                        /* 1->use the wimp sprite area                 */
+  BOOL  nameisname;     /* if FALSE, name is in fact a sprite pointer. */
+  }
+indirectedsprite;
+
+
+typedef struct          /* if indirect */          
+  {           
+  char *buffer;         /* pointer to text buffer       */
+  char *validstring;    /* pointer to validation string */
+  int   bufflen;        /* length of text buffer        */
+  }
+indirectedtext;
+
+
+typedef union    /* the data field in an icon */
+  {             
+  char             text[12];          /* up to 12 bytes of text        */
+  char             sprite_name[12];   /* up to 12 bytes of sprite name */
+  indirectedsprite indirectedsprite;
+  indirectedtext   indirectedtext;
+  } 
+icondata;
+
+
+typedef struct
+  {
+  int x, y;
+  }
+coord;
+
+
+typedef struct
+  {
+  coord min, max;
+  }
+rect;
+
+
+/* Wimp Colours */
+
+#define WIMP_WHITE          ((char) 0)
+#define WIMP_LIGHTGREY_HIGH ((char) 1)
+#define WIMP_LIGHTGREY_LOW  ((char) 2)
+#define WIMP_MIDGREY_HIGH   ((char) 3)
+#define WIMP_MIDGREY_LOW    ((char) 4)
+#define WIMP_DARKGREY_HIGH  ((char) 5)
+#define WIMP_DARKGREY_LOW   ((char) 6)
+#define WIMP_BLACK          ((char) 7)
+#define WIMP_DARKBLUE       ((char) 8)
+#define WIMP_YELLOW         ((char) 9)
+#define WIMP_LIGHTGREEN     ((char) 10)
+#define WIMP_RED            ((char) 11)
+#define WIMP_CREAM          ((char) 12)
+#define WIMP_DARKGREEN      ((char) 13)
+#define WIMP_ORANGE         ((char) 14)
+#define WIMP_LIGHTBLUE      ((char) 15)
+
+
+typedef struct
+  {
+  rect         visiblearea;   /* screen coords of work area                 */
+  coord        scroll;        /* scroll bar positions                       */
+  windowhandle windowbehind;  /* handle to open window behind, or -1 if top */
+  windowflags  flags;         /* word of flag bits defined above            */
+  char         colours[8];    /* colours: index using wimp_wcolours.        */
+  rect         extent;        /* maximum extent of work area                */
+  iconflags    titleflags;    /* icon flags for title bar                   */
+  iconflags    workflags;     /* just button type relevant                  */
+  void        *spritearea;    /* 0->use the common sprite area              */
+                              /* 1->use the wimp sprite area                */
+  int          minsize;       /* two 16-bit OS-unit fields, (width/height)  */
+                              /* giving min size of window. 0->use title.   */
+  icondata     title;         /* title icon data                            */
+  int          numicons;      /* no. of icons in window                     */
+  }
+window;
+/* If there are any icon definitions, they should */
+/* follow this structure immediately in memory.   */
+
+
+typedef struct           /* result of get_info call. */
+  {
+  windowhandle windowhandle;
+  window       window;
+  }
+windowinfo;
+/* Space for icons must follow. */
+
+
+typedef struct
+  {                    /* icon description structure         */
+  rect      pos;       /* bounding box - relative to         */
+                       /* window origin (work area top left) */
+  iconflags flags;     /* word of flag bits defined above    */
+  icondata  data;      /* union of bits & bobs as above      */
+  }
+icon;
+
+
+typedef struct     /* structure for creating icons. */
+  {
+  windowhandle windowhandle;
+  icon         icon;
+  }
+createiconinfo;
+
+
+typedef struct     /* structure returned by Wimp_GetIconState */
+  {
+  windowhandle windowhandle;
+  iconhandle   iconhandle;         /* <- Has this extra word of info here */
+  icon         icon;
+  }
+iconstate;
+
+
+typedef struct 
+  {
+  windowhandle handle;      /* window handle                            */
+  rect         screenpos;   /* position on screen of visible work area  */
+  coord        scroll;      /* 'real' coordinates of visible work area  */
+  windowhandle behind;      /* handle of window to go behind (-1 = top, */
+                            /* -2 = bottom)                             */
+  }
+openwindowinfo;
+/* a couple of #defs for the above */
+#define OPEN_ON_TOP    (-1)
+#define OPEN_ON_BOTTOM (-2)
+
+
+typedef struct         /* result for window state enquiry */
+  {
+  windowhandle handle;  
+  rect         screenpos;   
+  coord        scroll; 
+  windowhandle behind;
+  windowflags  flags;
+  } 
+windowstate;
+
+
+/* Note that these are not upper case   */
+/* to conform with the 1.2 user manuals */
+typedef enum      /* event types */
+  {
+  Null_Reason_Code,
+  Redraw_Window_Request, 
+  Open_Window_Request,
+  Close_Window_Request,
+  Pointer_Leaving_Window,
+  Pointer_Entering_Window,
+  Mouse_Button_Change,  
+  User_Drag_Box,
+  Key_Pressed,
+  Menu_Select,
+  Scroll_Request,
+  Lose_Caret,
+  Gain_Caret,
+  Send_Message              = 17, /* send message, don't worry if it doesn't arrive */
+  Send_Message_Acknowledged = 18, /* send message, return ack if not acknowledged   */
+  Acknowledge_Message       = 19  /* acknowledge receipt of message.                */
+  }
+eventtype;
+
+
+typedef enum                 /* event type masks */
+  {
+  Mask_Null_Reason_Code           = 1 << Null_Reason_Code,
+  Mask_Redraw_Window_Request      = 1 << Redraw_Window_Request,
+  Mask_Open_Window_Request        = 1 << Open_Window_Request,
+  Mask_Close_Window_Request       = 1 << Close_Window_Request,
+  Mask_Pointer_Leaving_Window     = 1 << Pointer_Leaving_Window,
+  Mask_Pointer_Entering_Window    = 1 << Pointer_Entering_Window,
+  Mask_Mouse_Button_Change        = 1 << Mouse_Button_Change,
+  Mask_User_Drag_Box              = 1 << User_Drag_Box,
+  Mask_Key_Pressed                = 1 << Key_Pressed,
+  Mask_Menu_Select                = 1 << Menu_Select,
+  Mask_Scroll_Request             = 1 << Scroll_Request,
+  Mask_Lose_Caret                 = 1 << Lose_Caret,
+  Mask_Gain_Caret                 = 1 << Gain_Caret,
+  Mask_Send_Message               = 1 << Send_Message,
+  Mask_Send_Message_Acknowledged  = 1 << Send_Message_Acknowledged,
+  Mask_Acknowledge_Message        = 1 << Acknowledge_Message
+  }
+eventmask;
+
+
+typedef struct
+  {
+  windowhandle windowhandle;
+  rect         screenpos;       /* work area coordinates */
+  coord        scroll;          /* scroll bar positions */
+  rect         invalid;         /* current graphics window */
+  }
+redrawinfo;
+
+
+typedef struct
+  {
+  windowhandle windowhandle;
+  rect         invalid;         /* area to invalidate */
+  }
+updateinfo;
+
+
+typedef struct
+  {
+  coord        pos;       /* mouse x and y                */
+  buttonstate  buttons;   /* button state                 */
+  windowhandle window;    /* window handle, or -1 if none */
+  iconhandle   icon;      /* icon handle, or -1 if none   */
+  }
+pointerinfo;
+
+
+typedef struct
+  {
+  windowhandle window;
+  iconhandle   icon;
+  coord        offset;             /* offset relative to window origin     */
+  int          height;             /* -1 if calc within icon               */
+                                   /* bit 24 -> VDU-5 type caret           */
+                                   /* bit 25 -> caret invisible            */
+                                   /* bit 26 -> bits 16..23 contain colour */
+                                   /* bit 27 -> colour is "real" colour    */
+  int          textpos;            /* position within icon                 */ 
+  }
+caretinfo;
+
+
+/* Message action codes are allocated just like SWI codes. */
+typedef enum 
+  {
+  Message_CloseDown    = 0,   /* Reply if any dialogue with the user is required, */
+                              /* and the closedown sequence will be aborted.      */
+  Message_DataSave      = 1,  /* request to identify directory                    */
+  Message_DataSaveOK    = 2,  /* reply to message type 1                          */
+  Message_DataLoad      = 3,  /* request to load/insert dragged icon              */
+  Message_DataLoadOK    = 4,  /* reply that file has been loaded                  */
+  Message_DataOpen      = 5,  /* warning that an object is to be opened           */
+  Message_RamFetch      = 6,  /*   transfer data to buffer in my workspace        */
+  Message_RamTransmit   = 7,  /* I have transferred some data to a buffer in your */
+                              /*   workspace                                      */
+  Message_PreQuit       = 8,
+  Message_PalleteChange = 9,
+  Message_SaveDesk      = 10, /* Wimp 2.43 onwards - desktop closedown message    */
+  Message_DeviceClaim   = 11, /* Broadcast before an application can claim        */
+                              /* parallel port, RS232 port etc.                   */
+  Message_DeviceInUse   = 12, /* Reply if another application is already using    */
+                              /* the device                                       */
+  Message_DataSaved     = 13, /* A file previously saved has become 'safe'        */
+
+  Message_FilerOpenDir  = 0x0400,
+  Message_FilerCloseDir = 0x0401,
+
+  Message_Notify        = 0x40040, /* net filer notify broadcast */
+
+  Message_MenuWarn      = 0x400c0, /* menu warning. Sent if wimp_MSUBLINKMSG set. */
+                                   /* Data sent is:                               */
+                                   /*   submenu field of relevant wimp_menuitem.  */
+                                   /*   screen x-coord                            */
+                                   /*   screen y-coord                            */
+                                   /*   list of menu selection indices            */
+                                   /*                   (0..n-1 for each menu)    */
+                                   /*   terminating -1 word.                      */
+                                   /* Typical response is to call                 */
+                                   /*                 wimp_create_submenu.        */
+  Message_ModeChange    = 0x400c1,
+  Message_InitTask      = 0x400c2,
+  Message_CloseTask     = 0x400c3,
+  Message_SlotChange    = 0x400c4, /* Slot size has altered                       */
+  Message_SetSlot       = 0x400c5, /* Task manager requests application           */
+                                   /*   to change its slot size                   */
+  Message_TaskNameReq   = 0x400c6, /* Request task name                           */
+  Message_TasknameIs    = 0x400c7, /* Reply to task name request                  */
+  Message_TaskStarted   = 0x400c8, /* Broadcast by task to indicate that it has   */
+                                   /*   now fully started                         */
+
+  Message_HelpReq       = 0x502,   /* interactive help request                    */
+  Message_HelpReply     = 0x503,   /* interactive help message                    */
+
+  /* Messages for dialogue with printer applications */
+
+  Message_PrintFile     = 0x80140, /* Printer app's first response to             */
+                                   /* a DATASAVE                                  */
+  Message_WillPrint     = 0x80141, /* Acknowledgement of PrintFile                */
+  Message_PrintTypeOdd  = 0x80145, /* Broadcast when strange files                */
+                                   /*   dropped on the printer                    */
+  Message_PrintTypeKnown= 0x80146, /* Ack to above                                */
+  Message_PrinterChange = 0x80147  /* New printer application installed           */
+  }
+messagetype;
+
+
+typedef struct       /* message block header. */
+  {
+  int            size;        /* 20<=size<=256, multiple of 4              */
+  taskhandle     taskhandle;  /* task handle of sender (filled in by wimp) */
+  int            my_ref;      /* unique ref number (filled in by wimp)     */
+  int            your_ref;    /* (0==>none) if non-zero, acknowledge       */
+  messagetype    type;        /* message action code                       */
+  }
+messageheader;
+/* size is the size of the whole msgstr, see below. */
+
+
+typedef struct
+  {
+  windowhandle windowhandle;   /* window in which save occurs.                        */
+  iconhandle   iconhandle;     /* icon there                                          */
+  coord        position;       /* position within that window of destination of save. */
+  int          estdatasize;    /* estimated size of data, in bytes                    */
+  int          filetype;       /* file type of data to save                           */
+  char         leafname[212];  /* proposed leaf-name of file, 0-terminated            */
+  }
+datasave;
+
+
+typedef struct
+  {
+  /* w, i, x, y, type, estsize copied unaltered from DataSave message. */
+  windowhandle windowhandle;   /* window in which save occurs.                        */
+  iconhandle   iconhandle;     /* icon there                                          */
+  coord        position;       /* position within that window of destination of save. */
+  int          estdatasize;    /* estimated size of data, in bytes                    */
+  int          filetype;       /* file type of data to save                           */
+  char         fullname[212];  /* the name of the file to save                        */
+  }
+datasaveok;
+
+
+typedef struct
+  {
+  windowhandle windowhandle;       /* target window                            */
+  iconhandle   iconhandle;         /* target icon                              */
+  coord        position;           /* target coords in target window work area */
+  int          size;               /* must be 0                                */
+  int          filetype;           /* type of file                             */
+  char         fullname[212];      /* the filename follows.                    */
+  }
+dataload;
+
+/* for a data load reply, no arguments are required. */
+
+typedef dataload dataopen;
+/* The data provided when opening a file is exactly the same. the             */
+/* window, x, y refer to the bottom lh corner of the icon that represents the */
+/* file being opened, or w=-1 if there is no such.                            */
+
+
+typedef struct               /* transfer data in memory */
+  {
+  char *addr;                /* address of data to transfer */
+  int   numbytes;            /* number of bytes to transfer */
+  }
+ramfetch;
+
+
+typedef struct               /* I have transferred some data to a buffer in your workspace */
+  {
+  char *addr;                /* copy of value sent in RAMfetch */
+  int   numbyteswritten;     /* number of bytes written        */
+  }
+ramtransmit;
+
+
+typedef struct             /* Save state for restart */
+  {
+  int filehandle;          /* RISC OS file handle (not a C one!) */
+  }
+savedesk;
+
+
+typedef struct
+  {
+  int  major;               /* Major device number                */
+  int  minor;               /* Minor device number                */
+  char information[228];    /* Null-terminated information string */
+  }
+deviceinfo;
+
+
+typedef struct
+  {
+  pointerinfo pointerinfo;    /* where the help is required */
+  }
+helprequest;
+
+
+typedef struct
+  {
+  char helptext[200];     /* the helpful string */
+  }
+helpreply;
+
+
+typedef struct           /* structure used in all print messages */
+  {
+  int  filler[5];
+  int  filetype;         /* filetype */
+  char name[256-44];     /* filename */
+  }
+printinfo;
+
+
+typedef struct         /* message block */
+  {
+  messageheader header;
+  union 
+    {
+    char        byte[236];
+    int         word[59];        /* max data size. */
+    datasave    datasave;
+    datasaveok  datasaveok;
+    dataload    dataload;
+    dataopen    dataopen;
+    ramfetch    ramfetch;
+    ramtransmit ramtransmit;
+    helprequest helprequest;
+    helpreply   helpreply;
+    printinfo   printinfo;
+    savedesk    savedesk;
+    deviceinfo  devicenfo;
+    }
+  data;
+  }
+messageinfo;
+
+
+typedef struct
+  {
+  pointerinfo pointerinfo;
+  buttonstate oldbuttonstate;
+  }
+buttonchange;   /* for button change event */
+
+
+typedef struct 
+  {
+  caretinfo caretinfo;
+  int       code;
+  }
+keypress;  /* for key events */
+
+
+typedef struct
+  {
+  int x,y;
+  }
+scrollrequest;
+
+
+typedef struct                      /* for scroll request                    */
+  {                                 /* x=-1 for left, +1 for right           */
+  openwindowinfo window;            /* y=-1 for down, +1 for up              */
+  scrollrequest  request;           /* scroll by +/-2 -> page scroll request */
+  }
+scrollinfo;
+
+
+typedef struct
+  {
+  windowhandle window;
+  dragtype     type;
+  rect         startbox;         /* initial position for drag box */
+  rect         boundingbox;      /* parent box for drag box       */
+  }
+draginfo;
+
+
+typedef struct
+  {
+  rect         endbox;
+  }
+dragreturn;
+
+
+typedef union 
+  {
+  openwindowinfo window;          /* for redraw, close, enter, leave events */
+  buttonchange   buttonchange;    /* for button change event                */
+  dragreturn     drag;            /* for user drag box event                */
+  keypress       key;             /* for key events                         */
+  int            menu[10];        /* for menu event: terminated by -1       */
+  scrollinfo     scroll;          /* for scroll request                     */
+  caretinfo      caret;           /* for caret gain/lose.                   */
+  messageinfo    message;         /* for messages.                          */
+  }
+eventdata;
+
+
+typedef struct              /* wimp event description */
+  {
+  eventtype type;           /* event type             */
+  eventdata data;
+  }
+eventinfo;
+
+
+typedef struct
+  {
+  char title[12];          /* menu title (optional)        */
+  char titleforeground;    /* colours                      */
+  char titlebackground;
+  char workforeground;
+  char workbackground;
+  int  width, height;      /* size of following menu items */
+  int  gap;                /* vertical gap between items   */
+  }
+menuheader;
+
+
+typedef enum    /* menu item flag set */
+  {
+  MENU_TICK       = 1,
+  MENU_SEPARATER  = 2,
+  MENU_WRITABLE   = 4,
+  MENU_SUBLINK    = 8,    /* show a => flag, and inform program when it is activated. */
+  MENU_LAST_ITEM  = 0x80  /* signal last item in the menu                             */
+  }
+menuflags;
+/* use wimp_INOSELECT to shade the item as unselectable,
+and the button type to mark it as writable. */
+
+
+typedef struct menu *menuptr;
+/* Only for the circular reference in menuitem/str. */
+
+
+typedef struct
+  {
+  menuflags menuflags;         /* menu entry flags */
+  menuptr   submenu;         /* wimp_menustr* pointer to sub menu,
+                                   or wimp_w dialogue box,
+                                   or -1 if no submenu */
+  iconflags iconflags;     /* icon flags for the entry */
+  icondata  icondata;           /* icon data for the entry */
+  }
+menuitem;
+/* submenu can also be a wimp_w, in which case the window is opened as a
+dialogue box within the menu tree. */
+
+
+typedef struct menu
+  {
+  menuheader  header;
+/*menuitem    item[];*/ /* Zero or more menu items follow in memory */
+  }
+menu;
+
+
+typedef struct
+  {
+  windowhandle window;       /* handle                       */
+  int          bit_mask;     /* bit set => consider this bit */
+  int          bit_set;      /* desired bit setting          */
+  }
+wimp_which_block;
+
+
+typedef struct
+  {
+  int    shape_num;          /* pointer shape number (0 turn off pointer)  */
+  char  *shape_data;         /* shape data, NULL pointer implies existing  */
+                             /* shape                                      */
+  int    width, height;      /* Width and height in pixels. Width = 4 * n, */
+                             /* where n is an integer.                     */
+  int    activex, activey;   /* active point (pixels from top left)        */
+  }
+pointershape;
+
+
+typedef struct
+  {
+  char font[256];            /* initialise all to zero before using for */
+                             /* first load_template, then just use      */
+                             /* repeatedly without altering             */
+  }
+templatefonts;
+
+
+typedef struct                    /* template reading structure */
+  {
+  int            reserved;    /* ignore - implementation detail             */
+  window        *buffer;      /* pointer to space for putting template in   */
+  char          *work_free;   /* pointer to start of free wimp workspace -  */
+                              /* you have to provide the wimp system with   */
+                              /* workspace to store its redirected icons in */
+  char          *work_end;    /* end of workspace you are offerring to wimp */
+  templatefonts *fontarray;   /* points to font reference count array, 0    */
+                              /* pointer implies fonts not allowed          */
+  char          *windowname;  /* name to match with (can be wildcarded)     */
+  int            index;       /* pos. in index to search from (0 = start)   */
+  }
+templateloadinfo;
+
+
+typedef struct
+  {
+  char gcol;
+  char red;
+  char green;
+  char blue;
+  }
+palleteintensity;
+
+
+typedef union
+  {
+  palleteintensity intensity;
+  int word;
+  }
+paletteword;
+/* The gcol char (least significant) is a gcol colour except in 8-bpp
+modes, when bits 0..2 are the tint and bits 3..7 are the gcol colour. */
+
+
+typedef struct
+  {
+  paletteword c[16];              /* wimp colours 0..15 */
+  paletteword screenborder, mouse1, mouse2, mouse3;
+  }
+paletteinfo;
+
+
+typedef enum
+  { 
+  TITLE                = 0,
+  ACTIVE               = 1,
+  CLOSE_WITH_PROMPT    = 2,
+  CLOSE_WITHOUT_PROMPT = 3
+  }
+commandwindowtag;
+
+
+typedef struct
+  {
+  commandwindowtag  tag;
+  char             *title;
+  }
+commandwindowinfo;
+
+
+typedef enum
+  {
+  HAS_OK         = 1,        /* put in "OK" box                  */
+  HAS_CANCEL     = 2,        /* put in "CANCEL" box              */
+  HILIGHT_CANCEL = 4         /* highlight CANCEL rather than OK. */
+  }
+errorboxflags;
+/* If OK and CANCEL are both 0 you get an OK. */
+
+# endif
+
+/* end wimp.h */

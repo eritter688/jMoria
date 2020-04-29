@@ -1,0 +1,651 @@
+/*****************************************************************************
+ *                                                                           *
+ *                Archimedes UMoria 5.4.0 Frontend Program                   *
+ *                                                                           *
+ *     UMoria Port and Frontend by edouard@nacjack.gen.nz (Edouard Poor)     *
+ *                                                                           *
+ *****************************************************************************/
+
+/* #includes */
+
+#include "kernel.h"    /* in the standard libraries */
+#include "swicodes.h"
+#include "wimpdata.h"
+
+#define AutoWimpErrorReporting
+
+/* #defines/macros */
+
+#ifndef NULL
+ #define NULL 0  /* This is done in various ANSI places, but is needed here too */
+#endif
+
+#ifndef BOOL
+ #define BOOL  int
+ #define TRUE  1
+ #define FALSE 0
+#endif
+
+
+#define MAXISPACE     4096  /* in bytes */
+#define MAXWINDOWSIZE 4096  /* in bytes */
+
+
+/* wimpfuncs functions */
+
+extern _kernel_oserror * Wimp_ReportError(_kernel_oserror *error,
+                                          errorboxflags    flags,
+                                          char            *name)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *localerror;
+
+    regs.r[0] = (int) error;
+    regs.r[1] = (int) flags;
+    regs.r[2] = (int) name;
+
+    localerror = _kernel_swi(SWI_Wimp_ReportError, &regs, &regs);
+
+#if 0
+    /* This would be a bad thing to do */
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_ReportError");
+#endif
+
+    return localerror;
+    }
+
+
+extern _kernel_oserror * Wimp_CreateIcon(createiconinfo *create, iconhandle *icon)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) create;
+
+    error = _kernel_swi(SWI_Wimp_CreateIcon, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_CreateIcon");
+#endif
+
+    *icon = regs.r[0];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_InstallBarIcon(char       *spritename, 
+                                             int         spritearea,
+                                             int         barposition,
+                                             iconhandle *icon)
+    {
+    createiconinfo    create;
+    int               pixelshigh;
+    int               pixelswide;
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    if(barposition != ICONBAR_RIGHT)
+        create.windowhandle   = ICONBAR_LEFT;
+    else
+        create.windowhandle   = ICONBAR_RIGHT;
+
+    create.icon.pos.min.x = 0;
+    create.icon.pos.min.y = 0;
+
+    if (spritearea == WIMP_SPRITEAREA)
+        {
+        regs.r[0] = SPRITE_READINFO;
+        regs.r[1] = 0;
+        }
+    else
+        {
+        regs.r[0] = SPRITE_READUSERINFO;
+        regs.r[1] = spritearea;
+        }
+    regs.r[2] = (int) spritename;
+
+    if(spritearea == WIMP_SPRITEAREA)
+      error = _kernel_swi(SWI_Wimp_SpriteOp, &regs, &regs);
+    else
+      error = _kernel_swi(SWI_OS_SpriteOp, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_InstallBarIcon");
+#endif
+
+    if(error != NULL)
+        {
+        create.icon.pos.max.x = 70;   /*  Arbitrary value.  */
+        create.icon.pos.max.y = 76;   /*  Arbitrary value.  */
+        }
+    else
+        {
+        pixelshigh = regs.r[4];
+        pixelswide = regs.r[3];
+        regs.r[0]  = regs.r[6];
+        regs.r[1]  = MODE_XEIG;
+
+        error = _kernel_swi(SWI_OS_ReadModeVariable, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+        if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_InstallBarIcon");
+#endif
+
+        if(error != NULL)
+            create.icon.pos.max.x = 70;
+        else
+            create.icon.pos.max.x = pixelswide << regs.r[2];
+
+        regs.r [1] = MODE_YEIG;
+
+        error = _kernel_swi(SWI_OS_ReadModeVariable, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+        if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_InstallBarIcon");
+#endif
+
+        if(error != NULL)
+            create.icon.pos.max.y = 76;
+        else
+            create.icon.pos.max.y = pixelshigh << regs.r[2];
+        }
+
+    create.icon.flags = HAS_SPRITE       |
+                        HORIZONAL_CENTRE |
+                        VERTICAL_CENTRE  |
+                        INDIRECTED       |
+                        (CLICKDEBOUNCE * BUTTON_FIELD);
+
+    create.icon.data.indirectedsprite.name       = spritename;
+    create.icon.data.indirectedsprite.area       = (void *) spritearea;
+    create.icon.data.indirectedsprite.nameisname = TRUE;
+
+    error = Wimp_CreateIcon(&create, icon);
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_ProcessKey(int key)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = (int) key;
+
+    error = _kernel_swi(SWI_Wimp_ProcessKey, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_ProcessKey");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_SetColour(int col)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = (int) col;
+
+    error = _kernel_swi(SWI_Wimp_SetColour, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_SetColour");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_SetCaretPosition(caretinfo *caret)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = (int) caret->window;
+    regs.r[1] = (int) caret->icon;
+    regs.r[2] = (int) caret->offset.x;
+    regs.r[3] = (int) caret->offset.y;
+    regs.r[4] = (int) caret->height;
+    regs.r[5] = (int) caret->textpos;
+
+    error = _kernel_swi(SWI_Wimp_SetCaretPosition, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_SetCaretPosition");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_GetWindowState(windowstate *state)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) state;
+
+    error = _kernel_swi(SWI_Wimp_GetWindowState, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_GetWindowState");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_RedrawWindow(redrawinfo *redraw, BOOL *more)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) redraw;
+
+    error = _kernel_swi(SWI_Wimp_RedrawWindow, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_RedrawWindow");
+#endif
+
+    *more = (BOOL) regs.r[0];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_UpdateWindow(updateinfo *update, BOOL *more)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) update;
+
+    error = _kernel_swi(SWI_Wimp_UpdateWindow, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_UpdateWindow");
+#endif
+
+    *more = (BOOL) regs.r[0];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_GetRectangle(redrawinfo *redraw, BOOL *more)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) redraw;
+
+    error = _kernel_swi(SWI_Wimp_GetRectangle, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_GetRectangle");
+#endif
+
+    *more = (BOOL) regs.r[0];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_CreateWindow(window *windowtocreate, windowhandle *handle)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) windowtocreate;
+
+    error = _kernel_swi(SWI_Wimp_CreateWindow, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_CreateWindow");
+#endif
+
+    *handle = (windowhandle) regs.r[0];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_OpenWindow(openwindowinfo *open)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) open;
+
+    error = _kernel_swi(SWI_Wimp_OpenWindow, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_OpenWindow");
+#endif
+
+    return error;
+    }
+
+
+/*
+ *  JW - Added to allow window to be
+ *       opened in centre of screen.
+ */
+extern _kernel_oserror * Wimp_OpenWindowCentred(openwindowinfo *open)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+    int               windowx, windowy;
+    int               screenx, screeny;
+
+    windowx  = open->screenpos.max.x - open->screenpos.min.x;
+    if (windowx < 0) 
+        windowx = -windowx;
+
+    windowy = open->screenpos.max.y - open->screenpos.min.y;
+    if (windowy < 0)
+        windowy = -windowy;
+
+    regs.r[0] = -1;
+    regs.r[1] = 11;
+    error = _kernel_swi(SWI_OS_ReadModeVariable, &regs, &regs);
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_OpenWindowCentred");
+#endif
+    screenx =  regs.r[2] + 1;
+
+    regs.r[0] = -1;
+    regs.r[1] = 4;
+    error = _kernel_swi(SWI_OS_ReadModeVariable, &regs, &regs);
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_OpenWindowCentred");
+#endif
+    screenx <<= regs.r[2];
+
+    regs.r[0] = -1;
+    regs.r[1] = 12;
+    error = _kernel_swi(SWI_OS_ReadModeVariable, &regs, &regs);
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_OpenWindowCentred");
+#endif
+    screeny =  regs.r[2] + 1;
+
+    regs.r[0] = -1;
+    regs.r[1] = 5;
+    error = _kernel_swi(SWI_OS_ReadModeVariable, &regs, &regs);
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_OpenWindowCentred");
+#endif
+    screeny <<= regs.r[2];
+
+    open->screenpos.min.x = (screenx - windowx) / 2;
+    open->screenpos.max.x = open->screenpos.min.x + windowx;
+    open->screenpos.min.y = (screeny - windowy) / 2;
+    open->screenpos.max.y = open->screenpos.min.y + windowy;
+
+    return(Wimp_OpenWindow(open));
+    }
+
+
+extern _kernel_oserror * Wimp_CloseWindow(windowhandle close)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) &close;
+
+    error = _kernel_swi(SWI_Wimp_CloseWindow, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_CloseWindow");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_OpenTemplate(char *templatename)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[1] = (int) templatename;
+
+    error = _kernel_swi(SWI_Wimp_OpenTemplate, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_OpenTemplate");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_LoadTemplate(window        *windowtoload,  /* altered */
+                                           int           *currenti,      /* altered */
+                                           int           *endi,          /* passed  */
+                                           templatefonts *fonts,         /* altered */
+                                           char          *windowname,    /* passed  */
+                                           int           *index)         /* passed  */
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = 0; 
+    regs.r[1] = (int) windowtoload;
+    regs.r[2] = *currenti;
+    regs.r[3] = *endi;
+    if(fonts == (templatefonts *) -1)
+      regs.r[4] = -1;
+    else
+      regs.r[4] = (int) fonts->font;
+    regs.r[5] = (int) windowname;
+    regs.r[6] = *index;
+
+    error = _kernel_swi(SWI_Wimp_LoadTemplate, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_LoadTemplate");
+#endif
+
+    *currenti = regs.r[2];
+    *index    = regs.r[6];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_LoadNamedTemplate(window        *windowtoload,  /* altered */
+                                                char          *windowname,    /* passed  */
+                                                char          *ispace,        /* passed  */
+                                                int            isize,         /* passed  */
+                                                templatefonts *fonts)         /* altered */
+    {
+    _kernel_oserror *error;
+    int              index  = 0;
+    int              starti;
+    int              endi;
+
+    starti = (int) ispace;
+    endi   = (int) ispace + isize;
+    if(fonts == NULL)
+        fonts = (templatefonts *) -1;
+
+    error = Wimp_LoadTemplate(windowtoload, &starti, &endi, fonts, windowname, &index);
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_NamedTemplateSize(char *windowname,     /* passed  */
+                                                int  *isize,          /* altered */
+                                                int  *windowsize,     /* altered */
+                                                BOOL *fontspresent)   /* altered */
+    {
+    _kernel_oserror *error;
+    char             ispace[MAXISPACE];
+    char             windowtoload[MAXWINDOWSIZE];    
+    int              starti, currenti, endi;
+    templatefonts    fonts;
+    int              index = 0;
+    int              loop;
+    window          *windowptr;
+
+    windowptr = (window *) windowtoload;
+    starti = currenti = (int) ispace;
+    endi = starti + MAXISPACE;
+    for(loop = 0; loop < sizeof(fonts); loop++)
+        fonts.font[loop] = 0;
+    *fontspresent = FALSE;
+
+    for(loop = 0; loop < 88; loop++)
+      windowtoload[loop] = (char) loop;
+
+    error = Wimp_LoadTemplate(windowptr, &currenti, &endi, &fonts, windowname, &index);
+
+    *isize      = currenti - starti;
+    *windowsize = sizeof(window) + ((windowptr->numicons) * sizeof(icon));
+
+    for(loop = 0; loop < sizeof(fonts); loop++)
+        if(fonts.font[loop] != 0)
+            {
+            *fontspresent = TRUE;
+            break;
+            }
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_CloseTemplate()
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    error = _kernel_swi(SWI_Wimp_CloseTemplate, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != 0) Wimp_ReportError(error, HAS_OK, "Wimp_CloseTemplate");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_Poll(eventinfo *event, eventmask mask)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = (int) mask;
+    regs.r[1] = (int) &event->data;
+
+    error = _kernel_swi(SWI_Wimp_Poll, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != 0) Wimp_ReportError(error, HAS_OK, "Wimp_Poll");
+#endif
+
+    event->type = (eventtype) regs.r[0];
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_Initialise(char *programname, taskhandle *task)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = 200;            /* RISC OS version 2.00 */
+    regs.r[1] = 0x4B534154;     /* 'TASK'               */
+    regs.r[2] = (int) programname;
+
+    error = _kernel_swi(SWI_Wimp_Initialise, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != 0) Wimp_ReportError(error, HAS_OK, "Wimp_Initialise");
+#endif
+
+    *task = regs.r[1]; 
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_CloseDown()
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    error = _kernel_swi(SWI_Wimp_CloseDown, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != 0) Wimp_ReportError(error, HAS_OK, "Wimp_CloseDown");
+#endif
+
+    return error;
+    }
+
+
+extern _kernel_oserror * Wimp_ScreenToWindowOffsets(windowstate *state, coord *offset)
+    {
+    offset->x = state->screenpos.min.x - state->scroll.x;
+    offset->y = state->screenpos.max.y - state->scroll.y;
+
+    return NULL; /* this doesn't fail */
+    }
+
+
+extern _kernel_oserror * Wimp_GetIconState(windowhandle w, iconhandle i,
+                                           iconstate *info)
+/* NOTE: This is simply a nice call-interface to the SWI.
+   As a result, it returns a slightly different block to the createicon one
+   (although the fields are accessed with exactly the same names)            */
+{
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    info->windowhandle = (int) w;
+    info->iconhandle   = (int) i;
+    regs.r[1] = (int) info;
+    regs.r[2] = (int) i;
+
+    error = _kernel_swi(SWI_Wimp_GetIconState, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_GetIconState");
+#endif
+
+    return error;
+}
+
+
+extern _kernel_oserror * Wimp_SetIconState(windowhandle w, iconhandle i,
+                                           int eorword, int notandword)
+{
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+    int floobie[32];   /* fix this, ed! */
+
+    floobie[0] = (int) w;
+    floobie[1] = (int) i;
+    floobie[2] = (int) eorword;
+    floobie[3] = (int) notandword;
+
+    regs.r[1] = (int) floobie;
+
+    error = _kernel_swi(SWI_Wimp_SetIconState, &regs, &regs);
+
+#ifdef AutoWimpErrorReporting
+    if(error != NULL) Wimp_ReportError(error, HAS_OK, "Wimp_SetIconState");
+#endif
+
+    return error;
+}

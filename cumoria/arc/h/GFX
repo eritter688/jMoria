@@ -1,0 +1,14 @@
+
+/*
+ *  GFX library (doing a lot less then bbc.h)
+ */
+
+#include "kernel.h"
+
+extern _kernel_oserror * GFX_Move(int, int);
+
+extern _kernel_oserror * GFX_WriteN(unsigned char *, int);
+
+extern _kernel_oserror * GFX_CLG(void);
+
+extern _kernel_oserror * GFX_Wait(void);

@@ -1,0 +1,7 @@
+typedef struct     /* structure returned by Wimp_GetIconState */
+  {
+  windowhandle windowhandle;
+  iconhandle   iconhandle;         /* <- Has this extra word of info here */
+  icon         icon;
+  }
+iconstate;

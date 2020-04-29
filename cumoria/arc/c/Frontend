@@ -1,0 +1,587 @@
+/*****************************************************************************
+ *                                                                           *
+ *                Archimedes UMoria 5.4.0 Frontend Program                   *
+ *                                                                           *
+ *     UMoria Port and Frontend by edouard@nacjack.gen.nz (Edouard Poor)     *
+ *                                                                           *
+ *****************************************************************************/
+
+/* #includes */
+
+#include <stdio.h>
+
+#include <stdlib.h>
+#include <string.h>
+#include <setjmp.h>
+#include "^.source.config.h"
+#include "colourtran.h"
+#include "screeninfo.h"
+#include "keycodes.h"
+#include "gfx.h"
+#include "swicodes.h"
+#include "wimpdata.h"
+#include "wimpfuncs.h"
+#include "frontend.h"
+#ifdef COLOUR_GFX
+#include "^.colour.colour.h"
+#endif
+#include "^.wimp.screen.h"
+
+
+/* #defines/macros */
+
+#define forever for(;;)
+
+
+/* Global Vars */
+
+static jmp_buf where;
+
+
+/* Global Wimp Vars */
+
+char          ourname[]       = "Mines of UMoria";
+char          templatefile[]  = "<Moria$Dir>.Templates";
+char          iconbarsprite[] = "!UMoria";
+char          maintitle[]     = "The Mines of Moria (UMoria 5.5.0)";
+taskhandle    ourtask;
+window        *mainwindow;
+window        *recallwindow;
+window        *historywindow;
+windowhandle   mainwindowhandle;
+iconhandle     iconbarhandle;
+templatefonts *fonts = (templatefonts *) -1;
+
+int            DrawingStyle = BLACK_AND_WHITE;
+
+
+/* Externs */
+
+extern int moria_main(int, char **);
+extern void clear_screen(void);
+
+extern void recallwindow_clear(void);
+extern int recallwindowopen;
+extern windowhandle recallwindowhandle;
+extern windowhandle historywindowhandle;
+extern void historywindow_clear(void);
+
+extern colour_entry colours[];
+
+/* Global I/O Vars */
+
+screenstruct screen;
+
+/* Global Archimedes UMoria preference variables */
+int keypresswaiton = TRUE;   /* if FALSE, DON'T bother with -more- waiting   */
+int waitonupdate   = FALSE;  /* if TRUE, then WAIT on certain screen updates */
+
+/* Wimp procedures */
+
+void die()
+    {
+    Wimp_CloseDown();
+    exit(1);
+    }
+
+
+void report(wimperror *error)
+    {
+    Wimp_ReportError(error, HAS_OK, ourname);
+    }
+
+
+void setcaret()
+    {
+    caretinfo caret;
+
+    caret.window   = mainwindowhandle;
+    caret.icon     = (iconhandle) -1;
+    caret.offset.x = 0;
+    caret.offset.y = 0;
+    caret.height   = 1<<25;
+    caret.textpos  = -1;
+
+    Wimp_SetCaretPosition(&caret);
+    }
+
+
+void initwimp()
+    {
+    int              windowsize;
+    int              isize;
+    char            *ispace, *historyispace, *recallispace;
+    windowstate      wstate;
+    BOOL             fontspresent;
+
+    Wimp_Initialise(ourname, &ourtask);
+    Wimp_OpenTemplate(templatefile);
+
+
+/* --- Load the message history window */
+    Wimp_NamedTemplateSize("MoriaHistry", &isize, &windowsize, &fontspresent);
+    historyispace = malloc(isize);
+    historywindow = (window *) malloc(windowsize + 1024);
+    Wimp_LoadNamedTemplate(historywindow, "MoriaHistry",
+                             historyispace, isize, NULL);
+
+    Wimp_CreateWindow(historywindow, &historywindowhandle);
+    wstate.handle = historywindowhandle;
+    Wimp_GetWindowState(&wstate);
+    Wimp_OpenWindow((openwindowinfo *) &wstate);
+    historywindow_clear();
+
+
+/* --- Load the recall window */
+    Wimp_NamedTemplateSize("MoriaRecall", &isize, &windowsize, &fontspresent);
+    recallispace = malloc(isize);
+    recallwindow = (window *) malloc(windowsize + 1024);
+
+    Wimp_LoadNamedTemplate(recallwindow, "MoriaRecall",
+                             recallispace, isize, NULL);
+
+    Wimp_CreateWindow(recallwindow, &recallwindowhandle);
+    wstate.handle = recallwindowhandle;
+    Wimp_GetWindowState(&wstate);
+    Wimp_OpenWindow((openwindowinfo *) &wstate);
+    recallwindowopen = TRUE;
+    recallwindow_clear();
+
+
+/* --- Load the main UMoria window */
+    Wimp_NamedTemplateSize("MoriaScreen", &isize, &windowsize, &fontspresent);
+
+    ispace     = malloc(isize);
+    mainwindow = (window *) malloc(windowsize + 1024);
+    if (fontspresent)
+        fonts  = (templatefonts *) calloc(sizeof(templatefonts), 1);
+
+    Wimp_LoadNamedTemplate(mainwindow, "MoriaScreen", ispace, isize, fonts); 
+    mainwindow->titleflags                      |= INDIRECTED;
+    mainwindow->title.indirectedtext.buffer      = maintitle;
+    mainwindow->title.indirectedtext.validstring = (char *) 0;
+    mainwindow->title.indirectedtext.bufflen     = strlen(maintitle);
+    mainwindow->colours[WORKAREA_BACK]           = INVISIBLE_BACKGROUND;
+
+    Wimp_CreateWindow(mainwindow, &mainwindowhandle);
+    wstate.handle = mainwindowhandle;
+    Wimp_GetWindowState(&wstate);
+    Wimp_OpenWindowCentred((openwindowinfo *) &wstate);
+    setcaret();
+
+    Wimp_CloseTemplate();
+
+    Wimp_InstallBarIcon(iconbarsprite, WIMP_SPRITEAREA,
+                        ICONBAR_RIGHT, &iconbarhandle);
+    }
+
+
+void alterdrawingstyle()
+    {
+    int number;
+
+    Screen_CurrentNumberOfColours(&number);
+
+    if(number < 16) 
+        DrawingStyle = BLACK_AND_WHITE;
+    if(number == 16)
+        DrawingStyle = WIMP_SET_COLOUR;
+    if(number > 16)
+        DrawingStyle = COLOUR_TRANSED;
+    }
+
+
+void processmessage(messageinfo *message)
+    {
+    switch(message->header.type)
+        {
+        case Message_CloseDown:
+            die();
+            break;
+        case Message_ModeChange:
+            alterdrawingstyle();
+            break;
+        }
+    }
+
+
+void openwindow(openwindowinfo *window)
+    {
+    if (window->handle == recallwindowhandle)
+      recallwindowopen = TRUE;
+    Wimp_OpenWindow(window);
+    }
+
+
+void closewindow(windowhandle handle)
+    {
+    if (handle == recallwindowhandle)
+      recallwindowopen = FALSE;
+    Wimp_CloseWindow(handle);
+    }
+
+
+/*
+ *  Assumes that the window starts at 0,0 at the top left...
+ */
+void convertinvalidrect(rect *windowpos, coord *offset, rect *charpos)
+    {
+    charpos->min.x =  (windowpos->min.x - SCREEN_XCHAROFFSET - offset->x -1) / SCREEN_XCHARSIZE;
+    charpos->min.y = -(windowpos->max.y - SCREEN_YCHAROFFSET - offset->y -1) / SCREEN_YCHARSIZE;
+    charpos->max.x =  (windowpos->max.x - SCREEN_XCHAROFFSET - offset->x -1) / SCREEN_XCHARSIZE;
+    charpos->max.y = -(windowpos->min.y - SCREEN_YCHAROFFSET - offset->y -1) / SCREEN_YCHARSIZE;
+    }
+
+
+/*
+ *  Also assumes that the window starts at 0,0 at the top left...
+ */
+void converttextrect(rect *charpos, coord *offset, rect *windowpos)
+    {
+    windowpos->min.x =  charpos->min.x * SCREEN_XCHARSIZE - SCREEN_XCHAROFFSET;
+    windowpos->min.y = -charpos->min.y * SCREEN_YCHARSIZE - SCREEN_YCHAROFFSET - SCREEN_YCHARSIZE -1;
+    windowpos->max.x =  charpos->max.x * SCREEN_XCHARSIZE - SCREEN_XCHAROFFSET + SCREEN_XCHARSIZE;
+    windowpos->max.y = -charpos->max.y * SCREEN_YCHARSIZE - SCREEN_YCHAROFFSET -1;
+    }
+
+
+void redrawwindow(windowhandle window)
+    {
+    BOOL        more;
+    redrawinfo  redraw;
+    windowstate state;
+    coord       offset;
+    int         loopy;
+    rect        pos;
+    screenarray text;
+    screenarray attr;
+
+    text = screen.text;
+    attr = screen.attr;
+
+    state.handle = window;
+    Wimp_GetWindowState(&state);
+    Wimp_ScreenToWindowOffsets(&state, &offset);
+
+    redraw.windowhandle = window;
+    Wimp_RedrawWindow(&redraw, &more);
+    while(more)
+        {
+        convertinvalidrect(&redraw.invalid, &offset, &pos);
+        if(pos.max.y >= SCREEN_ROWS) pos.max.y = SCREEN_ROWS-1;
+        
+        if(DrawingStyle == BLACK_AND_WHITE)
+            {
+            Wimp_SetColour(WIMP_WHITE);
+            Wimp_SetColour(WIMP_BLACK | 0x80);
+            GFX_CLG();
+
+            for(loopy = pos.min.y; loopy <= pos.max.y; loopy++)
+                {
+                GFX_Move(SCREEN_XCHAROFFSET + offset.x + pos.min.x * SCREEN_XCHARSIZE,
+                         SCREEN_YCHAROFFSET + offset.y + -loopy    * SCREEN_YCHARSIZE);
+                GFX_WriteN(&text.array[loopy][pos.min.x], pos.max.x - pos.min.x + 1);
+                }
+            }
+
+        if(DrawingStyle == WHITE_AND_BLACK)
+            {
+            Wimp_SetColour(WIMP_BLACK);
+            Wimp_SetColour(WIMP_WHITE | 0x80);
+            GFX_CLG();
+
+            for(loopy = pos.min.y; loopy <= pos.max.y; loopy++)
+                {
+                GFX_Move(SCREEN_XCHAROFFSET + offset.x + pos.min.x * SCREEN_XCHARSIZE,
+                         SCREEN_YCHAROFFSET + offset.y + -loopy    * SCREEN_YCHARSIZE);
+                GFX_WriteN(&text.array[loopy][pos.min.x], pos.max.x - pos.min.x + 1);
+                }
+            }
+
+        if(DrawingStyle == WIMP_SET_COLOUR)
+            {
+            Wimp_SetColour(WIMP_BLACK | 0x80);
+            GFX_CLG();
+
+            for(loopy = pos.min.y; loopy <= pos.max.y; loopy++)
+                {
+                GFX_Move(SCREEN_XCHAROFFSET + offset.x + pos.min.x * SCREEN_XCHARSIZE,
+                         SCREEN_YCHAROFFSET + offset.y + -loopy    * SCREEN_YCHARSIZE);
+                    {
+                    register int xloop = pos.min.x;
+                    register int xloopstart, lastattr;
+                    while (xloop <= pos.max.x)
+                        {
+                        xloopstart = xloop;
+                        lastattr = (int) attr.array[loopy][xloop++];
+                        while(xloop <= pos.max.x &&
+                              (text.array[loopy][xloop] == 32 ||
+                              colours[lastattr].L == colours[attr.array[loopy][xloop]].L))
+                            xloop ++;
+
+                        Wimp_SetColour(colours[attr.array[loopy][xloopstart]].L);
+                        GFX_WriteN(&text.array[loopy][xloopstart], xloop - xloopstart);
+                        }
+                    }
+                }
+            }
+
+        if(DrawingStyle == COLOUR_TRANSED)
+            {
+            Wimp_SetColour(WIMP_BLACK | 0x80);
+            GFX_CLG();
+
+            for(loopy = pos.min.y; loopy <= pos.max.y; loopy++)
+                {
+                GFX_Move(SCREEN_XCHAROFFSET + offset.x + pos.min.x * SCREEN_XCHARSIZE,
+                         SCREEN_YCHAROFFSET + offset.y + -loopy    * SCREEN_YCHARSIZE);
+                    {
+                    register int xloop = pos.min.x;
+                    register int xloopstart, lastattr;
+                    while (xloop <= pos.max.x)
+                        {
+                        xloopstart = xloop;
+                        lastattr = (int) attr.array[loopy][xloop++];
+                        while(xloop <= pos.max.x &&
+                              (text.array[loopy][xloop] == 32 ||
+                              lastattr == attr.array[loopy][xloop]) )
+                            xloop ++;
+
+                        ColourTrans_SetGCOL((colours[attr.array[loopy][xloopstart]].R << 8)  |
+                                            (colours[attr.array[loopy][xloopstart]].G << 16) |
+                                            (colours[attr.array[loopy][xloopstart]].B << 24) );
+                        GFX_WriteN(&text.array[loopy][xloopstart], xloop - xloopstart);
+                        }
+                    }
+                }
+            }
+
+        if(DrawingStyle == COLOUR_TRANSED_DITHERED)
+            {
+            Wimp_SetColour(WIMP_BLACK | 0x80);
+            GFX_CLG();
+
+            for(loopy = pos.min.y; loopy <= pos.max.y; loopy++)
+                {
+                GFX_Move(SCREEN_XCHAROFFSET + offset.x + pos.min.x * SCREEN_XCHARSIZE,
+                         SCREEN_YCHAROFFSET + offset.y + -loopy    * SCREEN_YCHARSIZE);
+                    {
+                    register int xloop = pos.min.x;
+                    register int xloopstart, lastattr;
+                    while (xloop <= pos.max.x)
+                        {
+                        xloopstart = xloop;
+                        lastattr = (int) attr.array[loopy][xloop++];
+                        while(xloop <= pos.max.x &&
+                              (text.array[loopy][xloop] == 32 ||
+                              lastattr == attr.array[loopy][xloop]) )
+                            xloop ++;
+
+                        ColourTrans_DitheredSetGCOL(
+                                      (colours[attr.array[loopy][xloopstart]].R << 8)  |
+                                      (colours[attr.array[loopy][xloopstart]].G << 16) |
+                                      (colours[attr.array[loopy][xloopstart]].B << 24) );
+                        GFX_WriteN(&text.array[loopy][xloopstart], xloop - xloopstart);
+                        }
+                    }
+                }
+            }
+        Wimp_GetRectangle(&redraw, &more);
+        }
+    }
+
+
+void mouse(buttonchange *button)
+    {
+    windowstate state;
+
+    switch(button->pointerinfo.buttons)
+        {
+        case MENU:
+            /* arcscreen_beep(); */
+            break;
+        default:
+            if(button->pointerinfo.window == ICONBAR_HANDLE)
+                {
+                state.handle = historywindowhandle;
+                Wimp_GetWindowState(&state);
+                state.behind = OPEN_ON_TOP;
+                Wimp_OpenWindow((openwindowinfo *) &state);
+
+                state.handle = recallwindowhandle;
+                Wimp_GetWindowState(&state);
+                state.behind = OPEN_ON_TOP;
+                Wimp_OpenWindow((openwindowinfo *) &state);
+                recallwindowopen = TRUE;
+
+                state.handle = mainwindowhandle;
+                Wimp_GetWindowState(&state);
+                state.behind = OPEN_ON_TOP;
+                Wimp_OpenWindow((openwindowinfo *) &state);
+                }
+            setcaret();
+            break;
+        }
+    }
+
+
+void keypressed(int key)
+    {
+    int  old;
+    int  number;
+    rect area;
+    windowstate state;
+
+    old = DrawingStyle;
+
+    switch(key)
+        {
+        case Keycode_F1:        if(waitonupdate == TRUE)
+                                    waitonupdate = FALSE;
+                                else
+                                    waitonupdate = TRUE;
+                                break;
+
+        case Keycode_F5:        state.handle = mainwindowhandle;
+                                Wimp_GetWindowState(&state);
+                                state.behind = OPEN_ON_TOP;
+                                Wimp_OpenWindow((openwindowinfo *) &state);
+                                break;
+
+        case Keycode_F6:        state.handle = recallwindowhandle;
+                                Wimp_GetWindowState(&state);
+                                state.behind = OPEN_ON_TOP;
+                                Wimp_OpenWindow((openwindowinfo *) &state);
+                                recallwindowopen = TRUE;
+                                break;
+
+        case Keycode_F7:        state.handle = historywindowhandle;
+                                Wimp_GetWindowState(&state);
+                                state.behind = OPEN_ON_TOP;
+                                Wimp_OpenWindow((openwindowinfo *) &state);
+                                break;
+
+        case Keycode_F9:        DrawingStyle = BLACK_AND_WHITE;
+                                break;
+
+        case Keycode_Shift_F9:  DrawingStyle = WHITE_AND_BLACK;
+                                break;
+
+        case Keycode_F10:       Screen_CurrentNumberOfColours(&number);
+                                if(number == 16)
+                                    DrawingStyle = WIMP_SET_COLOUR;
+                                if(number > 16)
+                                    DrawingStyle = COLOUR_TRANSED;
+                                break;
+
+        case Keycode_Shift_F10: if(DrawingStyle == BLACK_AND_WHITE)
+                                    {
+                                    Screen_CurrentNumberOfColours(&number);
+                                    if(number == 16)
+                                        DrawingStyle = WIMP_SET_COLOUR;
+                                    if(number > 16)
+                                        DrawingStyle = COLOUR_TRANSED;
+                                    }
+                                else
+                                    if(DrawingStyle == WIMP_SET_COLOUR)
+                                        DrawingStyle = COLOUR_TRANSED;
+                                    else
+                                        DrawingStyle = WIMP_SET_COLOUR;
+                                break;
+        case Keycode_Ctrl_F10:  DrawingStyle = COLOUR_TRANSED_DITHERED;
+                                break;
+
+        default:                Wimp_ProcessKey(key);
+        }
+
+      if(DrawingStyle != old)
+        {
+        area.min.x = 0;
+        area.min.y = 0;
+        area.max.x = SCREEN_COLS-1;
+        area.max.y = SCREEN_ROWS-1;
+        screen_invalidate(&area);
+        screen_update();
+        }
+    }
+
+
+void dispatchpoll(eventinfo *event)
+    {
+    switch (event->type)
+        {
+        case Open_Window_Request :
+            openwindow(&event->data.window);
+            break;
+
+        case Close_Window_Request :
+            closewindow(event->data.window.handle);
+            break;
+
+        case Redraw_Window_Request:
+            redrawwindow(event->data.window.handle);
+            break;
+
+        case Mouse_Button_Change:
+            mouse(&event->data.buttonchange);
+            break;
+
+        case Key_Pressed:
+            keypressed(event->data.key.code);
+            break;
+
+        case Send_Message:
+        case Send_Message_Acknowledged:
+            processmessage(&event->data.message);
+            break;
+        }
+    }
+
+
+void timeslice()
+    {
+    eventmask mask = 0;
+    eventinfo event;
+
+    Wimp_Poll(&event, mask);
+    dispatchpoll(&event);
+    }
+
+
+void goback()
+    {
+/*  exit(0);  */
+    longjmp(where, 1);
+    }
+
+
+void run_moria(int argc, char **argv)
+    {
+    if(setjmp(where) != 0) return;
+    moria_main(argc, argv);
+    }
+
+
+int main(int argc, char **argv)
+    {
+    set_local_colours();
+    screen_setcurrentattr(WIMP_LIGHTGREY_HIGH, WIMP_BLACK);
+    clear_screen();
+
+    initwimp();
+    alterdrawingstyle();
+
+    timeslice(); /* poll once before running moria_main() */
+
+/*  save_restart_vars();  */
+
+    run_moria(argc, argv);
+
+/*  load_restart_vars();
+    run_moria(argc, argv);
+    load_restart_vars();
+    run_moria(argc, argv);
+    load_restart_vars();
+    run_moria(argc, argv);  */
+    
+    }

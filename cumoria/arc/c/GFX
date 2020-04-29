@@ -1,0 +1,59 @@
+
+/*
+ *  GFX library (doing a lot less then bbc.h)
+ */
+
+#include "kernel.h"    /* in the standard libraries */
+#include "swicodes.h"
+
+extern _kernel_oserror * GFX_Move(int x, int y)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = 4;
+    regs.r[1] = x;
+    regs.r[2] = y;
+
+    error = _kernel_swi(SWI_OS_Plot, &regs, &regs);
+
+    return error;
+    }
+
+
+extern _kernel_oserror * GFX_WriteN(unsigned char *string, int count)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = (int) string;
+    regs.r[1] = count;
+
+    error = _kernel_swi(SWI_OS_WriteN, &regs, &regs);
+
+    return error;
+    }
+
+
+extern _kernel_oserror * GFX_CLG(int col)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    error = _kernel_swi(SWI_OS_WriteI+16, &regs, &regs);
+
+    return error;
+    }
+
+
+extern _kernel_oserror * GFX_Wait()
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = 19;
+
+    error = _kernel_swi(SWI_OS_Byte, &regs, &regs);
+
+    return error;
+    }

@@ -1,0 +1,206 @@
+ReadMe file for umoria/mac, the Macintosh port of Moria 5.5.0.
+--------------------------------------------------------------
+This folder contains the source for Purple X's Moria for the Macintosh v1.0.
+The files included in this folder are as follows:
+
+buildres.hqx    THINK C 5.0.4 Project File for Building Resources.
+creator.txt     Offical Creator/type registration for this port from Apple.
+dumpres         folder containing the dumpres package for saving global vars.
+mac.c           Main File, contains most of the interface code.
+mac.h           Main Header file, contains mainly constant definitions.
+macdata.c       Global re-initialisation code. 
+macrsrc.c       Globals in resources loading code.
+macrsrc.h       Header for above.
+MacScreen.h     header file for Screen Manager Library.
+MacScreen.hqx   Screen Manager Library.
+project.hqx     THINK C 5.0.2 Project File.
+resources.hqx   Main resource file, excluding resource globals.
+wGame.c         Code to handle the main game window.
+wGame.h         header file for above
+wRecall.c       Code to handle the recall window
+wRecall.h       header file for above.
+
+
+Not included in this distribution, but of some use, are the formatted Microsoft
+Word 4 Manual and Wizard's Quest. These are avaliable with the compiled
+distribution of the Macintosh Port.
+
+Installing
+----------
+You will need:
+
+* THINK C 5.0.2 or later. THINK C 5.0 doesn't work, a free updater is avaliable
+  on various sites to update 5.0 or 5.0.1 to 5.0.2. If using THINK C 5.0.2
+  you can safely turn on "Code Motion" option in the optomizer. Using "Code
+  Motion" under 5.0.3 or 5.0.4, or "CSE Elimintation" in all versions causes
+  the compiler to crash.
+  
+* All the files in umoria/mac, umoria/wimp, umoria/colour and umoria/source.
+
+* A deBinHex'er, ie BinHex4, Compact Pro, Stuffit or DeHqx.
+
+* ResEdit.
+
+* Around 3-4 MB of free disks space and at least 2MB of RAM, although I would
+  recommend at least 2.5MB
+
+
+Step One - Decoding the files
+-----------------------------
+It is a assumed that you have recieved the full source distribution of moria
+and have succefully extracted everything into a directory, and the original
+directory structure is intact. If you just have a file umoria55.Z you wil need
+to deCompress the file (using macCompress 3.2), and then unTar the resulting
+tar file using tar. 
+
+* DeHQX the .hqx files (buildres.hqx, MacScreen.hqx, Project.hqx and
+  resources.hqx) using any one of the applications mentioned above.
+
+* Move the resulting files BuildRes.¹, umoria.¹ and umoria.¹.rsrc to the root
+  level directory of were you have located moria (ie the folder umoria.) and
+  delete the .hqx files if they havn't allready been deleted.
+
+* Remove or rename the following files from the umoria/source directory:
+  io.c, monsters.c, tables.c, treasure.c
+ 
+
+Step Two - Building the Global Resources
+----------------------------------------
+In order to make the game restartable, we store the initial values of a
+whole bunch of global variables and consant in resources, and load them
+when we need to restart the game. First we need to build these resources
+as follows. If you change any of the variables declared in the files
+contained in the BuildRes project, then you will need to rebuild the 
+resources.
+
+* Launch THINK C with BuildRes.¹ as the project, open source/config.h and
+  edit the following piece of code found in config.h
+
+    /* If we are in Think C, then we must be on a mac. */
+    #ifdef THINK_C
+    #define MAC
+    /* Set the following when building the data resources. See mac/Install */
+    /* #define RSRC         */
+    /* #define RSRC_PART1   */
+    /* #define RSRC_PART2   */
+    #define MACGAME
+    #endif
+
+* uncomment #define RSRC and #define RSRC_PART1 and comment #define MACGAME, so
+  it looks like this:
+
+    /* If we are in Think C, then we must be on a mac. */
+    #ifdef THINK_C
+    #define MAC
+    /* Set the following when building the data resources. See mac/Install */
+    #define RSRC
+    #define RSRC_PART1
+    /* #define RSRC_PART2   */
+    /* #define MACGAME      */
+    #endif
+
+  Now Run BuildRes.¹. You should be presented with a CLI prompt, type in the
+  name of the file to put in part one of the resources for example "pt1".
+
+* Repeat the process, this time commenting #define RSRC_PART1 and uncommenting
+  RSRC_PART2, so the block of code looks like this:
+
+    /* If we are in Think C, then we must be on a mac. */
+    #ifdef THINK_C
+    #define MAC
+    /* Set the following when building the data resources. See mac/Install */
+    #define RSRC
+    /* #define RSRC_PART1   */
+    #define RSRC_PART2
+    /* #define MACGAME      */
+    #endif
+
+* Run BuildRes again this time specifying a different file name, ie "pt2".
+
+* You should now have two extra files in your umoria directory, "pt1" & "pt2".
+  Open them and "umoria.¹.rsrc" using ResEdit. Copy all the resources in "pt1"
+  and "pt2" to "umoria.¹.rsrc". The File "umoria.¹.rsrc" now contains all the
+  resources needed, it should be around 98-100K. Close all the files, saving
+  changes made to "umoria.¹.rsrc". You can now delete "pt1" and "pt2", you
+  won't need them anymore.
+
+* Edit "config.h" to undo any changes that you made, the resulting block of
+  code should look like this:
+
+    /* If we are in Think C, then we must be on a mac. */
+    #ifdef THINK_C
+    #define MAC
+    /* Set the following when building the data resources. See mac/Install */
+    /* #define RSRC         */
+    /* #define RSRC_PART1   */
+    /* #define RSRC_PART2   */
+    #define MACGAME
+    #endif
+
+* Close the project, you may want to "Remove Objects" first to save on disk
+  space.
+
+
+Step Three - Compiling the Game
+-------------------------------
+
+* Open the project file "umoria.¹" in THINK C. Run it. Everything should work
+  fine (touch wood.) It takes around 23 minutes to compile on a MacPlus. If you
+  like you can turn off the optimizer, it then takes around 10 minutes.
+
+The Project is set up just right. Change something like language settings and
+things will likely blow-up in your face, the Optimizer settings are just right
+too. Warning: the compiler crashes with all the optimizer options on, this is
+why one of them is off.
+
+
+A Note about Preference Resources
+---------------------------------
+The game creates 'Wpos' and "Deft' resources in the preferences file. If the
+preferences file cannot be opened it uses the application's resource Fork,
+If you see any 'Wpos' or 'Deft' resources in your .rsrc file or in a built
+application delete them else that file will be rewritten everytime you qiut
+the game to update these resources, instead of those in the preferences file. 
+
+I found this out the hard way, locating a 'Deft' resource in the final release
+file two days after release, meaning that most copies in the world will store
+game preferences in the Application instead of the preferneces file were they
+should be. Oops. I should proberly fix this.
+
+
+So, Whats this MacScreen.Lib thing?
+-----------------------------------
+MacScreen.lib is a compiled version of "Purple X's Excellent Screen Management
+Package" that provides all the nasties of Macintosh interface work for you.
+I spent several months pwritting it this year, and it does a rather lot of work
+for you, including a complete replacement for the Dialog Manager (hence the
+strange 'Itm#' and 'Wind' resources.)
+
+So, why do I provide a library rather that source? Well, three reasons. One: It
+ain't ready for public release yet, hence the 1.0a5 version number. Two: It is
+all THINK Pascal code, so I decided it didn't have a place in the source
+distribution for a game written in C. Three: It's is a rather large quantity
+of source code, containing far too few comments. Four (OK one more reason), I
+havn't written any documentation for it (apart from the header file). So you
+wouldn't be able to do anything with it anyway. You should be able to get the
+general gist of things from the code provided though, besides the whole reason
+for this release is so you can dink around with the moria game code on your mac,
+rather than perform brain surgery on the Macintosh interface code.
+
+The version of MacScreen.lib and MacScreen.h included in Moria is restricted
+for use in Moria only, it is illegal for you to use it in anything else without
+prior written permission from me. they are Copyright 1992 Richard Knuckey.
+
+
+Question? Problems?
+-------------------
+If you have any problems compiling the game you can contact me at
+
+Richard Knuckey
+21 Cameron Street,
+Papakura,
+New Zealand.
+
+or preferably via internet e-mail at:
+
+purplex@nacjack.gen.nz

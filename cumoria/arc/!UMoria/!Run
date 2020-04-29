@@ -1,0 +1,19 @@
+|
+| !Run file for UMoria 5.4 ported by edouard@nacjack.gen.nz (Edouard Poor)
+|
+if "<System$Path>" = "" then Error 0 System resources cannot be found
+|
+WimpSlot -min 480k -max 480k
+IconSprites <Obey$Dir>.!Sprites
+|
+RMensure SharedClibrary 0 System:Modules.clib
+RMensure SharedClibrary 3.75 Error You need at least version 3.75 of the shared C library
+|
+Set Moria$Dir <Obey$Dir>
+Set MoriaFiles$Dir <Moria$Dir>.Files
+| 
+| >& <moria$dir>.zzz
+|
+WimpSlot -min 480k -max 480k
+|
+Run <Moria$dir>.!RunImage

@@ -1,0 +1,11 @@
+/*****************************************************************************
+ *                                                                           *
+ *                Archimedes UMoria 5.4.0 Frontend Program                   *
+ *                                                                           *
+ *     UMoria Port and Frontend by edouard@nacjack.gen.nz (Edouard Poor)     *
+ *                                                                           *
+ *****************************************************************************/
+
+/* Prototypes */
+
+extern _kernel_oserror * Screen_CurrentNumberOfColours(int *);

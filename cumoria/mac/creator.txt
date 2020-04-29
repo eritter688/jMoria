@@ -1,0 +1,53 @@
+private.messages
+DEVSUPPORT@AppleLink.Apple.COM
+Richard Knuckey
+RE>FileType/Creator Request
+Fri May 15 00:01:00 1992
+<705888872.1614564@AppleLink.Apple.COM>
+
+
+TO-ADDRESS PURPLEX@NACJACK.GEN.NZ
+Received from mercury.gen.nz by nacjack.gen.nz; Sun, 17 May 92 1:58:09 GMT
+Received by mercury.gen.nz (smail2.5); 16 May 92 07:00:08 NZST (Sat)
+Received from ccvcom.aukuni.ac.nz by ccu1.aukuni.ac.nz with 920110.SGI/920109.2	id <AA17458@ccu1.aukuni.ac.nz>; Fri, 15 May 92 12:43:07 +1200
+Received from colossus.apple.com by aukuni.ac.nz; Fri, 15 May 92 12:21 +1200
+Received from [90.20.0.222] by colossus.apple.com with SMTP (5.65/11-Dec-1991-eef) id AA09239; Thu, 14 May 92 17:19:12 -0700 for
+Received by alink-gw.apple.com (5.65/27-Sep-1991-eef) id AA22163; Thu, 14 May 92 17:14:19 -0700 for
+Cc C.CARPENTER@AppleLink.Apple.COM
+Attn: Richard Knuckey
+Date: Thursday, May 14, 1992
+Re: Registration of Creator and File Types Confirmation
+ 
+ 
+Dear Richard,
+ 
+Thank you for your continued product development and support of Apple Computer,
+Inc. The Developer Support Center has reviewed your Creator identification
+request, and has registered the following unique product information:
+ 
+ 
+            Developer: Purple X
+ 
+    Technical Contact: Richard Knuckey
+ 
+     Application Name: Moria
+ 
+Application Signature: Mria
+ 
+            File Type: SAVE, PREF, High
+ 
+ 
+This letter serves as your confirmation and proof of registration, please keep
+it on file. Additionally you should review the information for accuracy. If you
+locate discrepancies in our data, please contact Developer Support with your
+corrections.
+ 
+Sincerely Yours,
+Cassi Carpenter
+Apple Computer, Inc.
+Developer Support Center
+ 
+[Gateway note: There will be a charge associated with this message
+if it originates outside of Auckland. Please contact Sysop on FIDO 3:772/110
+Demi-Monde 199:310/1 or richard@nacjack.gen.nz for details]
+

@@ -1,0 +1,44 @@
+/*****************************************************************************
+ *                                                                           *
+ *                Archimedes UMoria 5.4.0 Frontend Program                   *
+ *                                                                           *
+ *     UMoria Port and Frontend by edouard@nacjack.gen.nz (Edouard Poor)     *
+ *                                                                           *
+ *****************************************************************************/
+
+/* #includes */
+
+#include "kernel.h"    /* in the standard libraries */
+#include "swicodes.h"
+
+extern _kernel_oserror * ColourTrans_SetGCOL(int colour)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = colour;
+    regs.r[1] = 0;
+    regs.r[2] = 0;
+    regs.r[3] = 0;
+    regs.r[4] = 0;
+
+    error = _kernel_swi(SWI_ColourTrans_SetGCOL, &regs, &regs);
+
+    return error;
+    }
+
+extern _kernel_oserror * ColourTrans_DitheredSetGCOL(int colour)
+    {
+    _kernel_swi_regs  regs;
+    _kernel_oserror  *error;
+
+    regs.r[0] = colour;
+    regs.r[1] = 0;
+    regs.r[2] = 0;
+    regs.r[3] = 256;
+    regs.r[4] = 0;
+
+    error = _kernel_swi(SWI_ColourTrans_SetGCOL, &regs, &regs);
+
+    return error;
+    }

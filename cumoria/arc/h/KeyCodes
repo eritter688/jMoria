@@ -1,0 +1,113 @@
+/*  Program:       keycodes.h
+    Purpose:       #defined constants for common Wimp key codes
+    Author:        © 1991 Jason Williams
+                   All rights reserved
+    Version date:  24 January 1992
+*/
+
+#define Keycode_Backspace   8
+#define Keycode_Return      13
+#define Keycode_Escape      27
+#define Keycode_Home        30
+#define Keycode_Delete      127
+
+#define Keycode_F1          385
+#define Keycode_F2          386
+#define Keycode_F3          387
+#define Keycode_F4          388
+#define Keycode_F5          389
+#define Keycode_F6          390
+#define Keycode_F7          391
+#define Keycode_F8          392
+#define Keycode_F9          393
+
+#define Keycode_Print       384
+#define Keycode_Tab         394
+#define Keycode_Copy        395
+
+#define Keycode_CursorLeft  396
+#define Keycode_CursorRight 397
+#define Keycode_CursorDown  398
+#define Keycode_CursorUp    399
+#define Keycode_PageDown    414
+#define Keycode_PageUp      415
+
+#define Keycode_F10         458
+#define Keycode_F11         459
+#define Keycode_F12         460
+
+#define Keycode_Insert      461
+
+
+
+/* Keys in combination with Shift ------------------------------------------ */
+
+#define Keycode_Shift_Backspace   8
+#define Keycode_Shift_Return      13
+#define Keycode_Shift_Escape      27
+#define Keycode_Shift_Home        30
+#define Keycode_Shift_Delete      127
+
+#define Keycode_Shift_F1          401
+#define Keycode_Shift_F2          402
+#define Keycode_Shift_F3          403
+#define Keycode_Shift_F4          404
+#define Keycode_Shift_F5          405
+#define Keycode_Shift_F6          406
+#define Keycode_Shift_F7          407
+#define Keycode_Shift_F8          408
+#define Keycode_Shift_F9          409
+
+#define Keycode_Shift_Print       400
+#define Keycode_Shift_Tab         410
+#define Keycode_Shift_Copy        411
+
+#define Keycode_Shift_CursorLeft  412
+#define Keycode_Shift_CursorRight 413
+#define Keycode_Shift_CursorDown  414
+#define Keycode_Shift_CursorUp    415
+#define Keycode_Shift_PageDown    398
+#define Keycode_Shift_PageUp      399
+
+#define Keycode_Shift_F10         474
+#define Keycode_Shift_F11         475
+#define Keycode_Shift_F12         476
+
+#define Keycode_Shift_Insert      477
+
+
+
+/* Keys in combination with Shift ------------------------------------------ */
+
+#define Keycode_Ctrl_Backspace   8
+#define Keycode_Ctrl_Return      13
+#define Keycode_Ctrl_Escape      27
+#define Keycode_Ctrl_Home        30
+#define Keycode_Ctrl_Delete      127
+
+#define Keycode_Ctrl_F1          417
+#define Keycode_Ctrl_F2          418
+#define Keycode_Ctrl_F3          419
+#define Keycode_Ctrl_F4          420
+#define Keycode_Ctrl_F5          421
+#define Keycode_Ctrl_F6          422
+#define Keycode_Ctrl_F7          423
+#define Keycode_Ctrl_F8          424
+#define Keycode_Ctrl_F9          425
+
+#define Keycode_Ctrl_Print       416
+#define Keycode_Ctrl_Tab         426
+#define Keycode_Ctrl_Copy        427
+
+#define Keycode_Ctrl_CursorLeft  428
+#define Keycode_Ctrl_CursorRight 429
+#define Keycode_Ctrl_CursorDown  430
+#define Keycode_Ctrl_CursorUp    431
+#define Keycode_Ctrl_PageDown    446
+#define Keycode_Ctrl_PageUp      447
+
+#define Keycode_Ctrl_F10         490
+#define Keycode_Ctrl_F11         491
+#define Keycode_Ctrl_F12         492
+
+#define Keycode_Ctrl_Insert      493

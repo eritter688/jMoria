@@ -1,0 +1,130 @@
+/*****************************************************************************
+ *                                                                           *
+ *                Archimedes UMoria 5.4.0 Special windows                    *
+ *                                                                           *
+ *           Written by Jason Williams (JCW) Sunday 26 Jan 1992              *
+ *          See also the UMoria source files recall.c & moria4.c             *
+ *                               and arcio.c                                 *
+ *                                                                           *
+ *****************************************************************************/
+
+/*#include "SwiCodes.h"*/
+#include "WimpData.h"
+#include "WimpFuncs.h"
+
+#include <string.h>
+/*#include "bbc.h"*/
+
+
+int recallwindowlast = -1; /* The mon_num of the last monster we printed to */
+                           /* the recall window                             */
+int recalllastkilled = -1; /* The number of monsters (of type               */
+                           /*  recallwindowlast) that have been killed      */
+windowhandle recallwindowhandle;
+int recallwindowopen = 0;
+int recallrow = 0;
+
+#define RECALL_maxlines   13
+int recalllinelength = 63;
+
+windowhandle historywindowhandle;
+#define HISTORY_maxlines 6
+
+
+extern void recallwindow_clear(void)
+{
+  int loop;
+  iconstate istate;
+
+  for (loop = 0; loop < RECALL_maxlines; loop++)
+  {
+    Wimp_GetIconState(recallwindowhandle, loop, &istate);
+    istate.icon.data.indirectedtext.buffer[0] = 0;
+    Wimp_SetIconState(recallwindowhandle, loop, 0, 0);
+  }
+
+  recallrow = 0;  /* start printing at top of window again */
+}
+
+
+
+extern void recallwindow_prt(char *msg, int col, int row)
+{
+  iconstate istate;
+
+  if (recallrow >= RECALL_maxlines ||                /* Overflow - ignore it */
+       !recallwindowopen)                            /* Window not open      */
+    return;
+
+  Wimp_GetIconState(recallwindowhandle, recallrow, &istate);
+  strncpy(istate.icon.data.indirectedtext.buffer, msg,
+            istate.icon.data.indirectedtext.bufflen);
+  Wimp_SetIconState(recallwindowhandle, recallrow, 0, 0);
+
+  recallrow++;
+}
+
+
+extern void historywindow_clear(void)
+{
+  int loop;
+  iconstate istate;
+
+  for (loop = 0; loop < HISTORY_maxlines; loop++)
+  {
+    Wimp_GetIconState(historywindowhandle, loop, &istate);
+    if (loop == 1)
+      strcpy(istate.icon.data.indirectedtext.buffer,
+      "                    Welcome to Archimedes UMoria 5.5.0");
+    else
+      istate.icon.data.indirectedtext.buffer[0] = 0;
+    Wimp_SetIconState(historywindowhandle, loop, 0, 0);
+  }
+
+}
+
+
+
+extern void historywindow_prt(char *msg)
+{ 
+  int loop;
+  iconstate istate1, istate2;
+
+  for (loop = 0; loop < HISTORY_maxlines - 1; loop++)
+  {
+    Wimp_GetIconState(historywindowhandle, loop, &istate1);
+    Wimp_GetIconState(historywindowhandle, loop + 1, &istate2);
+    strncpy(istate1.icon.data.indirectedtext.buffer,
+              istate2.icon.data.indirectedtext.buffer,
+              istate1.icon.data.indirectedtext.bufflen);
+    Wimp_SetIconState(historywindowhandle, loop, 0, 0);
+  }
+
+  Wimp_GetIconState(historywindowhandle, HISTORY_maxlines - 1, &istate1);
+  strncpy(istate1.icon.data.indirectedtext.buffer,
+            msg,
+            istate1.icon.data.indirectedtext.bufflen);
+  Wimp_SetIconState(historywindowhandle, HISTORY_maxlines - 1, 0, 0);
+}
+
+
+
+extern void historywindow_concat(char *msg)
+/* Concatenates msg onto the end of the last buffer line. Will crash if the
+   total length of the 2 lines exceeds 253 characters (but this shouldn't
+   happen as max. Moria should output is 2*80, and this code shouldn't be
+   called unless it can all fit into 80 chars anyway...
+*/
+{
+  char temp[256];
+  iconstate istate1;
+
+  Wimp_GetIconState(historywindowhandle, HISTORY_maxlines - 1, &istate1);
+  strncpy(temp, istate1.icon.data.indirectedtext.buffer, 250);
+  strcat(temp, "  ");                         /* Add some space between msgs */
+  strcat(temp, msg);
+  strncpy(istate1.icon.data.indirectedtext.buffer,
+            temp,
+            istate1.icon.data.indirectedtext.bufflen);
+  Wimp_SetIconState(historywindowhandle, HISTORY_maxlines - 1, 0, 0);
+}

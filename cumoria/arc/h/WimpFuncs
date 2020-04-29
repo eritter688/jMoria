@@ -1,0 +1,144 @@
+
+/*
+ *  Title:    WimpFuncs.h
+ *  Purpose:  C protoypes to Wimp routines for UMoria 5.4.0
+ */
+
+#ifndef __wimpfuncs_h
+#define __wimpfuncs_h
+
+#include "kernel.h"
+
+
+#define wimperror _kernel_oserror
+
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_ReportError(_kernel_oserror *, errorboxflags, char *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_CreateIcon(createiconinfo *, iconhandle *);
+
+extern _kernel_oserror * Wimp_SetIconState(windowhandle w, iconhandle i,
+                                           int eorword, int notandword);
+
+extern _kernel_oserror * Wimp_GetIconState(windowhandle w, iconhandle i,
+                                           iconstate *info);
+
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_InstallBarIcon(char *, int, int, iconhandle *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_ProcessKey(int);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_ScreenToWindowOffsets(windowstate *, coord *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_SetColour(int);
+
+
+/*
+ *
+ */
+extern _kernel_oserror *  Wimp_SetCaretPosition(caretinfo *);
+
+/*
+ *
+ */
+extern _kernel_oserror *  Wimp_GetWindowState(windowstate *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_RedrawWindow(redrawinfo *, BOOL *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_UpdateWindow(updateinfo *, BOOL *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_GetRectangle(redrawinfo *, BOOL *);
+
+/*
+ *
+ */
+extern _kernel_oserror *  Wimp_CreateWindow(window *, windowhandle *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_OpenWindow(openwindowinfo *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_OpenWindowCentred(openwindowinfo *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_CloseWindow(windowhandle);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_CloseTemplate(void);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_LoadTemplate(window *, int *, int *, templatefonts *, char *, int *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_LoadNamedTemplate(window *, char *, char *, int, templatefonts *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_NamedTemplateSize(char *, int  *, int  *, BOOL *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_OpenTemplate(char *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_Initialise(char *, taskhandle *);
+
+/*
+ *
+ */
+extern _kernel_oserror * Wimp_CloseDown(void);
+
+/*
+ *  The base level poll routine. Takes an eventinfo block (empty)
+ *  and returns it filled in according to the poll results. The
+ *  second argument is the Poll mask (which is not altered.)
+ *  If an error is encountered a wimperror block is passed back
+ *  to the caller to do with what they will. If no error is
+ *  returned then the function returns NULL
+ */
+extern wimperror * Wimp_Poll(eventinfo *, eventmask);
+
+#endif
