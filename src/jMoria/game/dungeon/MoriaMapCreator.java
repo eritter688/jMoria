@@ -4,6 +4,10 @@ import jMoria.game.dungeon.tile.Tile;
 import jMoria.game.dungeon.tile.TileSets;
 import jMoria.game.dungeon.tile.TileType;
 import jMoria.game.utils.Math;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class MoriaMapCreator {
 
@@ -30,40 +34,19 @@ public class MoriaMapCreator {
   }
 
   private void createTown() {
-    fillCave(TileType.FLOOR_DARK);
+    //fillCave(TileType.FLOOR_DARK);
+    fillCave(TileType.FLOOR_LIGHT);
 
-//    int rooms[] = new int[6];
-//    int k;
-//    for (int i = 0; i < 6; i++) {
-//      rooms[i] = i;
-//    }
-//    int l = 6;
-//    for (int i = 0; i < 2; i++) {
-//      for (int j = 0; j < 3; j++) {
-//        k = Math.randInt(l) - 1;
-//        //placeStore(rooms[k], i, j);
-//        for (int m = k; m < l - 1; m++) {
-//          rooms[m] = rooms[m + 1];
-//        }
-//        l--;
-//      }
-//    }
+    List<TileType> store_list = new ArrayList<>();
+    TileSets.STORE_TYPES.iterator().forEachRemaining(store_list::add);
+    Collections.shuffle(store_list);
 
-//    for (i = 0; i < 6; i++) {
-//      rooms[i] = i;
-//    }
-//    l = 6;
-//    for (i = 0; i < 2; i++) {
-//      for (j = 0; j < 3; j++) {
-//        k = randint(l) - 1;
-//        build_store(rooms[k], i, j);
-//        for (m = k; m < l - 1; m++) {
-//          rooms[m] = rooms[m + 1];
-//        }
-//        l--;
-//      }
-//    }
-
+    Iterator<TileType> iterator = store_list.iterator();
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < 3; j++) {
+        placeStore(iterator.next(), i * 10 + 5, j * 16 + 16);
+      }
+    }
     placeBoundary();
     placeStairs(TileType.STAIRCASE_DOWN, 1, false);
   }
@@ -75,18 +58,60 @@ public class MoriaMapCreator {
     moriaMap.tileMap[row][col].type = type;
   }
 
-  /*
-
-
-
-   */
-
-  private void placeStore(TileType type, int x, int y) {
+  private void placeStore(TileType type, int row, int col) {
 
     if (!TileSets.STORE_TYPES.contains(type)) {
       throw new IllegalArgumentException("type must be a valid store.");
     }
 
+    System.out.println(String.format("%d %d", row, col));
+
+    int y_height = row - Math.randInt(3) + 1;
+    int y_depth = row + Math.randInt(4) + 1;
+    int x_left = col - Math.randInt(6) + 1;
+    int x_right = col + Math.randInt(6) + 1;
+
+    for (int i = y_height; i <= y_depth; i++) {
+      for (int j = x_left; j <= x_right; j++) {
+        moriaMap.tileMap[i][j].type = TileType.WALL_BOUNDARY;
+      }
+    }
+
+    // Place the door...
+    switch (Math.randInt(4)) {
+      case 0:
+        // door on top
+        break;
+      case 1:
+        // door on bottom
+        break;
+      case 2:
+        // door on left
+        break;
+      case 3:
+        // door on right
+        break;
+    }
+
+    //    // Place the door!
+//    int i, j;
+//    int tmp = Math.randInt(4);
+//    if (tmp < 3) {
+//      i = Math.randInt(y_depth - y_height) + y_height - 1;
+//      if (tmp == 1) {
+//        j = x_left;
+//      } else {
+//        j = x_right;
+//      }
+//    } else {
+//      j = Math.randInt(x_right - x_left) + x_left - 1;
+//      if (tmp == 3) {
+//        i = y_depth;
+//      } else {
+//        i = y_height;
+//      }
+//    }
+    moriaMap.tileMap[i][j].type = type;
   }
 
   private void fillCave(TileType type) {

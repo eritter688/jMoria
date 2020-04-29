@@ -26,6 +26,10 @@ public class MoriaMap {
     }
   }
 
+  // IDEA
+  // When we get to actual dungeon time and moving the player around,
+  // ensure this doesn't give a hint to the player that they are near
+  // the boundary of the map...
   public List<String> getMapSlice(int row, int col, int height, int width) {
 
     if (row < 0 || row >= this.height) {
