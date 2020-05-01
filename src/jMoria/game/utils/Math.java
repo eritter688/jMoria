@@ -29,6 +29,11 @@ public class Math {
     return GENERATOR.nextInt(bound);
   }
 
+  // [1, bound]
+  public static int randIntOne(int bound) {
+    return GENERATOR.nextInt(bound) + 1;
+  }
+
   public static int randNor(int mean, int stand) {
 
     int NORMAL_TABLE_SIZE = 256;
