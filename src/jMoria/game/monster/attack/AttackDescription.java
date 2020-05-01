@@ -1,6 +1,6 @@
 package jMoria.game.monster.attack;
 
-public enum AttackDescriptionType {
+public enum AttackDescription {
 
   HIT("hits you."),
   BITE("bites you."),
@@ -33,7 +33,7 @@ public enum AttackDescriptionType {
 
   private final String text;
 
-  AttackDescriptionType(String text) {
+  AttackDescription(String text) {
     this.text = text;
   }
 
