@@ -29,7 +29,6 @@ public class Monster {
   }
 
   public static class MonsterAttack {
-
     public AttackType attackType;
     public AttackDescription attackDescription;
     public Dice dice;
