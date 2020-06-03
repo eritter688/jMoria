@@ -26,8 +26,8 @@ public class GameScreen extends AbstractScreen {
     this.player = gameResources.player;
     // TEMP
     MoriaMapCreator mapCreator = new MoriaMapCreator();
-    mapCreator.createMap(0);
-    this.town = mapCreator.getMoriaMap();
+//    mapCreator.createMap(0);
+//    this.town = mapCreator.getMoriaMap();
   }
 
   @Override
