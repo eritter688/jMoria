@@ -61,7 +61,7 @@ public class NewPlayerRenders {
     }
 
     // Render
-    int currentLine = 20;
+    int currentLine = 21;
     for (String output : lines) {
       terminal.writeLine(currentLine, output);
       currentLine++;

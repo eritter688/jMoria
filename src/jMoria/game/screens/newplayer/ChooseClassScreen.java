@@ -37,7 +37,7 @@ public class ChooseClassScreen extends AbstractScreen {
     NewPlayerRenders.renderStatBlock(gameResources.terminal, gameResources.player);
     NewPlayerRenders.renderBonusBlock(gameResources.terminal, gameResources.player);
     NewPlayerRenders.renderCharacterBackgroundBlock(gameResources.terminal, gameResources.player);
-    gameResources.terminal.writeLine(19, "   Choose a class:");
+    gameResources.terminal.writeLine(20, "   Choose a class:");
     NewPlayerRenders.renderChoices(gameResources.terminal, classes, null);
   }
 

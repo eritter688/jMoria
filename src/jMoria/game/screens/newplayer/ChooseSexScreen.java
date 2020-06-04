@@ -27,7 +27,7 @@ public class ChooseSexScreen extends AbstractScreen {
   @Override
   public void render() {
     NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
-    gameResources.terminal.writeLine(19, "   Choose a sex:");
+    gameResources.terminal.writeLine(20, "   Choose a sex:");
     NewPlayerRenders.renderChoices(gameResources.terminal, sexes, new String[]{"m", "f"});
   }
 
