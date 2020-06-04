@@ -35,9 +35,6 @@ public class ChooseRaceScreen extends AbstractScreen {
   @Override
   public void init() {
     gameResources.terminal.clearScreen();
-
-//    PlayerCreationRenders.renderChoices(gameResources.terminal, races);
-
   }
 
   @Override

@@ -30,14 +30,7 @@ public class PlayerCreationRenders {
 
     for (int index = 0; index < enumSet.size(); index++) {
 
-      // Set up a new line for output.
-      if ((index != 0) &&
-          (index % 5 == 0)) {
-        lines.add(line.toString());
-        line = new StringBuilder("  ");
-      }
-
-      // Assemble the choice string.
+      // Assemble the choice string and add it to the line.
       StringBuilder choice = new StringBuilder();
       choice.append(choiceKeys[index]);
       choice.append(") ");
@@ -47,15 +40,19 @@ public class PlayerCreationRenders {
       }
       line.append(choice.toString());
 
-      // If we're done with elements, make sure the final
-      // line gets added to the list.
-      if (!enumSetIterator.hasNext()) {
-        lines.add(line.toString());
+      // Are we at the end of a line or out of elements?
+      if (index != 0) {
+        if (((index + 1) % 5 == 0) ||
+            (!enumSetIterator.hasNext())) {
+          lines.add(line.toString());
+          if (enumSetIterator.hasNext()) {
+            line = new StringBuilder("  ");
+          }
+        }
       }
-
     }
 
-    // Output
+    // Render
     int currentLine = 20;
     for (String output : lines) {
       terminal.writeLine(currentLine, output);
