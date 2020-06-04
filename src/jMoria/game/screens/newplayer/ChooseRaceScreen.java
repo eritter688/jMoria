@@ -29,7 +29,7 @@ public class ChooseRaceScreen extends AbstractScreen {
 
   @Override
   public void render() {
-    NewPlayerRenders.renderPersonalStats(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
     gameResources.terminal.writeLine(19, "  Choose a race:");
     NewPlayerRenders.renderChoices(gameResources.terminal, races);
   }

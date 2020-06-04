@@ -11,40 +11,41 @@ public class Player {
   public Sex sex;
   public Class playerClass;
 
-  public int age;
-  public int height;
-  public int weight;
-  public int socialClass;
+  public int age = 0;
+  public int height = 0;
+  public int weight = 0;
+  public int socialClass = 0;
 
-  public int strength;
-  public int intelligence;
-  public int wisdom;
-  public int dexterity;
-  public int constitution;
-  public int charisma;
+  public int strength = 0;
+  public int intelligence = 0;
+  public int wisdom = 0;
+  public int dexterity = 0;
+  public int constitution = 0;
+  public int charisma = 0;
 
-  public int bonusToHit;
-  public int bonusToDamage;
-  public int bonusToArmorClass;
-  public int totalArmorClass;
+  public int bonusToHit = 0;
+  public int bonusToDamage = 0;
+  public int bonusToArmorClass = 0;
+  public int totalArmorClass = 0;
 
-  public int level;
-  public int experience;
-  public int gold;
-  public int maxHitPoints;
-  public int currentHitPoints;
-  public int maxMana;
-  public int currentMana;
+  public int level = 1;
+  public int experience = 0;
+  public int maxExperience = 0;
+  public int gold = 0;
+  public int maxHitPoints = 0;
+  public int currentHitPoints = 0;
+  public int maxMana = 0;
+  public int currentMana = 0;
 
-  public String characterBackground;
+  public String characterBackground = "";
 
-  public int fighting;
-  public int bowsThrow;
-  public int savingThrow;
-  public int stealth;
-  public int disarming;
-  public int magicDevice;
-  public int perception;
-  public int searching;
-  public int infraVision;
+  public int fighting = 0;
+  public int bowsThrow = 0;
+  public int savingThrow = 0;
+  public int stealth = 0;
+  public int disarming = 0;
+  public int magicDevice = 0;
+  public int perception = 0;
+  public int searching = 0;
+  public int infraVision = 0;
 }

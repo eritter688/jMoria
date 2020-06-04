@@ -24,7 +24,12 @@ public class NewPlayerRenders {
    * @param enumSet  An EnumSet of Enum choices which override toString to present it's elements.
    *                 See player.enums.Race for example.
    */
-  public static void renderChoices(Terminal terminal, EnumSet<?> enumSet) {
+  public static void renderChoices(Terminal terminal, EnumSet<?> enumSet, String[] choiceKeys) {
+
+    // Needed because picking sex is m/f instead of a/b. :)
+    if (choiceKeys == null) {
+      choiceKeys = NewPlayerRenders.choiceKeys;
+    }
 
     int choiceMaxWidth = 15;
     List<String> lines = new ArrayList<>();
@@ -64,15 +69,7 @@ public class NewPlayerRenders {
 
   }
 
-  public static void renderAll(Terminal t, Player p) {
-    renderPersonalStats(t, p);
-    renderHitACStats(t, p);
-    renderPhyicalStats(t, p);
-    renderPlayerStats(t, p);
-    renderCharacterBackground(t, p);
-  }
-
-  public static void renderPersonalStats(Terminal t, Player p) {
+  public static void renderNameBlock(Terminal t, Player p) {
     t.writeStringAt(3, 0, "  Name      :");
     t.writeStringAt(4, 0, "  Race      :");
     t.writeStringAt(5, 0, "  Sex       :");
@@ -95,33 +92,19 @@ public class NewPlayerRenders {
     }
   }
 
-  public static void renderHitACStats(Terminal t, Player p) {
-    t.writeStringAt(10, 3, "+ To Hit   :");
-    t.writeStringAt(11, 3, "+ To Damage:");
-    t.writeStringAt(12, 3, "+ To AC    :");
-    t.writeStringAt(13, 3, "  Total AC :");
-
-    // TODO
-    t.writeRJStringAt(10, 21, "0");
-    t.writeRJStringAt(11, 21, "00");
-    t.writeRJStringAt(12, 21, "000");
-    t.writeRJStringAt(13, 21, "0000");
-  }
-
-  public static void renderPhyicalStats(Terminal t, Player p) {
+  public static void renderAgeBlock(Terminal t, Player p) {
     t.writeStringAt(3, 39, "Age          :");
     t.writeStringAt(4, 39, "Height       :");
     t.writeStringAt(5, 39, "Weight       :");
     t.writeStringAt(6, 39, "Social Class :");
 
-    // TODO
     t.writeRJStringAt(3, 58, String.valueOf(p.age));
     t.writeRJStringAt(4, 58, String.valueOf(p.height));
     t.writeRJStringAt(5, 58, String.valueOf(p.weight));
-    t.writeRJStringAt(6, 58, "0000");
+    t.writeRJStringAt(6, 58, String.valueOf(p.socialClass));
   }
 
-  public static void renderPlayerStats(Terminal t, Player p) {
+  public static void renderStatBlock(Terminal t, Player p) {
     t.writeStringAt(3, 63, "STR :");
     t.writeStringAt(4, 63, "INT :");
     t.writeStringAt(5, 63, "WIS :");
@@ -129,21 +112,84 @@ public class NewPlayerRenders {
     t.writeStringAt(7, 63, "CON :");
     t.writeStringAt(8, 63, "CHR :");
 
-    // TODO
-    t.writeRJStringAt(3, 75, "0");
-    t.writeRJStringAt(4, 75, "00");
-    t.writeRJStringAt(5, 75, "000");
-    t.writeRJStringAt(6, 75, "0");
-    t.writeRJStringAt(7, 75, "00");
-    t.writeRJStringAt(8, 75, "000");
+    // TODO Over 18 stats.
+    t.writeRJStringAt(3, 75, String.valueOf(p.strength));
+    t.writeRJStringAt(4, 75, String.valueOf(p.intelligence));
+    t.writeRJStringAt(5, 75, String.valueOf(p.wisdom));
+    t.writeRJStringAt(6, 75, String.valueOf(p.dexterity));
+    t.writeRJStringAt(7, 75, String.valueOf(p.constitution));
+    t.writeRJStringAt(8, 75, String.valueOf(p.charisma));
   }
 
-  public static void renderCharacterBackground(Terminal t, Player p) {
+  public static void renderBonusBlock(Terminal t, Player p) {
+    t.writeStringAt(10, 3, "+ To Hit   :");
+    t.writeStringAt(11, 3, "+ To Damage:");
+    t.writeStringAt(12, 3, "+ To AC    :");
+    t.writeStringAt(13, 3, "  Total AC :");
+
+    t.writeRJStringAt(10, 21, String.valueOf(p.bonusToHit));
+    t.writeRJStringAt(11, 21, String.valueOf(p.bonusToDamage));
+    t.writeRJStringAt(12, 21, String.valueOf(p.bonusToArmorClass));
+    t.writeRJStringAt(13, 21, String.valueOf(p.totalArmorClass));
+  }
+
+  public static void renderLevelBlock(Terminal t, Player p) {
+    t.writeStringAt(10, 29, "Level      :");
+    t.writeStringAt(11, 29, "Experience :");
+    t.writeStringAt(12, 29, "Max Exp    :");
+    t.writeStringAt(13, 29, "Exp to Adv.:"); // TODO
+    t.writeStringAt(13, 29, "Gold       :");
+
+    t.writeRJStringAt(10, 48, String.valueOf(p.level));
+    t.writeRJStringAt(11, 48, String.valueOf(p.experience));
+    t.writeRJStringAt(12, 48, String.valueOf(p.maxExperience));
+    t.writeRJStringAt(13, 48, "XX"); // TODO
+    t.writeRJStringAt(13, 48, String.valueOf(p.gold));
+  }
+
+  public static void renderHPBlock(Terminal t, Player p) {
+    t.writeStringAt(10, 52, "Max Hit Points :");
+    t.writeStringAt(11, 52, "Cur Hit Points :");
+    t.writeStringAt(12, 52, "Max Mana       :");
+    t.writeStringAt(13, 52, "Cur Mana       :");
+
+    t.writeRJStringAt(10, 75, String.valueOf(p.maxHitPoints));
+    t.writeRJStringAt(11, 75, String.valueOf(p.currentHitPoints));
+    t.writeRJStringAt(12, 75, String.valueOf(p.maxMana));
+    t.writeRJStringAt(13, 75, String.valueOf(p.currentMana));
+  }
+
+  public static void renderCharacterBackgroundBlock(Terminal t, Player p) {
     t.writeStringAt(14, 27, "Character Background");
 
     // TODO
     t.writeStringAt(15, 4, "You are one of several children of a Yeoman. You are a well-liked");
     t.writeStringAt(16, 4, "child.  You have dark brown eyes, straight brown hair, and an average");
     t.writeStringAt(17, 4, "complexion.");
+  }
+
+  public static void renderMiscAbilitiesBlock(Terminal t, Player p) {
+    t.writeStringAt(15, 26, "(Miscellaneous Abilities)");
+
+    t.writeStringAt(16, 3, "Fighting    :");
+    t.writeStringAt(17, 3, "Bows/Throw  :");
+    t.writeStringAt(18, 3, "Saving Throw:");
+    t.writeStringAt(16, 17, "");
+    t.writeStringAt(17, 17, "");
+    t.writeStringAt(18, 17, "");
+
+    t.writeStringAt(16, 29, "Stealth     :");
+    t.writeStringAt(17, 29, "Disarming   :");
+    t.writeStringAt(18, 29, "Magic Device:");
+    t.writeStringAt(16, 43, "");
+    t.writeStringAt(17, 43, "");
+    t.writeStringAt(18, 43, "");
+
+    t.writeStringAt(16, 55, "Perception  :");
+    t.writeStringAt(17, 55, "Searching   :");
+    t.writeStringAt(18, 55, "Infra-Vision:");
+    t.writeStringAt(16, 69, "");
+    t.writeStringAt(17, 69, "");
+    t.writeStringAt(18, 69, "");
   }
 }

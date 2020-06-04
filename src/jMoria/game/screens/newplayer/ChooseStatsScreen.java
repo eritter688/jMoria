@@ -33,7 +33,7 @@ public class ChooseStatsScreen extends AbstractScreen {
     if (key.equals("SPACE")) {
       render();
     } else if (key.equals("ESCAPE")) {
-      System.out.println("TO CLASS SELECT");
+      gameResources.game.setCurrentScreen(new ChooseClassScreen(gameResources));
     }
   }
 }
