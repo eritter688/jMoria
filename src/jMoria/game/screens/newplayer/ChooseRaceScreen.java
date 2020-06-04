@@ -1,7 +1,5 @@
 package jMoria.game.screens.newplayer;
 
-import static java.util.EnumSet.allOf;
-
 import jMoria.game.ResourcePackage;
 import jMoria.game.player.enums.Race;
 import jMoria.game.screens.AbstractScreen;
@@ -13,7 +11,7 @@ import java.util.Map;
 
 public class ChooseRaceScreen extends AbstractScreen {
 
-  private final EnumSet<Race> races = allOf(Race.class);
+  private final EnumSet<Race> races = EnumSet.allOf(Race.class);
   private final Map<String, Race> choiceMap = new HashMap<>();
 
   public ChooseRaceScreen(ResourcePackage gameResources) {
