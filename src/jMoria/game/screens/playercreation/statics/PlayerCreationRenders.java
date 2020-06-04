@@ -2,8 +2,16 @@ package jMoria.game.screens.playercreation.statics;
 
 import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
+import java.util.EnumSet;
 
 public class PlayerCreationRenders {
+
+  public static void renderChoices(Terminal t, EnumSet<?> enumSet) {
+    for (Enum<?> eNum : enumSet) {
+      System.out.println(eNum.toString());
+    }
+
+  }
 
   public static void renderAll(Terminal t, Player p) {
     renderPersonalStats(t, p);

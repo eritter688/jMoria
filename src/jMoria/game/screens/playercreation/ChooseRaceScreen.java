@@ -1,18 +1,21 @@
 package jMoria.game.screens.playercreation;
 
+import static java.util.EnumSet.allOf;
 import static java.util.Map.entry;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.player.Player;
 import jMoria.game.player.enums.Race;
+import jMoria.game.player.enums.Sex;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
 import jMoria.ui.Terminal;
+import java.util.EnumSet;
 import java.util.Map;
 
 public class ChooseRaceScreen extends AbstractScreen {
 
-  private Map<String, Race> choices =
+  private final Map<String, Race> choices =
       Map.ofEntries(
           entry("a", Race.HUMAN),
           entry("b", Race.HALF_ELF),
@@ -23,6 +26,10 @@ public class ChooseRaceScreen extends AbstractScreen {
           entry("g", Race.HALF_ORC),
           entry("h", Race.HALF_TROLL));
 
+  private final String[] keys = new String[]{"a", "b", "c"};
+  private final EnumSet<Race> races = allOf(Race.class);
+  private final EnumSet<Sex> sexes = allOf(Sex.class);
+
   public ChooseRaceScreen(ResourcePackage gameResources) {
     super(gameResources);
   }
@@ -30,6 +37,15 @@ public class ChooseRaceScreen extends AbstractScreen {
   @Override
   public void init() {
     gameResources.terminal.clearScreen();
+//    System.out.println(Arrays.toString(keys));
+//    System.out.println(races);
+//
+//    for (Enum<Race> e : races) {
+//      System.out.println(e);
+//    }
+    PlayerCreationRenders.renderChoices(gameResources.terminal, races);
+    PlayerCreationRenders.renderChoices(gameResources.terminal, sexes);
+
   }
 
   @Override
