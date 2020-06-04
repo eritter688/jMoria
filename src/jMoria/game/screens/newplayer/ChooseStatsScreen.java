@@ -1,11 +1,11 @@
-package jMoria.game.screens.playercreation;
+package jMoria.game.screens.newplayer;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.player.Player;
 import jMoria.game.player.PlayerCreator;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.GameScreen;
-import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
+import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 import jMoria.ui.Terminal;
 
 public class ChooseStatsScreen extends AbstractScreen {
@@ -29,7 +29,7 @@ public class ChooseStatsScreen extends AbstractScreen {
     t.clearScreen();
 
     pc.rollPlayerValues();
-    PlayerCreationRenders.renderAll(t, p);
+    NewPlayerRenders.renderAll(t, p);
 
     t.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
   }

@@ -1,4 +1,4 @@
-package jMoria.game.screens.playercreation;
+package jMoria.game.screens.newplayer;
 
 import static java.util.Map.entry;
 
@@ -6,7 +6,7 @@ import jMoria.game.ResourcePackage;
 import jMoria.game.player.Player;
 import jMoria.game.player.enums.Sex;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
+import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 import jMoria.ui.Terminal;
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class ChooseSexScreen extends AbstractScreen {
     Terminal t = gameResources.terminal;
     Player p = gameResources.player;
 
-    PlayerCreationRenders.renderPersonalStats(t, p);
+    NewPlayerRenders.renderPersonalStats(t, p);
 
     t.writeLine(19, "  Choose a sex:");
     t.writeLine(20, "  m) Male        f) Female");

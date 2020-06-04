@@ -1,4 +1,4 @@
-package jMoria.game.screens.playercreation;
+package jMoria.game.screens.newplayer;
 
 import static java.util.EnumSet.allOf;
 
@@ -6,7 +6,7 @@ import jMoria.game.ResourcePackage;
 import jMoria.game.player.Player;
 import jMoria.game.player.enums.Race;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.game.screens.playercreation.statics.PlayerCreationRenders;
+import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 import jMoria.ui.Terminal;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class ChooseRaceScreen extends AbstractScreen {
     super(gameResources);
     Iterator<Race> raceIterator = races.iterator();
     for (int index = 0; index < races.size(); index++) {
-      choiceMap.put(PlayerCreationRenders.choiceKeys[index], raceIterator.next());
+      choiceMap.put(NewPlayerRenders.choiceKeys[index], raceIterator.next());
     }
   }
 
@@ -36,10 +36,10 @@ public class ChooseRaceScreen extends AbstractScreen {
     Terminal t = gameResources.terminal;
     Player p = gameResources.player;
 
-    PlayerCreationRenders.renderPersonalStats(t, p);
+    NewPlayerRenders.renderPersonalStats(t, p);
 
     t.writeLine(19, "  Choose a race:");
-    PlayerCreationRenders.renderChoices(t, races);
+    NewPlayerRenders.renderChoices(t, races);
 
   }
 

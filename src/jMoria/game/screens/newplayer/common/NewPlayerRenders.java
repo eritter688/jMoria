@@ -1,4 +1,4 @@
-package jMoria.game.screens.playercreation.statics;
+package jMoria.game.screens.newplayer.common;
 
 import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
@@ -7,7 +7,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
-public class PlayerCreationRenders {
+public class NewPlayerRenders {
 
   public static String[] choiceKeys = {
       "a", "b", "c", "d", "e",

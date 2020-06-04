@@ -1,4 +1,4 @@
-package jMoria.game.screens.playercreation;
+package jMoria.game.screens.newplayer;
 
 import jMoria.game.ResourcePackage;
 import jMoria.game.player.Player;
