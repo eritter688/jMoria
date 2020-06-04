@@ -38,7 +38,7 @@ public class ChooseSexScreen extends AbstractScreen {
   public void handleKey(String key) {
     if (this.listening && choiceMap.containsKey(key)) {
       gameResources.player.sex = choiceMap.get(key);
-//      gameResources.game.setCurrentScreen(new ChooseStatsScreen(gameResources));
+      gameResources.game.setCurrentScreen(new ChooseStatsScreen(gameResources));
     }
   }
 }
