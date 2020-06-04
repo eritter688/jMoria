@@ -25,7 +25,7 @@ public class ChooseNameScreen extends AbstractScreen {
     NewPlayerRenders.renderHPBlock(gameResources.terminal, gameResources.player);
     NewPlayerRenders.renderMiscAbilitiesBlock(gameResources.terminal, gameResources.player);
     gameResources.terminal
-        .writeLine(21, "  Enter your player's name  [press <RETURN> when finished]");
+        .writeLine(21, "   Enter your player's name  [press <RETURN> when finished]");
   }
 
   @Override
