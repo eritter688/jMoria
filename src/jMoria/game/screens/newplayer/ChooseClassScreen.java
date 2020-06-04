@@ -4,7 +4,6 @@ import jMoria.game.ResourcePackage;
 import jMoria.game.player.enums.Class;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.newplayer.common.NewPlayerRenders;
-import jMoria.ui.Terminal;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,10 +32,13 @@ public class ChooseClassScreen extends AbstractScreen {
 
   @Override
   public void render() {
-    Terminal t = gameResources.terminal;
-    NewPlayerRenders.renderAll(gameResources.terminal, gameResources.player);
-    t.writeLine(19, "  Choose a class:");
-    NewPlayerRenders.renderChoices(gameResources.terminal, classes);
+    NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderAgeBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderStatBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderBonusBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderCharacterBackgroundBlock(gameResources.terminal, gameResources.player);
+    gameResources.terminal.writeLine(19, "  Choose a class:");
+    NewPlayerRenders.renderChoices(gameResources.terminal, classes, null);
   }
 
   @Override

@@ -6,7 +6,6 @@ import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ChooseSexScreen extends AbstractScreen {
@@ -16,10 +15,8 @@ public class ChooseSexScreen extends AbstractScreen {
 
   public ChooseSexScreen(ResourcePackage gameResources) {
     super(gameResources);
-    Iterator<Sex> sexIterator = sexes.iterator();
-    for (int index = 0; index < sexes.size(); index++) {
-      choiceMap.put(NewPlayerRenders.choiceKeys[index], sexIterator.next());
-    }
+    choiceMap.put("m", Sex.MALE);
+    choiceMap.put("f", Sex.FEMALE);
   }
 
   @Override
@@ -31,7 +28,7 @@ public class ChooseSexScreen extends AbstractScreen {
   public void render() {
     NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
     gameResources.terminal.writeLine(19, "  Choose a sex:");
-    NewPlayerRenders.renderChoices(gameResources.terminal, sexes);
+    NewPlayerRenders.renderChoices(gameResources.terminal, sexes, new String[]{"m", "f"});
   }
 
   @Override

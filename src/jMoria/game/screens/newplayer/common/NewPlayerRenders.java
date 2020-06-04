@@ -171,12 +171,12 @@ public class NewPlayerRenders {
   public static void renderMiscAbilitiesBlock(Terminal t, Player p) {
     t.writeStringAt(15, 26, "(Miscellaneous Abilities)");
 
-    t.writeStringAt(16, 3, "Fighting    :");
-    t.writeStringAt(17, 3, "Bows/Throw  :");
-    t.writeStringAt(18, 3, "Saving Throw:");
-    t.writeStringAt(16, 17, "");
-    t.writeStringAt(17, 17, "");
-    t.writeStringAt(18, 17, "");
+    t.writeStringAt(16, 2, "Fighting    :");
+    t.writeStringAt(17, 2, "Bows/Throw  :");
+    t.writeStringAt(18, 2, "Saving Throw:");
+    t.writeStringAt(16, 16, "");
+    t.writeStringAt(17, 16, "");
+    t.writeStringAt(18, 16, "");
 
     t.writeStringAt(16, 29, "Stealth     :");
     t.writeStringAt(17, 29, "Disarming   :");

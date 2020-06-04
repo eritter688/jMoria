@@ -19,7 +19,11 @@ public class ChooseStatsScreen extends AbstractScreen {
 
   @Override
   public void render() {
-    NewPlayerRenders.renderAll(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderAgeBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderStatBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderBonusBlock(gameResources.terminal, gameResources.player);
+    NewPlayerRenders.renderCharacterBackgroundBlock(gameResources.terminal, gameResources.player);
     gameResources.terminal.writeLine(21, "  Hit space to reroll or ESC to accept characteristics:");
   }
 
