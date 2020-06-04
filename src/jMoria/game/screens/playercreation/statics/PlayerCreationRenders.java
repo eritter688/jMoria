@@ -2,13 +2,64 @@ package jMoria.game.screens.playercreation.statics;
 
 import jMoria.game.player.Player;
 import jMoria.ui.Terminal;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
 
 public class PlayerCreationRenders {
 
-  public static void renderChoices(Terminal t, EnumSet<?> enumSet) {
-    for (Enum<?> eNum : enumSet) {
-      System.out.println(eNum.toString());
+  /**
+   * Dynamically render choices at the bottom of the screen based on the given enumset. Caution,
+   * don't send more than 15 choices or the UI will break! Caution, choices should be a max length
+   * of 11 characters or the UI will break!
+   *
+   * @param terminal
+   * @param enumSet
+   */
+  public static void renderChoices(Terminal terminal, EnumSet<?> enumSet) {
+
+    String[] choiceKeys = {"a", "b", "c", "d", "e",
+        "f", "g", "h", "i", "j",
+        "k", "l", "m", "n", "o"};
+
+    int choiceMaxWidth = 15;
+    List<String> lines = new ArrayList<>();
+    StringBuilder line = new StringBuilder("  ");
+    Iterator<?> enumSetIterator = enumSet.iterator();
+
+    for (int index = 0; index < enumSet.size(); index++) {
+
+      // Set up a new line for output.
+      if ((index != 0) &&
+          (index % 5 == 0)) {
+        lines.add(line.toString());
+        line = new StringBuilder("  ");
+      }
+
+      // Assemble the choice string.
+      StringBuilder choice = new StringBuilder();
+      choice.append(choiceKeys[index]);
+      choice.append(") ");
+      choice.append(enumSetIterator.next().toString());
+      if (choice.length() < choiceMaxWidth) {
+        choice.append(" ".repeat(choiceMaxWidth - choice.length()));
+      }
+      line.append(choice.toString());
+
+      // If we're done with elements, make sure the final
+      // line gets added to the list.
+      if (!enumSetIterator.hasNext()) {
+        lines.add(line.toString());
+      }
+
+    }
+
+    // Output
+    int currentLine = 20;
+    for (String output : lines) {
+      terminal.writeLine(currentLine, output);
+      currentLine++;
     }
 
   }

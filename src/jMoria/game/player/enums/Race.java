@@ -19,4 +19,8 @@ public enum Race {
   public String getRace() {
     return this.race;
   }
+
+  public String toString() {
+    return this.race;
+  }
 }
