@@ -3,11 +3,9 @@ package jMoria.game.screens.newplayer;
 import static java.util.EnumSet.allOf;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.player.Player;
 import jMoria.game.player.enums.Race;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.newplayer.common.NewPlayerRenders;
-import jMoria.ui.Terminal;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,14 +31,9 @@ public class ChooseRaceScreen extends AbstractScreen {
 
   @Override
   public void render() {
-    Terminal t = gameResources.terminal;
-    Player p = gameResources.player;
-
-    NewPlayerRenders.renderPersonalStats(t, p);
-
-    t.writeLine(19, "  Choose a race:");
-    NewPlayerRenders.renderChoices(t, races);
-
+    NewPlayerRenders.renderPersonalStats(gameResources.terminal, gameResources.player);
+    gameResources.terminal.writeLine(19, "  Choose a race:");
+    NewPlayerRenders.renderChoices(gameResources.terminal, races);
   }
 
   @Override
