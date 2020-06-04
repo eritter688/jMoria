@@ -9,19 +9,22 @@ import java.util.List;
 
 public class PlayerCreationRenders {
 
+  public static String[] choiceKeys = {
+      "a", "b", "c", "d", "e",
+      "f", "g", "h", "i", "j",
+      "k", "l", "m", "n", "o"
+  };
+
   /**
    * Dynamically render choices at the bottom of the screen based on the given enumset. Caution,
    * don't send more than 15 choices or the UI will break! Caution, choices should be a max length
    * of 11 characters or the UI will break!
    *
-   * @param terminal
-   * @param enumSet
+   * @param terminal The terminal to output to.
+   * @param enumSet  An EnumSet of Enum choices which override toString to present it's elements.
+   *                 See player.enums.Race for example.
    */
   public static void renderChoices(Terminal terminal, EnumSet<?> enumSet) {
-
-    String[] choiceKeys = {"a", "b", "c", "d", "e",
-        "f", "g", "h", "i", "j",
-        "k", "l", "m", "n", "o"};
 
     int choiceMaxWidth = 15;
     List<String> lines = new ArrayList<>();
