@@ -83,15 +83,15 @@ public class NewPlayerRenders {
     }
 
     if (p.race != null) {
-      t.writeStringAt(4, 14, p.race.getRace());
+      t.writeStringAt(4, 14, p.race.toString());
     }
 
     if (p.sex != null) {
-      t.writeStringAt(5, 14, p.sex.getSex());
+      t.writeStringAt(5, 14, p.sex.toString());
     }
 
     if (p.playerClass != null) {
-      t.writeStringAt(6, 14, p.playerClass.getPlayerClass());
+      t.writeStringAt(6, 14, p.playerClass.toString());
     }
   }
 

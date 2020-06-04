@@ -14,7 +14,7 @@ public enum Class {
     this.playerClass = playerClass;
   }
 
-  public String getPlayerClass() {
+  public String toString() {
     return this.playerClass;
   }
 }

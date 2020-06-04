@@ -10,7 +10,7 @@ public enum Sex {
     this.sex = sex;
   }
 
-  public String getSex() {
+  public String toString() {
     return this.sex;
   }
 }

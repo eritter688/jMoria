@@ -49,7 +49,7 @@ public class GameScreen extends AbstractScreen {
   }
 
   private void renderStats(Terminal t) {
-    t.writeStringAt(2, 0, player.race.getRace());
+    t.writeStringAt(2, 0, player.race.toString());
     t.writeStringAt(3, 0, "Warrior");
     t.writeStringAt(4, 0, "Rookie");
 
