@@ -12,7 +12,7 @@ import java.util.Map;
 public class ChooseSexScreen extends AbstractScreen {
 
   private final EnumSet<Sex> sexes = EnumSet.allOf(Sex.class);
-  private Map<String, Sex> choiceMap = new HashMap<>();
+  private final Map<String, Sex> choiceMap = new HashMap<>();
 
   public ChooseSexScreen(ResourcePackage gameResources) {
     super(gameResources);
