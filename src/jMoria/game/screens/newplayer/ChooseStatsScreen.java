@@ -1,12 +1,13 @@
 package jMoria.game.screens.newplayer;
 
 import jMoria.game.ResourcePackage;
+import jMoria.game.player.PlayerCreator;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 
-//import jMoria.game.player.PlayerCreator;
-
 public class ChooseStatsScreen extends AbstractScreen {
+
+  public PlayerCreator playerCreator;
 
   public ChooseStatsScreen(ResourcePackage gameResources) {
     super(gameResources);
@@ -15,6 +16,8 @@ public class ChooseStatsScreen extends AbstractScreen {
   @Override
   public void init() {
     gameResources.terminal.clearScreen();
+    this.playerCreator = new PlayerCreator(gameResources.player);
+    playerCreator.roll();
   }
 
   @Override
@@ -36,6 +39,7 @@ public class ChooseStatsScreen extends AbstractScreen {
     }
 
     if (key.equals("SPACE")) {
+      playerCreator.roll();
       render();
     } else if (key.equals("ESCAPE")) {
       gameResources.game.setCurrentScreen(new ChooseClassScreen(gameResources));
