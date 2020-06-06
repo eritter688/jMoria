@@ -86,9 +86,13 @@ public class PlayerCreator {
 
     socialClassRoll();
 
-    PlayerHistoryGenerator historyGenerator = new PlayerHistoryGenerator(this.player);
+//    PlayerHistoryGenerator historyGenerator = new PlayerHistoryGenerator(this.player);
 //    historyGenerator.generateHistory();
 //    System.out.println(player.characterBackground);
+
+    HumanHistoryGenerator hg = new HumanHistoryGenerator();
+    hg.generateHistory();
+
   }
 
   private void setStats(int[] stats) {
