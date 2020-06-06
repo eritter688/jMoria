@@ -16,12 +16,33 @@ public class Player {
   public int weight = 0;
   public int socialClass = 0;
 
+  // STATS
+
   public int strength = 0;
   public int intelligence = 0;
   public int wisdom = 0;
   public int dexterity = 0;
   public int constitution = 0;
   public int charisma = 0;
+
+  public int maxStrength = 0;
+  public int maxIntelligence = 0;
+  public int maxWisdom = 0;
+  public int maxDexterity = 0;
+  public int maxConstitution = 0;
+  public int maxCharisma = 0;
+
+  // ABILITIES
+
+  public int fighting = 0;
+  public int bowsThrow = 0;
+  public int savingThrow = 0;
+  public int stealth = 0;
+  public int disarming = 0;
+  public int magicDevice = 0;
+  public int perception = 0;
+  public int searching = 0;
+  public int infraVision = 0;
 
   public int bonusToHit = 0;
   public int bonusToDamage = 0;
@@ -39,13 +60,4 @@ public class Player {
 
   public String characterBackground = "";
 
-  public int fighting = 0;
-  public int bowsThrow = 0;
-  public int savingThrow = 0;
-  public int stealth = 0;
-  public int disarming = 0;
-  public int magicDevice = 0;
-  public int perception = 0;
-  public int searching = 0;
-  public int infraVision = 0;
 }

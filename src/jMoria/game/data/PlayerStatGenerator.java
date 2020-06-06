@@ -1,16 +1,16 @@
 package jMoria.game.data;
 
+import jMoria.game.player.Player;
 import jMoria.game.player.enums.Race;
+import jMoria.game.player.enums.Sex;
 import jMoria.game.utils.Dice;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerStatGenerator {
 
+  private final Player player;
   private final Race race;
-  private int[] statAdjusts;
-  private int[] stats = new int[6];
-
 
   public static final Map<Race, int[]> statAdjustMap = new HashMap<>();
   public static final Map<Race, int[]> ageMap = new HashMap<>();
@@ -60,42 +60,38 @@ public class PlayerStatGenerator {
     weightMap.put(Race.HALF_TROLL, new int[]{255, 50, 225, 40});
   }
 
-  public PlayerStatGenerator(Race race) {
-    this.race = race;
-    switch (race) {
-      case HUMAN:
-        statAdjusts = new int[]{0, 0, 0, 0, 0, 0};
-        break;
-      case HALF_ELF:
-        statAdjusts = new int[]{-1, 1, 0, 1, -1, 1};
-        break;
-      case ELF:
-        statAdjusts = new int[]{-1, 2, 1, 1, -2, 1};
-        break;
-      case HALFLING:
-        statAdjusts = new int[]{-2, 2, 1, 3, 1, 1};
-        break;
-      case GNOME:
-        statAdjusts = new int[]{-1, 2, 0, 2, 1, -2};
-        break;
-      case DWARF:
-        statAdjusts = new int[]{2, -3, 1, -2, 2, -3};
-        break;
-      case HALF_ORC:
-        statAdjusts = new int[]{2, -1, 0, 0, 1, -4};
-        break;
-      case HALF_TROLL:
-        statAdjusts = new int[]{4, -4, -2, -4, 3, -6};
-        break;
-    }
+  public PlayerStatGenerator(Player p) {
+    this.player = p;
+    this.race = p.race;
   }
 
   public void roll() {
-    initialRoll();
-    adjustmentRoll();
+    int[] stats = new int[6];
+    baseStatRoll(stats);
+    adjustStatRoll(stats);
+    setStats(stats);
+    ageRoll();
+    heightRoll();
+    weightRoll();
   }
 
-  private void initialRoll() {
+  private void setStats(int[] stats) {
+    player.strength = stats[0];
+    player.intelligence = stats[1];
+    player.wisdom = stats[2];
+    player.dexterity = stats[3];
+    player.constitution = stats[4];
+    player.charisma = stats[5];
+
+    player.maxStrength = stats[0];
+    player.maxIntelligence = stats[1];
+    player.maxWisdom = stats[2];
+    player.maxDexterity = stats[3];
+    player.maxConstitution = stats[4];
+    player.maxCharisma = stats[5];
+  }
+
+  private void baseStatRoll(int[] stats) {
     int total = 0;
     int[] temp = new int[18];
 
@@ -113,46 +109,90 @@ public class PlayerStatGenerator {
     }
   }
 
-  private void adjustmentRoll() {
+  private void adjustStatRoll(int[] stats) {
 
     for (int i = 0; i < 6; i++) {
-      int temp = stats[i];
-      int adjustment = statAdjusts[i];
+      int stat = stats[i];
+      int adjustment = statAdjustMap.get(race)[i];
 
       if (adjustment < 0) {
 
         for (int j = 0; j > adjustment; j--) {
-          if (temp > 108) {
-            temp--;
-          } else if (temp > 88) {
-            temp += -new Dice(1, 6).roll() - 2;
-          } else if (temp > 18) {
-            temp += -new Dice(1, 15).roll() - 5;
-            if (temp < 18) {
-              temp = 18;
+          if (stat > 108) {
+            stat--;
+          } else if (stat > 88) {
+            stat += -new Dice(1, 6).roll() - 2;
+          } else if (stat > 18) {
+            stat += -new Dice(1, 15).roll() - 5;
+            if (stat < 18) {
+              stat = 18;
             }
-          } else if (temp > 3) {
-            temp--;
+          } else if (stat > 3) {
+            stat--;
           }
         }
 
       } else {
 
         for (int j = 0; j < adjustment; j++) {
-          if (temp < 18) {
-            temp++;
-          } else if (temp < 88) {
-            temp += new Dice(1, 15).roll() + 5;
-          } else if (temp < 108) {
-            temp += new Dice(1, 6).roll() + 2;
-          } else if (temp < 118) {
-            temp++;
+          if (stat < 18) {
+            stat++;
+          } else if (stat < 88) {
+            stat += new Dice(1, 15).roll() + 5;
+          } else if (stat < 108) {
+            stat += new Dice(1, 6).roll() + 2;
+          } else if (stat < 118) {
+            stat++;
           }
         }
       }
-      stats[i] = temp;
+      stats[i] = stat;
     }
 
   }
+
+  private int adjustFromBaseValue(int baseValue, int modValue) {
+    int roll = new Dice(1, 3).roll();
+    if(roll == 1) {
+      return baseValue + new Dice(1, modValue).roll();
+    } else if (roll == 2) {
+      return baseValue - new Dice(1, modValue).roll();
+    } else {
+      return baseValue;
+    }
+  }
+
+  private void ageRoll() {
+    int base_age = ageMap.get(player.race)[0];
+    int age_mod = ageMap.get(player.race)[1];
+    player.age = adjustFromBaseValue(base_age, age_mod);
+  }
+
+  private void heightRoll() {
+    int base_height;
+    int height_mod;
+    if (player.sex == Sex.MALE) {
+      base_height = heightMap.get(player.race)[0];
+      height_mod = heightMap.get(player.race)[1];
+    } else {
+      base_height = heightMap.get(player.race)[2];
+      height_mod = heightMap.get(player.race)[3];
+    }
+    player.height = adjustFromBaseValue(base_height, height_mod);
+  }
+
+  private void weightRoll() {
+    int base_weight;
+    int weight_mod;
+    if (player.sex == Sex.MALE) {
+      base_weight = weightMap.get(player.race)[0];
+      weight_mod = weightMap.get(player.race)[1];
+    } else {
+      base_weight = weightMap.get(player.race)[2];
+      weight_mod = weightMap.get(player.race)[3];
+    }
+    player.weight = adjustFromBaseValue(base_weight, weight_mod);
+  }
+
 
 }
