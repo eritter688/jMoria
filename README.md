@@ -1,7 +1,7 @@
 # jMoria
 Mines of Moria - Java Edition
 
-## Play the Original
+## Play Umoria 5.5
 
 https://classicreload.com/moria.html
 
