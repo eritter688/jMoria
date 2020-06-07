@@ -1,5 +1,6 @@
-package jMoria.game.player;
+package jMoria.game.player.create;
 
+import jMoria.game.player.Player;
 import jMoria.game.player.enums.Race;
 import jMoria.game.player.enums.Sex;
 import jMoria.game.utils.Dice;
@@ -58,6 +59,14 @@ public class PlayerCreator {
     weightMap.put(Race.HALF_TROLL, new int[]{255, 50, 225, 40});
   }
 
+  /**
+   * UMoria and older variants used a normalized distribution but we're just going
+   * simple here and possibly modifying a little up or down or just stay the same.
+   *
+   * @param baseValue
+   * @param modValue
+   * @return A possibly modified integer value from the original.
+   */
   public static int adjustFromBaseValue(int baseValue, int modValue) {
     int roll = new Dice(1, 3).roll();
     if(roll == 1) {
@@ -84,14 +93,13 @@ public class PlayerCreator {
     heightRoll();
     weightRoll();
 
+    // TODO see player.create.history
     socialClassRoll();
-
 //    PlayerHistoryGenerator historyGenerator = new PlayerHistoryGenerator(this.player);
 //    historyGenerator.generateHistory();
 //    System.out.println(player.characterBackground);
-
-    HumanHistoryGenerator hg = new HumanHistoryGenerator();
-    hg.generateHistory();
+//    HumanHistoryGenerator hg = new HumanHistoryGenerator();
+//    hg.generateHistory();
 
   }
 
@@ -203,8 +211,9 @@ public class PlayerCreator {
     player.weight = adjustFromBaseValue(base_weight, weight_mod);
   }
 
+  // TODO
   private void socialClassRoll() {
-    int socialClass = new Dice(1, 4).roll();
+    int socialClass = new Dice(1, 100).roll();
   }
 
 

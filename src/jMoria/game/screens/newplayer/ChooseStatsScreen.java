@@ -1,7 +1,7 @@
 package jMoria.game.screens.newplayer;
 
 import jMoria.game.ResourcePackage;
-import jMoria.game.player.PlayerCreator;
+import jMoria.game.player.create.PlayerCreator;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 

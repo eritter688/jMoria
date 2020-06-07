@@ -1,4 +1,4 @@
-package jMoria.game.player;
+package jMoria.game.player.create.history;
 
 import jMoria.game.utils.Math;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package jMoria.game.player;
+package jMoria.game.player.create.history;
 
+import jMoria.game.player.Player;
 import jMoria.game.player.enums.Race;
 import jMoria.game.utils.Dice;
 
