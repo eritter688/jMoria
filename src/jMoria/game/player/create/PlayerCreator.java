@@ -1,9 +1,11 @@
 package jMoria.game.player.create;
 
 import jMoria.game.player.Player;
+import jMoria.game.player.enums.Class;
 import jMoria.game.player.enums.Race;
 import jMoria.game.player.enums.Sex;
 import jMoria.game.utils.Dice;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ public class PlayerCreator {
   public static final Map<Race, int[]> heightMap = new HashMap<>();
   public static final Map<Race, int[]> weightMap = new HashMap<>();
   public static final Map<Race, int[]> abilityMap = new HashMap<>();
+  public static final Map<Race, EnumSet<Class>> classMap = new HashMap<>();
 
   static {
     // str, int, wis, dex, con, chr
@@ -57,6 +60,18 @@ public class PlayerCreator {
     weightMap.put(Race.DWARF, new int[]     {150, 10, 120, 10});
     weightMap.put(Race.HALF_ORC, new int[]  {150,  5, 120,  5});
     weightMap.put(Race.HALF_TROLL, new int[]{255, 50, 225, 40});
+
+    // ability map
+
+    // class map
+    classMap.put(Race.HUMAN, EnumSet.allOf(Class.class));
+    classMap.put(Race.HALF_ELF, EnumSet.allOf(Class.class));
+    classMap.put(Race.ELF, EnumSet.of(Class.WARRIOR, Class.MAGE, Class.PRIEST, Class.ROGUE, Class.RANGER));
+    classMap.put(Race.HALFLING, EnumSet.of(Class.WARRIOR, Class.MAGE, Class.ROGUE));
+    classMap.put(Race.GNOME, EnumSet.of(Class.WARRIOR, Class.MAGE, Class.PRIEST, Class.ROGUE));
+    classMap.put(Race.DWARF, EnumSet.of(Class.WARRIOR, Class.PRIEST));
+    classMap.put(Race.HALF_ORC, EnumSet.of(Class.WARRIOR, Class.PRIEST, Class.ROGUE));
+    classMap.put(Race.HALF_TROLL, EnumSet.of(Class.WARRIOR, Class.PRIEST));
   }
 
   /**
@@ -214,6 +229,14 @@ public class PlayerCreator {
   // TODO
   private void socialClassRoll() {
     int socialClass = new Dice(1, 100).roll();
+  }
+
+  public EnumSet<Class> getClassOptions() {
+    return classMap.get(player.race);
+  }
+
+  public void setPlayerClass(Class playerClass) {
+    player.playerClass = playerClass;
   }
 
 

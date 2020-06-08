@@ -1,9 +1,14 @@
 package jMoria.game.screens.newplayer;
 
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderAgeBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderBonusBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderCharacterBackgroundBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderNameBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderStatBlock;
+
 import jMoria.game.ResourcePackage;
 import jMoria.game.player.create.PlayerCreator;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 
 public class ChooseStatsScreen extends AbstractScreen {
 
@@ -22,11 +27,11 @@ public class ChooseStatsScreen extends AbstractScreen {
 
   @Override
   public void render() {
-    NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderAgeBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderStatBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderBonusBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderCharacterBackgroundBlock(gameResources.terminal, gameResources.player);
+    renderNameBlock(gameResources.terminal, gameResources.player);
+    renderAgeBlock(gameResources.terminal, gameResources.player);
+    renderStatBlock(gameResources.terminal, gameResources.player);
+    renderBonusBlock(gameResources.terminal, gameResources.player);
+    renderCharacterBackgroundBlock(gameResources.terminal, gameResources.player);
     gameResources.terminal
         .writeLine(20, "   Hit space to reroll or ESC to accept characteristics:");
   }

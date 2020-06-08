@@ -1,6 +1,7 @@
 package jMoria.game.screens.newplayer;
 
 import jMoria.game.ResourcePackage;
+import jMoria.game.player.create.PlayerCreator;
 import jMoria.game.player.enums.Class;
 import jMoria.game.screens.AbstractScreen;
 import jMoria.game.screens.newplayer.common.NewPlayerRenders;
@@ -11,13 +12,14 @@ import java.util.Map;
 
 public class ChooseClassScreen extends AbstractScreen {
 
-  private final EnumSet<Class> classes = EnumSet.allOf(Class.class);
+  private final EnumSet<Class> classes;
   private final Map<String, Class> choiceMap = new HashMap<>();
 
   public ChooseClassScreen(ResourcePackage gameResources) {
     super(gameResources);
 
-    // call to get appropriate classes
+    PlayerCreator playerCreator = new PlayerCreator(gameResources.player);
+    classes = playerCreator.getClassOptions();
 
     Iterator<Class> classIterator = classes.iterator();
     for (int index = 0; index < classes.size(); index++) {
