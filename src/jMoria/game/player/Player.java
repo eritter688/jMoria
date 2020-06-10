@@ -6,7 +6,7 @@ import jMoria.game.player.enums.Sex;
 
 public class Player {
 
-  public String name;
+  public String name = "";
   public Race race;
   public Sex sex;
   public Class playerClass;
