@@ -17,10 +17,12 @@ public class ElfHistoryGenerator extends AbstractHistoryGenerator {
 
     ancestry_one.add(new HistoryObject("You are one of several children ", 50));
     ancestry_one.add(new HistoryObject("You are the only child ", 55));
+    historyList.add(ancestry_one);
 
     ancestry_two.add(new HistoryObject("of a Green-Elf ", 50));
     ancestry_two.add(new HistoryObject("of a Grey-Elf ", 55));
     ancestry_two.add(new HistoryObject("of a High-Elf ", 60));
+    historyList.add(ancestry_two);
 
     ancestry_three.add(new HistoryObject("Ranger.  ", 80));
     ancestry_three.add(new HistoryObject("Archer.  ", 90));
@@ -28,36 +30,24 @@ public class ElfHistoryGenerator extends AbstractHistoryGenerator {
     ancestry_three.add(new HistoryObject("Mage.  ", 125));
     ancestry_three.add(new HistoryObject("Prince.  ", 140));
     ancestry_three.add(new HistoryObject("King.  ", 145));
+    historyList.add(ancestry_three);
 
-    eyes.add(new HistoryObject("You have dark brown eyes, ", 50));
-    eyes.add(new HistoryObject("You have brown eyes, ", 50));
-    eyes.add(new HistoryObject("You have hazel eyes, ", 50));
-    eyes.add(new HistoryObject("You have green eyes, ", 50));
-    eyes.add(new HistoryObject("You have blue eyes, ", 50));
-    eyes.add(new HistoryObject("You have blue-gray eyes, ", 50));
+    eyes.add(new HistoryObject("You have light grey eyes, ", 50));
+    eyes.add(new HistoryObject("You have light blue eyes, ", 50));
+    eyes.add(new HistoryObject("You have light green eyes, ", 50));
+    historyList.add(eyes);
 
     hair_one.add(new HistoryObject("straight ", 50));
     hair_one.add(new HistoryObject("wavy ", 50));
-    hair_one.add(new HistoryObject("curly ", 50));
+    historyList.add(hair_one);
 
     hair_two.add(new HistoryObject("black hair, ", 50));
     hair_two.add(new HistoryObject("brown hair, ", 50));
-    hair_two.add(new HistoryObject("auburn hair, ", 50));
-    hair_two.add(new HistoryObject("red hair, ", 50));
     hair_two.add(new HistoryObject("blond hair, ", 50));
-
-    complexion.add(new HistoryObject("and a very dark complexion.", 50));
-    complexion.add(new HistoryObject("and a dark complexion.", 50));
-    complexion.add(new HistoryObject("and an average complexion.", 50));
-    complexion.add(new HistoryObject("and a fair complexion.", 50));
-    complexion.add(new HistoryObject("and a very fair complexion.", 50));
-
-    historyList.add(ancestry_one);
-    historyList.add(ancestry_two);
-    historyList.add(ancestry_three);
-    historyList.add(eyes);
-    historyList.add(hair_one);
+    hair_two.add(new HistoryObject("silver hair, ", 50));
     historyList.add(hair_two);
+
+    complexion.add(new HistoryObject("and a fair complexion.", 50));
     historyList.add(complexion);
 
   }
