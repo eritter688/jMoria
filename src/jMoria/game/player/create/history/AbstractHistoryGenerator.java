@@ -20,7 +20,7 @@ public abstract class AbstractHistoryGenerator {
     for (List<HistoryObject> list : historyList) {
       HistoryObject historyObject = pickOne(list);
       history.append(historyObject.text);
-      socialClass += historyObject.socialBonus;
+      socialClass += (historyObject.socialBonus - 50);
     }
     System.out.println(history.toString());
   }
