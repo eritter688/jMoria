@@ -1,6 +1,14 @@
 package jMoria.game.player.create;
 
 import jMoria.game.player.Player;
+import jMoria.game.player.create.history.AbstractHistoryGenerator;
+import jMoria.game.player.create.history.DwarfHistoryGenerator;
+import jMoria.game.player.create.history.ElfHistoryGenerator;
+import jMoria.game.player.create.history.GnomeHistoryGenerator;
+import jMoria.game.player.create.history.HalfElfHistoryGenerator;
+import jMoria.game.player.create.history.HalfOrcHistoryGen;
+import jMoria.game.player.create.history.HalfTrollHistoryGenerator;
+import jMoria.game.player.create.history.HalflingHistoryGenerator;
 import jMoria.game.player.create.history.HumanHistoryGenerator;
 import jMoria.game.player.enums.Class;
 import jMoria.game.player.enums.Race;
@@ -109,15 +117,8 @@ public class PlayerCreator {
     heightRoll();
     weightRoll();
 
-    // TODO see player.create.history
     socialClassRoll();
-//    PlayerHistoryGenerator historyGenerator = new PlayerHistoryGenerator(this.player);
-//    historyGenerator.generateHistory();
-//    System.out.println(player.characterBackground);
-    HumanHistoryGenerator hg = new HumanHistoryGenerator();
-    hg.generateHistory();
-
-  }
+}
 
   private void setStats(int[] stats) {
     player.strength = stats[0];
@@ -227,18 +228,50 @@ public class PlayerCreator {
     player.weight = adjustFromBaseValue(base_weight, weight_mod);
   }
 
-  // TODO
   private void socialClassRoll() {
-    int socialClass = new Dice(1, 100).roll();
+    AbstractHistoryGenerator historyGenerator;
+    switch (player.race) {
+      case HUMAN:
+        historyGenerator = new HumanHistoryGenerator();
+        break;
+      case HALF_ELF:
+        historyGenerator = new HalfElfHistoryGenerator();
+        break;
+      case ELF:
+        historyGenerator = new ElfHistoryGenerator();
+        break;
+      case HALFLING:
+        historyGenerator = new HalflingHistoryGenerator();
+        break;
+      case GNOME:
+        historyGenerator = new GnomeHistoryGenerator();
+        break;
+      case DWARF:
+        historyGenerator = new DwarfHistoryGenerator();
+        break;
+      case HALF_ORC:
+        historyGenerator = new HalfOrcHistoryGen();
+        break;
+      case HALF_TROLL:
+        historyGenerator = new HalfTrollHistoryGenerator();
+        break;
+      default:
+        throw new IllegalStateException("Unexpected value: " + player.race);
+    }
+
+    historyGenerator.generateHistory();
+
+    if (historyGenerator.socialClass < 1) {
+      player.socialClass = 1;
+    } else {
+      player.socialClass = Math.min(historyGenerator.socialClass, 100);
+    }
+
+    player.characterBackground = historyGenerator.history.toString();
   }
 
   public EnumSet<Class> getClassOptions() {
     return classMap.get(player.race);
   }
-
-  public void setPlayerClass(Class playerClass) {
-    player.playerClass = playerClass;
-  }
-
 
 }

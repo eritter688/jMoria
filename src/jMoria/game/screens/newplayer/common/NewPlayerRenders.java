@@ -160,12 +160,26 @@ public class NewPlayerRenders {
   }
 
   public static void renderCharacterBackgroundBlock(Terminal t, Player p) {
-    t.writeStringAt(14, 27, "Character Background");
+    t.writeStringAt(14, 28, "Character Background");
 
-    // TODO
-    t.writeStringAt(15, 4, "You are one of several children of a Yeoman. You are a well-liked");
-    t.writeStringAt(16, 4, "child.  You have dark brown eyes, straight brown hair, and an average");
-    t.writeStringAt(17, 4, "complexion.");
+    int currentLine = 15;
+    int maxWidth = 60;
+    String[] words = p.characterBackground.split(" ");
+
+    StringBuilder lineBuilder = new StringBuilder("");
+    for (String word: words) {
+      if ((lineBuilder.length() + word.length()) <= maxWidth) {
+        lineBuilder.append(word).append(" ");
+      } else {
+        t.writeStringAt(currentLine, 11, lineBuilder.toString());
+        currentLine++;
+        lineBuilder = new StringBuilder("").append(word).append(" ");
+      }
+      if (lineBuilder.length() > 0) {
+        t.writeStringAt(currentLine, 11, lineBuilder.toString());
+      }
+    }
+
   }
 
   public static void renderMiscAbilitiesBlock(Terminal t, Player p) {

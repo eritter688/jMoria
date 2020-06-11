@@ -20,13 +20,13 @@ public class ChooseStatsScreen extends AbstractScreen {
 
   @Override
   public void init() {
-    gameResources.terminal.clearScreen();
     this.playerCreator = new PlayerCreator(gameResources.player);
     playerCreator.roll();
   }
 
   @Override
   public void render() {
+    gameResources.terminal.clearScreen();
     renderNameBlock(gameResources.terminal, gameResources.player);
     renderAgeBlock(gameResources.terminal, gameResources.player);
     renderStatBlock(gameResources.terminal, gameResources.player);
