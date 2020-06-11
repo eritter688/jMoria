@@ -1,8 +1,15 @@
 package jMoria.game.screens.newplayer;
 
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderAgeBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderBonusBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderHPBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderLevelBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderMiscAbilitiesBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderNameBlock;
+import static jMoria.game.screens.newplayer.common.NewPlayerRenders.renderStatBlock;
+
 import jMoria.game.ResourcePackage;
 import jMoria.game.screens.AbstractScreen;
-import jMoria.game.screens.newplayer.common.NewPlayerRenders;
 import java.util.regex.Pattern;
 
 public class ChooseNameScreen extends AbstractScreen {
@@ -14,19 +21,18 @@ public class ChooseNameScreen extends AbstractScreen {
 
   @Override
   public void init() {
-    gameResources.terminal.clearScreen();
   }
 
   @Override
   public void render() {
     gameResources.terminal.clearScreen();
-    NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderAgeBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderStatBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderBonusBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderLevelBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderHPBlock(gameResources.terminal, gameResources.player);
-    NewPlayerRenders.renderMiscAbilitiesBlock(gameResources.terminal, gameResources.player);
+    renderNameBlock(gameResources.terminal, gameResources.player);
+    renderAgeBlock(gameResources.terminal, gameResources.player);
+    renderStatBlock(gameResources.terminal, gameResources.player);
+    renderBonusBlock(gameResources.terminal, gameResources.player);
+    renderLevelBlock(gameResources.terminal, gameResources.player);
+    renderHPBlock(gameResources.terminal, gameResources.player);
+    renderMiscAbilitiesBlock(gameResources.terminal, gameResources.player);
     gameResources.terminal
         .writeLine(21, "   Enter your player's name  [press <RETURN> when finished]");
   }
@@ -37,7 +43,7 @@ public class ChooseNameScreen extends AbstractScreen {
     if ("ENTER".equals(key)) {
       if (gameResources.player.name.equals("")) {
         gameResources.player.name = "player";
-        NewPlayerRenders.renderNameBlock(gameResources.terminal, gameResources.player);
+        renderNameBlock(gameResources.terminal, gameResources.player);
 //          gameResources.game.setCurrentScreen(new GameScreen(gameResources));
       }
     } else {

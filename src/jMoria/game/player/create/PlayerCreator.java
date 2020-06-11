@@ -1,6 +1,7 @@
 package jMoria.game.player.create;
 
 import jMoria.game.player.Player;
+import jMoria.game.player.create.history.HumanHistoryGenerator;
 import jMoria.game.player.enums.Class;
 import jMoria.game.player.enums.Race;
 import jMoria.game.player.enums.Sex;
@@ -113,8 +114,8 @@ public class PlayerCreator {
 //    PlayerHistoryGenerator historyGenerator = new PlayerHistoryGenerator(this.player);
 //    historyGenerator.generateHistory();
 //    System.out.println(player.characterBackground);
-//    HumanHistoryGenerator hg = new HumanHistoryGenerator();
-//    hg.generateHistory();
+    HumanHistoryGenerator hg = new HumanHistoryGenerator();
+    hg.generateHistory();
 
   }
 
